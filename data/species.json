@@ -1,0 +1,50 @@
+[
+    {
+        "Name": "Andorian",
+        "Female": ["Athytti", "Vryvih", "Zyle", "Vyssia", "Thriras", "Shreri", "Vrossaan", "Itamaan", "Ishrelia", "Vreraat", "Talas", "Tarah", "Jhamel", "Talla"],
+        "Male": ["Ishrath", "Thoss", "Shon", "Oshrev", "Atheth", "Tyvaass", "Thasiv", "Tyssab", "Tylihr", "Thy’lek", "Shras", "Thelev", "Keval", "Gareb"],
+        "Family": ["Tharhat", "Qiaqir", "Chiaqis", "Thenehr", "Zynes", "Shraviq", "Thilrerh", "Azonan", "Azollarh", "Shran"],
+        "AttributeBonus": {
+            "Daring": 1,
+            "Control": 1,
+            "Presence": 1
+        },
+        "Talents": ["PROUD AND HONORABLE", "THE USHAAN"]
+    },
+    {
+        "Name": "Bajoran",
+        "Female": ["Adami", "Chami", "Fala", "Jaxa", "Laren", "Lipras", "Leeta", "Lupaza", "Meru", "Neela", "Nerys", "Seriah", "Sul", "Yesa"],
+        "Male": ["Anaphis", "Edon", "Essa", "Furel", "Gel", "Holem", "Hovath", "Kag", "Los", "Mabrin", "Nalas", "Reon", "Taban", "Tennan"],
+        "Family": ["Anbara", "Anjohl", "Faren", "Jaro", "Kalem", "Krim", "Kubus", "Latara", "Latha", "Lenaris", "Li", "Tahna", "Reil"],
+        "AttributeBonus": {
+            "Control": 1,
+            "Daring": 1,
+            "Insight": 1
+        },
+        "Talents": ["ORB EXPERIENCE", "STRONG PAGH"]
+    },
+    {
+        "Name": "Betazoid",
+        "Female": ["Deanna", "Ania", "Kestra", "Lwaxanna", "Dalera", "Gloranna", "Abeana", "Pekera", "Nissila", "Lomestra", "Ioza", "Pegira", "Nemenna", "Nerira", "Lojeea"],
+        "Male": ["Konal", "Reban", "Xani", "Enon", "Dael", "Etas", "Andal", "Kolel", "Atani", "Devoni", "Algar", "Jensar", "Nikael", "Kalos", "Rennan"],
+        "Family": ["Grax", "Hagen", "Morganth", "Stadi", "Dutrax", "Odutan", "Nelan", "Onovren", "Kader", "Nostrun", "Dulas", "Konin", "Ebesi"],
+        "AttributeBonus": {
+            "Insight": 1,
+            "Presence": 1,
+            "Reason": 1
+        },
+        "Talents": ["EMPATH", "TELEPATH"]
+    },
+    {
+        "Name": "Denobulan",
+        "Female": ["Anari", "Andora", "Asha", "Daphina", "Feezal", "Forliza", "Kessil", "Liera", "Lusis", "Miral", "Natala", "Ninsen", "Henna", "Sabra", "Secka", "Symmé", "Trevis", "Vesena"],
+        "Male": ["Biras", "Bogga", "Delix", "Grolik", "Groznik", "Nettus", "Moga", "Morox", "Phlox", "Rinix", "Takis", "Tropp", "Tuglian", "Vinku", "Yolen", "Zepht", "Zinet"],
+        "Family": [""],
+        "AttributeBonus": {
+            "Fitness": 1,
+            "Insight": 1,
+            "Reason": 1
+        },
+        "Talents": ["CULTURAL FLEXIBILITY", "PARENT FIGURE"]
+    }
+]

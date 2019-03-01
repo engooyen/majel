@@ -1,0 +1,12 @@
+{
+    "ASSIST": "PC nominates an ally they can communicate with and declares how they are providing aid. During the ally's turn, roll the results.",
+    "ATTACK": "PC attacks.",
+    "CREATE ADVANTAGE": "PC attempts to create an ADVANTAGE. Base DIFFICULTY is 2.",
+    "DIRECT": " For Leaders only. May only be used once per SCENE. PC nominates an ally, who takes an immediate TASK, assisted by the Leader.",
+    "GUARD": " PC finds a defensible position. Base DIFFICULTY is 0, or 1 if protecting an ally; SUCCESS increases the DIFFICULTY of attacks against the PC by 1 until the start of the PC or ally’s next turn.",
+    "PASS": "PC performs no TASK. If they take no MINOR ACTIONS either, they may act later in the round.",
+    "READY": "PC declares a trigger before attempting a specific TASK as an interrupt when trigger occurs.",
+    "RECOVER": "PC catches their breath. FIT + COMM with base DIFFICULTY of 2 (1 if in COVER). If SUCCESSFUL, gain 1 additional RESISTANCE on any COVER effects, regain ability to AVOID INJURY, and can spend 2 MOMENTUM to regain 1 STRESS.",
+    "SPRINT": "PC moves. FIT + SECU with base Difficulty of 0; move to MEDIUM and spend 1 MOMENTUM to move additional ZONES.",
+    "FIRST AID": "PC treats injured creature. DAR + MEDI with base DIFFICULTY of 1; SUCCESS indicates creature is stabilized, and can spend 2 MOMENTUM to get patient back into the fray per DETERMINATION spend."
+}

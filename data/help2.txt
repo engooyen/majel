@@ -1,0 +1,23 @@
+**Reference for player characters (PC).**
+`!pc minor actions` - The minor actions the PC can perform.
+`!pc actions` - The actions the PC can perform.
+`!pc attack properties` - Attack properties of a PC attack.
+`!determination` - Determination spend table.
+**Reference for ship characters.**
+`!ship minor actions` - The minor actions the PC can perform.
+`!ship actions` - Lists the stations and the name of the actions that can be performed at that station.
+`!ship [action]` - Details of a ship action. See `!ship actions` for possible actions.
+`!ship attack properties` - Attack properties of a ship attack.
+**Character Sheets**
+`!traits` - Displays players available.
+`!traits [player]` - Displays character traits. Player can be listed with above command. Partial name is ok.
+`!stats` - Displays players available.
+`!stats [player]` - Displays players attributes/disciplines or systems/departments. Player can be listed with above command. Partial name is ok.
+`!disciplines` - Displays players available.
+`!disciplines [player]` - Displays players disciplines. Player can be listed with above command. Partial name is ok.
+`!values` - Displays players available.
+`!values [player]` - Displays players values. Player can be listed with above command. Partial name is ok.
+`!talents` - Displays players available.
+`!talents [player]` - Displays players talents. Player can be listed with above command. Partial name is ok.
+`!all` - Displays players available.
+`!all [player]` - Displays full character sheet. Player can be listed with above command. Partial name is ok.
