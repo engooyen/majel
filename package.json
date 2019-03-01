@@ -1,0 +1,15 @@
+{
+    "name": "majel",
+    "version": "1.0.0",
+    "description": "Helper bot Star Trek Adventures roleplaying game.",
+    "main": "app.js",
+    "author": "John H. Nguyen",
+    "dependencies": {
+        "csv": "^5.1.1",
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+        "dotenv": "^6.2.0",
+        "fast-csv": "^2.4.1",
+        "fs": "0.0.1-security",
+        "winston": "^3.2.1"
+    }
+}
