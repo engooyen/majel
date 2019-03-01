@@ -1,0 +1,3 @@
+Replace player-sheets channel messages as databases. Maybe use attachements?
+Add: A way to track stats. (Key value storage)
+Change: Partial task names. e.g. !ship modulate instead of !ship modulate shields
