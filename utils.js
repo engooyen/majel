@@ -19,14 +19,14 @@
  * IN THE SOFTWARE.
  */
 
-var fs = require('fs')
-var species = fs.readFileSync('./data/species.json', {encoding: 'utf8'})
+let fs = require('fs')
+let species = JSON.parse(fs.readFileSync('./data/species.json', {encoding: 'utf8'}))
 
 module.exports = {
     /**
-    * Shuffles elements of an array and returns the shuffled array.
-    * @param a The array to shuffle.
-    * @return The shuffled array.
+    * this.shuffles elements of an array and returns the this.shuffled array.
+    * @param a The array to this.shuffle.
+    * @return The this.shuffled array.
     */
     shuffle: function (a) {
         var j, x, i;
@@ -56,23 +56,23 @@ module.exports = {
     * @return The generated support character as a string.
     */
     generateSupportCharacter: function() {
-        species = shuffle(species);
+        species = this.shuffle(species);
         let race = species[0];
-        let gender = shuffle(['Female', 'Male'])[0];
-        let firstName = shuffle(race[gender])[0];
-        let lastName = shuffle(race['Family'])[0];
+        let gender = this.shuffle(['Female', 'Male'])[0];
+        let firstName = this.shuffle(race[gender])[0];
+        let lastName = this.shuffle(race['Family'])[0];
 
-        let attributePool = shuffle([10, 10, 9, 9, 8, 7]);
+        let attributePool = this.shuffle([10, 10, 9, 9, 8, 7]);
         let attributes = [
-            'Control (' + (attributePool[0] + findAttribute('Control', race.AttributeBonus)) + ')',
-            'Fitness (' + (attributePool[1] + findAttribute('Fitness', race.AttributeBonus)) + ')',
-            'Presence (' + (attributePool[2] + findAttribute('Presence', race.AttributeBonus)) + ')',
-            'Daring (' + (attributePool[3] + findAttribute('Daring', race.AttributeBonus)) + ')',
-            'Insight (' + (attributePool[4] + findAttribute('Insight', race.AttributeBonus)) + ')',
-            'Reason (' + (attributePool[5] + findAttribute('Reason', race.AttributeBonus)) + ')'
+            'Control (' + (attributePool[0] + this.findAttribute('Control', race.AttributeBonus)) + ')',
+            'Fitness (' + (attributePool[1] + this.findAttribute('Fitness', race.AttributeBonus)) + ')',
+            'Presence (' + (attributePool[2] + this.findAttribute('Presence', race.AttributeBonus)) + ')',
+            'Daring (' + (attributePool[3] + this.findAttribute('Daring', race.AttributeBonus)) + ')',
+            'Insight (' + (attributePool[4] + this.findAttribute('Insight', race.AttributeBonus)) + ')',
+            'Reason (' + (attributePool[5] + this.findAttribute('Reason', race.AttributeBonus)) + ')'
         ];
 
-        let disciplinePool = shuffle([4, 3, 2, 2, 1, 1]);
+        let disciplinePool = this.shuffle([4, 3, 2, 2, 1, 1]);
         let disciplines = [
             'Command (' + disciplinePool[0] + ')',
             'Conn (' + disciplinePool[1] + ')',
@@ -82,7 +82,7 @@ module.exports = {
             'Medicine (' + disciplinePool[5] + ')'
         ]
 
-        let talent = shuffle(race.Talents)[0];
+        let talent = this.shuffle(race.Talents)[0];
 
         return  'Name: ' + firstName + ' ' + lastName + '\n'
             + 'Race: ' + race.Name + ' ' + gender + '\n'

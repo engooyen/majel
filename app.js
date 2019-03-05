@@ -194,7 +194,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     });
                     break;
                 case 'support':
-                    msg = generateSupportCharacter();
+                    msg = utils.generateSupportCharacter();
                     break;
                 // !babble
                 case 'babble':
