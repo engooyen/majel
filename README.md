@@ -1,7 +1,9 @@
 # Majel
+
 Discord bot for use with Star Trek Adventures role playing game. This will help resolve dice rolls and some reference sheets.
 
 # Setup
+
 To install the required dependencies.
 
 `npm install`
@@ -15,12 +17,13 @@ Start your bot.
 `node app.js`
 
 # Hosting Options
+
 On your computer, needs to be on at least during the game session if not all the time. I initially hosted Majel on a Raspberry PI.
 
 You can also deploy to AWS free tier, which is my current solution.
 
-
 # Commands
+
 **General**
 
 `!help` - Displays all possible commands Majel can understand.
@@ -35,27 +38,15 @@ You can also deploy to AWS free tier, which is my current solution.
 
 `!Xd20` [Target] - Roll x d20s with a target number (e.g. Roll 2 d20 with target number of 15 = !2d20 15). X can be left blank, defaults to 1.
 
-`!Xd20` [Target] [Crit Range] - Roll x d20s with a target number and crit range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 = !2d20 15 5). X can be left blank, defaults to 1.
+`!Xd20` [Target][crit range] - Roll x d20s with a target number and crit range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 = !2d20 15 5). X can be left blank, defaults to 1.
 
-`!Xd20` [Target] [Crit Range] [Complication Range] - Roll x d20s with a target number, crit range, and complication range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 and comp range to 17 = !2d20 15 5 17). X can be left blank, defaults to 1.
+`!Xd20` [Target][crit range] [Complication Range] - Roll x d20s with a target number, crit range, and complication range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 and comp range to 17 = !2d20 15 5 17). X can be left blank, defaults to 1.
 
 `!babble` - Generate a random techno babble phrase and DMs the user.
 
 `!support` - Generate a random support character (In development).
 
-`!comp` - Display the current global complication range.
-
-`!comp [number]` - Set the global complication range. When players roll d20s, the global complication range will be used as the default value. The roller can override the global complication value.
-
 `!alien` - Generate a random alien species.
-
-`!var [variable name]` - Displays the current value of the variable.
-
-`!var [variable name] [any value]` - Set the value of the variable and displays the current value of the variable.
-
-`!var all` - Displays all variable and its values.
-
-`!reset-stats` - Resets the current stats.
 
 `!refresh` - Refreshes the character sheets.
 
@@ -106,17 +97,19 @@ You can also deploy to AWS free tier, which is my current solution.
 `!all [player]` - Displays full character sheet. Player can be listed with above command. Partial name is ok.
 
 # Contributers
+
 **Developers**
 
-* John Nguyen - john@engooyen.com
+- John Nguyen - john@engooyen.com
 
 **Players**
 
 Special thanks to my discord rp group.
-* Michael D.
-* Daniel Z.
-* Danyal
-* Euan
-* Adam
-* Simon B.
-* Kyle
+
+- Michael D.
+- Daniel Z.
+- Danyal
+- Euan
+- Adam
+- Simon B.
+- Kyle

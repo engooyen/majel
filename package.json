@@ -10,6 +10,7 @@
         "dotenv": "^6.2.0",
         "fast-csv": "^2.4.1",
         "fs": "0.0.1-security",
+        "googleapis": "^39.2.0",
         "winston": "^3.2.1"
     }
 }
