@@ -19,17 +19,20 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require("discord.io")
+const Discord = require("discord.js")
 const winston = require("winston")
 const fs = require("fs")
 const utils = require("./utils")
 const referenceSheets = require("./referenceSheets")
-const sta = require("./sta")
 const msgBuilder = require("./messageBuilder")
 const msgHandlers = require("./messageHandlers")
 require("dotenv").config()
 
-//sta.loadSourceBook()
+referenceSheets.loadReferenceSheets()
+
+// help content
+let help1 = fs.readFileSync("./data/help1.txt", { encoding: "utf8" })
+let help2 = fs.readFileSync("./data/help2.txt", { encoding: "utf8" })
 
 //Configure logger settings
 let logger = winston.createLogger({
@@ -42,94 +45,82 @@ let logger = winston.createLogger({
 })
 
 // Initialize Discord Bot
-let bot = new Discord.Client({
-  token: process.env.token,
-  autorun: true
-})
+let bot = new Discord.Client()
 
-referenceSheets.loadReferenceSheets()
+bot.login(process.env.token)
 
-// help content
-let help1 = fs.readFileSync("./data/help1.txt", { encoding: "utf8" })
-let help2 = fs.readFileSync("./data/help2.txt", { encoding: "utf8" })
-
-let players = []
-
-bot.on("ready", function(evt) {
+bot.on("ready", evt => {
   logger.info("Connected")
   logger.info("Logged in as: ")
-  logger.info(bot.username + " - (" + bot.id + ")")
-  players = utils.getPlayerSheets(bot)
+  logger.info(bot.user.username + " - (" + bot.user.id + ")")
 })
 
-bot.on("message", function(user, userID, channelID, message, evt) {
+bot.on("message", message => {
+  if (message.author.username.indexOf("Majel") > -1) {
+    console.log("Preventing Majel from spamming.")
+    return
+  }
+
   try {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     let msg = ""
-    if (message.substring(0, 1) == "!") {
-      let args = message.substring(1).split(" ")
+    let embed = {}
+    if (message.content.substring(0, 1) == "!") {
+      let args = message.content.substring(1).split(" ")
       let cmd = args[0]
-
       args = args.splice(1)
       let isD6 = cmd.indexOf("d6") > -1
       let isD20 = cmd.indexOf("d20") > -1
-
       if (isD6) {
-        msgHandlers.handleD6Cmd(cmd, bot, userID, channelID)
+        msgHandlers.handleD6Cmd(cmd, message)
         return
       } else if (isD20) {
-        msgHandlers.handleD20Cmd(cmd, args, bot, userID, channelID)
+        msgHandlers.handleD20Cmd(cmd, args, message)
         return
       }
-
       let option = args.length > 0 ? args.join(" ").toLowerCase() : ""
+      console.warn(option)
       switch (cmd) {
         case "help":
-          bot.sendMessage({ to: channelID, message: help1 })
-          bot.sendMessage({ to: channelID, message: help2 })
-          break
+          message.channel.send(help1)
+          message.channel.send(help2)
+          return
         case "support":
-          msg = utils.generateSupportCharacter()
+          embed = utils.generateSupportCharacter()
           break
         // !babble
         case "babble":
-          msg = "<@" + userID + "> Technobabble generated. Check your DM."
-          bot.sendMessage({
-            to: userID,
-            message: referenceSheets.generateTechnobabble()
-          })
+          msg = message.author + " Technobabble generated. Check your DM."
+          message.author.send(referenceSheets.generateTechnobabble())
           break
         case "pc":
-          msg = msgBuilder.buildPCMsg(option)
+          embed = msgBuilder.buildPCMsg(option)
           break
         case "ship":
-          msg = msgBuilder.buildShipMsg(option)
+          embed = msgBuilder.buildShipMsg(option)
           break
         case "determination":
-          msg = msgBuilder.buildDeterminationMsg(option)
-          break
-        case "all":
-        case "focuses":
-        case "stats":
-        case "talents":
-        case "traits":
-        case "values":
-          msg = msgBuilder.buildPlayerStatsMsg(option, cmd, players)
+          embed = msgBuilder.buildDeterminationMsg()
           break
         case "alien":
-          msg = msgBuilder.buildGeneratedAlienMsg()
-        case "refresh":
-          players = utils.getPlayerSheets(bot)
+          embed = msgBuilder.buildGeneratedAlienMsg()
           break
+        case "addme":
+          msg =
+            "https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot"
+          break
+        default:
+          msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
       }
     }
 
-    bot.sendMessage({ to: channelID, message: msg })
+    if (msg) {
+      message.channel.send(msg)
+    } else {
+      message.channel.send({ embed })
+    }
   } catch (error) {
-    bot.sendMessage({
-      to: channelID,
-      message: "Error trying to handle: " + message + "\n" + error
-    })
+    message.channel.send(error)
   }
 })

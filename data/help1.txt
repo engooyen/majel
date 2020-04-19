@@ -1,5 +1,6 @@
 **MAJEL - STAR TREK ADVENTURES BOT COMMAND LIST**
 `!help` - Displays all possible commands Majel can understand.
+`!addme` - Invite me to your game!
 `!d6` - Roll a challenge die.
 `!Xd6` - Roll X challenge dice (e.g. Roll 5 d6 = !5d6). X can be left blank, defaults to 1.
 `!d20` - Roll a d20.

@@ -1,0 +1,16 @@
+{
+  "ACCURATE": "If Aimed, creature may re-roll any number of d20s.",
+  "CHARGE": "If Prepared, creature may add either Area, Intense, Piercing 2, or Vicious 1.",
+  "CUMBERSOME": "Must be Prepared each turn to use.",
+  "DEADLY": "Increase DIFFICULTY by 1 to make a NON-LETHAL attack.",
+  "DEBILITATING": "FIRST AID on creatures INJURED by this weapon increase DIFFICULTY by 1.",
+  "GRENADE": "Cannot attack at LONG or EXTREME range. May be used 3 times per SCENE.",
+  "HIDDEN X": "Weapon may be hidden as a MINOR ACTION. Searches require INS + SECU or REA + SECU with a DIFFICULTY of X to locate the weapon.",
+  "INACCURATE": "Weapon gains no benefit from Aim.",
+  "NON-LETHAL": "Increase DIFFICULTY by 1 to make a LETHAL attack.",
+  "AREA": "Attack affects every creature or object within REACH of TARGET, plus one additional target within CLOSE for each EFFECT rolled. Allies may be hit for a COMPLICATION.",
+  "INTENSE": "Cost to AVOID INJURY is raised by 1 for each EFFECT rolled.",
+  "KNOCKDOWN": "TARGET is knocked PRONE if an EFFECT is rolled. Avoid by spending THREAT per EFFECT.",
+  "PIERCING X": "Attack ignores X of RESISTANCE for each EFFECT rolled.",
+  "VICIOUS X": "Attack inflicts X additional DAMAGE for each EFFECT rolled."
+}

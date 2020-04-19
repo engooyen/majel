@@ -21,145 +21,142 @@
 
 const alienGenerator = require("./alienGenerator")
 const referenceSheets = require("./referenceSheets")
-const utils = require("./utils")
 
 referenceSheets.loadReferenceSheets()
 
 module.exports = {
   buildPCMsg(option) {
-    let msg = ""
-
-    if (option === "minor actions") {
-      msg = referenceSheets.pcMinorActionsAll
-    } else if (option == "actions") {
-      msg = referenceSheets.pcActionsAll
-    } else if (option === "attack properties") {
-      msg = referenceSheets.pcAttackProperties
-    } else {
-      msg = "**" + option.toUpperCase() + "**: "
-      msg +=
-        referenceSheets.pcMinorActions[option.toUpperCase()] ||
-        referenceSheets.pcActions[option.toUpperCase()]
+    const embed = {
+      title: "",
+      fields: []
     }
 
-    return msg
+    if (option === "minor actions") {
+      embed.title = "PC MINOR ACTIONS"
+      for (let key in referenceSheets.pcMinorActions) {
+        embed.fields.push({
+          name: key,
+          value: referenceSheets.pcMinorActions[key]
+        })
+      }
+    } else if (option == "actions") {
+      embed.title = "PC ACTIONS"
+      for (let key in referenceSheets.pcActions) {
+        embed.fields.push({
+          name: key,
+          value: referenceSheets.pcActions[key]
+        })
+      }
+    } else if (option === "attack properties") {
+      embed.title = "PC ATTACK PROPERTIES"
+      for (let key in referenceSheets.pcAttackProperties) {
+        embed.fields.push({
+          name: key,
+          value: referenceSheets.pcAttackProperties[key]
+        })
+      }
+    } else {
+      embed.title = option.toUpperCase()
+      embed.description =
+        referenceSheets.pcMinorActions[embed.title] ||
+        referenceSheets.pcActions[embed.title]
+    }
+
+    return embed
   },
   buildShipMsg(option) {
-    let msg = ""
+    const embed = {
+      title: "",
+      fields: []
+    }
 
     if (option === "minor actions") {
-      msg = referenceSheets.shipMinorActionsAll
+      embed.title = "SHIP MINOR ACTIONS"
+      for (let key in referenceSheets.shipMinorActions) {
+        embed.fields.push({
+          name: key,
+          value: referenceSheets.shipMinorActions[key]
+        })
+      }
     } else if (option == "actions") {
-      msg = referenceSheets.shipActionsAll
+      embed.title = "SHIP ACTIONS OVERVIEW"
+      embed.description = "Available ship actions by station."
+      for (let key in referenceSheets.shipActionsOverview) {
+        embed.fields.push({
+          name: key,
+          value: referenceSheets.shipActionsOverview[key]
+        })
+      }
     } else if (option === "attack properties") {
-      msg = referenceSheets.shipAttackProperties
-    } else {
-      msg = "**" + option.toUpperCase() + "**: "
-      msg +=
-        referenceSheets.shipMinorActions[option.toUpperCase()] ||
-        referenceSheets.shipActions[option.toUpperCase()]
-    }
-
-    return msg
-  },
-  buildDeterminationMsg(option) {
-    let msg = ""
-
-    if (!option) {
-      msg = referenceSheets.determinationAll
-    } else {
-      msg = "**" + option.toUpperCase() + "**: "
-      msg += determination[option.toUpperCase()]
-    }
-
-    return msg
-  },
-  buildPlayerStatsMsg(option, cmd, players) {
-    let msg = ""
-
-    if (!option) {
-      msg = "**SHIP AND CREW**\n"
-      for (let i = 0; i < players.length; ++i) {
-        if (i > 0) {
-          msg += ", "
-        }
-
-        msg += players[i].Name
+      embed.title = "SHIP ATTACK PROPERTIES"
+      for (let key in referenceSheets.shipAttackProperties) {
+        embed.fields.push({
+          name: key,
+          value: referenceSheets.shipAttackProperties[key]
+        })
       }
     } else {
-      for (let i = 0; i < players.length; ++i) {
-        let player = players[i]
-        if (player.Name.toLowerCase().indexOf(option.toLowerCase()) > -1) {
-          msg = "**" + player.Name + "**"
-
-          if (cmd === "all" || cmd === "traits") {
-            if (player.Traits) {
-              msg += "\n**Traits**: " + player.Traits
-            }
-          }
-
-          if (cmd === "all" || cmd === "stats") {
-            if (player.Attributes) {
-              msg +=
-                "\n**Attributes**: " +
-                utils.enumerateDictionary(player.Attributes, ", ")
-            }
-
-            if (player.Disciplines) {
-              msg +=
-                "\n**Disciplines**: " +
-                utils.enumerateDictionary(player.Disciplines, ", ")
-            }
-
-            if (player.Systems) {
-              msg +=
-                "\n**Systems**: " +
-                utils.enumerateDictionary(player.Systems, ", ")
-            }
-
-            if (player.Departments) {
-              msg +=
-                "\n**Departments**: " +
-                utils.enumerateDictionary(player.Departments, ", ")
-            }
-          }
-
-          if (cmd === "all" || cmd === "focuses") {
-            if (player.Focuses) {
-              msg += "\n**Focuses**: " + player.Focuses
-            }
-          }
-
-          if (cmd === "all" || cmd === "values") {
-            if (player.Values) {
-              msg += "\n**Values**: " + player.Values
-            }
-          }
-
-          if (cmd === "all" || cmd === "talents") {
-            if (player.Talents) {
-              msg +=
-                "\n**Talents**\n" +
-                utils.enumerateDictionary(player.Talents, "\n")
-            }
-          }
-
-          break
+      embed.title = option.toUpperCase()
+      const shipActionsCategory =
+        referenceSheets.shipActionsOverview[embed.title]
+      if (shipActionsCategory) {
+        embed.title = `SHIP ACTIONS - ${option.toUpperCase()}`
+        const actions = shipActionsCategory.toString().split(", ")
+        for (let i in actions) {
+          const actionName = actions[i].toUpperCase()
+          embed.fields.push({
+            name: actionName,
+            value: referenceSheets.shipActions[actionName]
+          })
         }
+      } else {
+        embed.description =
+          referenceSheets.shipMinorActions[embed.title] ||
+          referenceSheets.shipActions[embed.title]
       }
     }
 
-    return msg
+    return embed
+  },
+  buildDeterminationMsg() {
+    const embed = {
+      title: "DETERMINATION SPENDS",
+      fields: []
+    }
+
+    const determinationSpends = referenceSheets.determination
+    for (let key in determinationSpends) {
+      embed.fields.push({
+        name: key,
+        value: determinationSpends[key]
+      })
+    }
+
+    console.warn(embed)
+    return embed
   },
   buildGeneratedAlienMsg() {
-    let msg = ""
-
-    let alien = alienGenerator.alien()
-    msg = "**GENERATED ALIEN**"
-    for (let key in alien) {
-      msg += "\n**" + key + "**: " + alien[key]
+    const embed = {
+      title: "GENERATED ALIEN",
+      fields: []
     }
 
-    return msg
+    let alien = alienGenerator.alien()
+    for (let key in alien) {
+      if (key !== "Traits") {
+        embed.fields.push({
+          name: key,
+          value: alien[key]
+        })
+      } else {
+        embed.fields.push({
+          name: "Trait - " + alien[key].name,
+          value: alien[key].description,
+          inline: true
+        })
+      }
+    }
+
+    return embed
   }
 }

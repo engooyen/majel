@@ -30,8 +30,8 @@ module.exports = {
    * @param a The array to this.shuffle.
    * @return The this.shuffled array.
    */
-  shuffle: function(a) {
-    var j, x, i
+  shuffle(a) {
+    let j, x, i
     for (i = a.length - 1; i > 0; i--) {
       j = Math.floor(Math.random() * (i + 1))
       x = a[i]
@@ -49,7 +49,7 @@ module.exports = {
    * @param attributes The key value map of attributes to modifier value.
    * @return The attribute modifier.
    */
-  findAttribute: function(name, attributes) {
+  findAttribute(name, attributes) {
     return attributes[name] || 0
   },
 
@@ -57,7 +57,7 @@ module.exports = {
    * Generates a random support character.
    * @return The generated support character as a string.
    */
-  generateSupportCharacter: function() {
+  generateSupportCharacter() {
     species = this.shuffle(species)
     let race = species[0]
     let gender = this.shuffle(["Female", "Male"])[0]
@@ -102,26 +102,32 @@ module.exports = {
 
     let talent = this.shuffle(race.Talents)[0]
 
-    return (
-      "Name: " +
-      firstName +
-      " " +
-      lastName +
-      "\n" +
-      "Race: " +
-      race.Name +
-      " " +
-      gender +
-      "\n" +
-      "Attributes: " +
-      attributes.join(", ") +
-      "\n" +
-      "Disciplines: " +
-      disciplines.join(", ") +
-      "\n" +
-      "Talents: " +
-      talent
-    )
+    return {
+      title: firstName + " " + lastName,
+      description: "Generated support character",
+      fields: [
+        {
+          name: "Race",
+          value: race.Name
+        },
+        {
+          name: "Gender",
+          value: gender
+        },
+        {
+          name: "Attributes",
+          value: attributes.join(", ")
+        },
+        {
+          name: "Disciplines",
+          value: disciplines.join(", ")
+        },
+        {
+          name: "Talent",
+          value: talent
+        }
+      ]
+    }
   },
 
   /**
@@ -129,7 +135,7 @@ module.exports = {
    * @param d The dictionary to enumerate.
    * @param delimiter The delimiter to insert between the key value pairs.
    */
-  enumerateDictionary: function(d, delimiter) {
+  enumerateDictionary(d, delimiter) {
     let str = ""
     for (let key in d) {
       if (str) {
@@ -142,19 +148,19 @@ module.exports = {
     return str
   },
 
-  getPlayerSheets(bot) {
+  getPlayerSheets(bot, callback) {
     let players = []
-    for (let k in bot.channels) {
-      if (bot.channels[k].name.toLowerCase() === "player-sheets") {
-        bot.getMessages({ limit: 50, channelID: bot.channels[k].id }, function(
-          a,
-          b
-        ) {
+    let channels = bot.channels.array()
+    for (let c in channels) {
+      let channel = channels[c]
+      if (channel.name.toLowerCase() === "player-sheets") {
+        channel.fetchMessages().then(messages => {
           try {
-            b = b.reverse()
-            for (let k = 0; k < b.length; ++k) {
+            let msgs = messages.array()
+            for (let m in msgs) {
+              let msg = msgs[m].content
               let player = {}
-              let playerData = b[k].content.split("\n")
+              let playerData = msg.split("\n")
               let collectTalents = false
               for (let i = 0; i < playerData.length; ++i) {
                 if (playerData[i].indexOf("Talents") > -1) {
@@ -213,17 +219,17 @@ module.exports = {
                 }
               }
 
-              players[players.length] = player
+              players.push(player)
             }
           } catch (error) {
             console.warn(error)
           }
         })
-        return players
+
+        callback(players)
+        return
       }
     }
-
     console.warn("player-sheets channel not found on this server!")
-    return players
   }
 }
