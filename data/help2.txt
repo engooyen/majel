@@ -7,5 +7,5 @@
 **Reference for ship characters.**
 `!ship actions` - Lists the stations and the name of the actions that can be performed at that station.
 `!ship minor actions` - The minor actions the PC can perform.
-`!ship [action or minor action pr statopm]` - Details of a ship action by name. See `!ship actions` or `!ship minor actions` for possible actions.
+`!ship [action or minor action or station]` - Details of a ship action by name. See `!ship actions` or `!ship minor actions` for possible actions.
 `!ship attack properties` - Attack properties of a ship attack.

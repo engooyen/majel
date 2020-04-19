@@ -65,7 +65,7 @@ bot.on("message", message => {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `!`
     let msg = ""
-    let embed = {}
+    let embed = null
     if (message.content.substring(0, 1) == "!") {
       let args = message.content.substring(1).split(" ")
       let cmd = args[0]
@@ -117,7 +117,7 @@ bot.on("message", message => {
 
     if (msg) {
       message.channel.send(msg)
-    } else {
+    } else if (embed) {
       message.channel.send({ embed })
     }
   } catch (error) {
