@@ -25,7 +25,6 @@ const fs = require("fs")
 const utils = require("./utils")
 const referenceSheets = require("./referenceSheets")
 const msgBuilder = require("./messageBuilder")
-const msgHandlers = require("./messageHandlers")
 require("dotenv").config()
 
 referenceSheets.loadReferenceSheets()
@@ -73,12 +72,13 @@ bot.on("message", message => {
       let isD6 = cmd.indexOf("d6") > -1
       let isD20 = cmd.indexOf("d20") > -1
       if (isD6) {
-        msgHandlers.handleD6Cmd(cmd, message)
+        msgBuilder.buildD6Msg(cmd, message)
         return
       } else if (isD20) {
-        msgHandlers.handleD20Cmd(cmd, args, message)
+        msgBuilder.buildD20msg(cmd, args, message)
         return
       }
+
       let option = args.length > 0 ? args.join(" ").toLowerCase() : ""
       console.warn(option)
       switch (cmd) {

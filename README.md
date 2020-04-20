@@ -2,31 +2,15 @@
 
 Discord bot for use with Star Trek Adventures role playing game. This will help resolve dice rolls and some reference sheets.
 
-# Setup
+# Add Majel To Your Server
 
-To install the required dependencies.
+https://discordapp.com/api/oauth2/authorize?client_id=546897285129175041&permissions=182272&scope=bot
 
-`npm install`
-
-Ensure 'token' is set somewhere in your environment. Easiest option is to use a .env file with:
-
-`token=ADD YOUR AUTH TOKEN HERE`
-
-Start your bot.
-
-`node app.js`
-
-# Hosting Options
-
-On your computer, needs to be on at least during the game session if not all the time. I initially hosted Majel on a Raspberry PI.
-
-You can also deploy to AWS free tier, which is my current solution.
-
-# Commands
-
-**General**
+# Majel - Star Trek Adventures Bot Command List
 
 `!help` - Displays all possible commands Majel can understand.
+
+`!addme` - Invite me to your game!
 
 `!d6` - Roll a challenge die.
 
@@ -48,13 +32,13 @@ You can also deploy to AWS free tier, which is my current solution.
 
 `!alien` - Generate a random alien species.
 
-`!refresh` - Refreshes the character sheets.
-
 **Reference for player characters (PC).**
 
-`!pc minor actions` - The minor actions the PC can perform.
-
 `!pc actions` - The actions the PC can perform.
+
+`!pc action minor actions` - The minor actions the PC can perform.
+
+`!pc [action or minor action]` - Details of a PC action or minor action by name. See `!pc actions` or `!pc minor actions`.
 
 `!pc attack properties` - Attack properties of a PC attack.
 
@@ -62,39 +46,33 @@ You can also deploy to AWS free tier, which is my current solution.
 
 **Reference for ship characters.**
 
-`!ship minor actions` - The minor actions the PC can perform.
-
 `!ship actions` - Lists the stations and the name of the actions that can be performed at that station.
 
-`!ship [action]` - Details of a ship action. See `!ship actions` for possible actions.
+`!ship minor actions` - The minor actions the PC can perform.
+
+`!ship [action or minor action or station]` - Details of a ship action by name. See `!ship actions` or `!ship minor actions` for possible actions.
 
 `!ship attack properties` - Attack properties of a ship attack.
 
-**Character Sheets**
+# Developer Setup
 
-`!traits` - Displays players available.
+To install the required dependencies.
 
-`!traits [player]` - Displays character traits. Player can be listed with above command. Partial name is ok.
+`npm install`
 
-`!stats` - Displays players available.
+Ensure 'token' is set somewhere in your environment. Easiest option is to use a .env file with:
 
-`!stats [player]` - Displays players attributes/disciplines or systems/departments. Player can be listed with above command. Partial name is ok.
+`token=ADD YOUR AUTH TOKEN HERE`
 
-`!disciplines` - Displays players available.
+Start your bot.
 
-`!disciplines [player]` - Displays players disciplines. Player can be listed with above command. Partial name is ok.
+`nodemon .`
 
-`!values` - Displays players available.
+# Hosting Options
 
-`!values [player]` - Displays players values. Player can be listed with above command. Partial name is ok.
+On your computer, needs to be on at least during the game session if not all the time. I initially hosted Majel on a Raspberry PI.
 
-`!talents` - Displays players available.
-
-`!talents [player]` - Displays players talents. Player can be listed with above command. Partial name is ok.
-
-`!all` - Displays players available.
-
-`!all [player]` - Displays full character sheet. Player can be listed with above command. Partial name is ok.
+You can also deploy to AWS free tier, which is my current solution.
 
 # Contributers
 
