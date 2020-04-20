@@ -4,7 +4,7 @@ Discord bot for use with Star Trek Adventures role playing game. This will help 
 
 # Add Majel To Your Server
 
-https://discordapp.com/api/oauth2/authorize?client_id=546897285129175041&permissions=182272&scope=bot
+https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot
 
 # Majel - Star Trek Adventures Bot Command List
 
