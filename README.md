@@ -12,9 +12,13 @@ https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permiss
 
 `!addme` - Invite me to your game!
 
+![d6 Rolls](https://i.imgur.com/DOaORZP.png "d6 Rolls")
+
 `!d6` - Roll a challenge die.
 
 `!Xd6` - Roll X challenge dice (e.g. Roll 5 d6 = !5d6). X can be left blank, defaults to 1.
+
+![d20 Rolls](https://i.imgur.com/BliWREK.png "d20 Rolls")
 
 `!d20` - Roll a d20.
 
@@ -26,9 +30,15 @@ https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permiss
 
 `!Xd20` [Target][crit range] [Complication Range] - Roll x d20s with a target number, crit range, and complication range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 and comp range to 17 = !2d20 15 5 17). X can be left blank, defaults to 1.
 
+![Generate technobabble](https://i.imgur.com/ZjEKeUc.jpg "Generate technobabble")
+
 `!babble` - Generate a random techno babble phrase and DMs the user.
 
+![Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
+
 `!support` - Generate a random support character (In development).
+
+![Generate a random alien](https://i.imgur.com/kuuDYnj.jpg "Generate a random alien")
 
 `!alien` - Generate a random alien species.
 
