@@ -65,7 +65,8 @@ bot.on("message", message => {
     // It will listen for messages that will start with `!`
     let msg = ""
     let embed = null
-    if (message.content.substring(0, 1) == "!") {
+    const cmdPrefix = message.content.substring(0, 1)
+    if (["!", "/"].includes(cmdPrefix)) {
       let args = message.content.substring(1).split(" ")
       let cmd = args[0]
       args = args.splice(1)
