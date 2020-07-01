@@ -7,6 +7,7 @@ Discord bot for use with Star Trek Adventures role playing game. This will help 
 https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot
 
 # Majel - Star Trek Adventures Bot Command List
+> Note - "/" prefix Is also supported along with the "!" prefix.
 
 `!help` - Displays all possible commands Majel can understand.
 
