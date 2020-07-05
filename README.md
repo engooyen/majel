@@ -4,10 +4,16 @@ Discord bot for use with Star Trek Adventures role playing game. This will help 
 
 # Add Majel To Your Server
 
+> Add this bot if you want the command prefixes to start with "!".
+
 https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot
 
+> Add this bot if you want the command prefixes to start with "/".
+
+https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permissions=51200&scope=bot
+
 # Majel - Star Trek Adventures Bot Command List
-> Note - "/" prefix Is also supported along with the "!" prefix.
+> Note - "/" prefix Is also supported depending which bot is added to your server.
 
 `!help` - Displays all possible commands Majel can understand.
 
