@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 John H. Nguyen
+ * Copyright 2019-2020 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -40,25 +40,25 @@ module.exports = {
       title: msg.author.username,
       description: "d6 Roll Result",
       thumbnail: {
-        url: "https://i.imgur.com/gN5LDfH.png"
+        url: "https://i.imgur.com/gN5LDfH.png",
       },
       fields: [
         {
           name: "Raw Result",
           value: rawResult,
-          inline: true
+          inline: true,
         },
         {
           name: "Numeric Result",
           value: numericResult,
-          inline: true
+          inline: true,
         },
         {
           name: "FX Result",
           value: fxResult,
-          inline: true
-        }
-      ]
+          inline: true,
+        },
+      ],
     }
 
     console.warn(embed)
@@ -81,47 +81,47 @@ module.exports = {
       compRange,
       rawResult,
       success,
-      complication
+      complication,
     } = dice.rollD20(numDice, args)
 
     const embed = {
       title: msg.author.username,
       description: "d20 Roll Result",
       thumbnail: {
-        url: "https://i.imgur.com/sBWwCxI.png"
+        url: "https://i.imgur.com/sBWwCxI.png",
       },
       fields: [
         {
           name: "Target",
           value: target,
-          inline: true
+          inline: true,
         },
         {
           name: "Critical Range",
           value: critRange,
-          inline: true
+          inline: true,
         },
         {
           name: "Complication Range",
           value: compRange,
-          inline: true
+          inline: true,
         },
         {
           name: "Raw Result",
           value: rawResult,
-          inline: true
+          inline: true,
         },
         {
           name: "Success(es)",
           value: success,
-          inline: true
+          inline: true,
         },
         {
           name: "Complication(s)",
           value: complication,
-          inline: true
-        }
-      ]
+          inline: true,
+        },
+      ],
     }
 
     msg.channel.send({ embed })
@@ -130,7 +130,7 @@ module.exports = {
   buildPCMsg(option) {
     const embed = {
       title: "",
-      fields: []
+      fields: [],
     }
 
     if (option === "minor actions") {
@@ -138,7 +138,7 @@ module.exports = {
       for (let key in referenceSheets.pcMinorActions) {
         embed.fields.push({
           name: key,
-          value: referenceSheets.pcMinorActions[key]
+          value: referenceSheets.pcMinorActions[key],
         })
       }
     } else if (option == "actions") {
@@ -146,7 +146,7 @@ module.exports = {
       for (let key in referenceSheets.pcActions) {
         embed.fields.push({
           name: key,
-          value: referenceSheets.pcActions[key]
+          value: referenceSheets.pcActions[key],
         })
       }
     } else if (option === "attack properties") {
@@ -154,7 +154,7 @@ module.exports = {
       for (let key in referenceSheets.pcAttackProperties) {
         embed.fields.push({
           name: key,
-          value: referenceSheets.pcAttackProperties[key]
+          value: referenceSheets.pcAttackProperties[key],
         })
       }
     } else {
@@ -169,7 +169,7 @@ module.exports = {
   buildShipMsg(option) {
     const embed = {
       title: "",
-      fields: []
+      fields: [],
     }
 
     if (option === "minor actions") {
@@ -177,7 +177,7 @@ module.exports = {
       for (let key in referenceSheets.shipMinorActions) {
         embed.fields.push({
           name: key,
-          value: referenceSheets.shipMinorActions[key]
+          value: referenceSheets.shipMinorActions[key],
         })
       }
     } else if (option == "actions") {
@@ -186,7 +186,7 @@ module.exports = {
       for (let key in referenceSheets.shipActionsOverview) {
         embed.fields.push({
           name: key,
-          value: referenceSheets.shipActionsOverview[key]
+          value: referenceSheets.shipActionsOverview[key],
         })
       }
     } else if (option === "attack properties") {
@@ -194,7 +194,7 @@ module.exports = {
       for (let key in referenceSheets.shipAttackProperties) {
         embed.fields.push({
           name: key,
-          value: referenceSheets.shipAttackProperties[key]
+          value: referenceSheets.shipAttackProperties[key],
         })
       }
     } else {
@@ -208,7 +208,7 @@ module.exports = {
           const actionName = actions[i].toUpperCase()
           embed.fields.push({
             name: actionName,
-            value: referenceSheets.shipActions[actionName]
+            value: referenceSheets.shipActions[actionName],
           })
         }
       } else {
@@ -223,14 +223,14 @@ module.exports = {
   buildDeterminationMsg() {
     const embed = {
       title: "DETERMINATION SPENDS",
-      fields: []
+      fields: [],
     }
 
     const determinationSpends = referenceSheets.determination
     for (let key in determinationSpends) {
       embed.fields.push({
         name: key,
-        value: determinationSpends[key]
+        value: determinationSpends[key],
       })
     }
 
@@ -240,7 +240,7 @@ module.exports = {
   buildGeneratedAlienMsg() {
     const embed = {
       title: "GENERATED ALIEN",
-      fields: []
+      fields: [],
     }
 
     let alien = alienGenerator.alien()
@@ -248,17 +248,17 @@ module.exports = {
       if (key !== "Traits") {
         embed.fields.push({
           name: key,
-          value: alien[key]
+          value: alien[key],
         })
       } else {
         embed.fields.push({
           name: "Trait - " + alien[key].name,
           value: alien[key].description,
-          inline: true
+          inline: true,
         })
       }
     }
 
     return embed
-  }
+  },
 }

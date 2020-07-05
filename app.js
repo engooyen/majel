@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 John H. Nguyen
+ * Copyright 2019-2020 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -33,14 +33,25 @@ referenceSheets.loadReferenceSheets()
 let help1 = fs.readFileSync("./data/help1.txt", { encoding: "utf8" })
 let help2 = fs.readFileSync("./data/help2.txt", { encoding: "utf8" })
 
+let addMeMsg =
+  "https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot"
+
+const CommandPrefix = process.env.prefix
+if (CommandPrefix === "/") {
+  help1 = help1.split("!").join("/")
+  help2 = help2.split("!").join("/")
+  addMeMsg =
+    "https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permissions=51200&scope=bot"
+}
+
 //Configure logger settings
 let logger = winston.createLogger({
   level: "debug",
   format: winston.format.json(),
   defaultMeta: {
-    service: "user-service"
+    service: "user-service",
   },
-  transports: [new winston.transports.Console()]
+  transports: [new winston.transports.Console()],
 })
 
 // Initialize Discord Bot
@@ -48,13 +59,13 @@ let bot = new Discord.Client()
 
 bot.login(process.env.token)
 
-bot.on("ready", evt => {
+bot.on("ready", (evt) => {
   logger.info("Connected")
   logger.info("Logged in as: ")
   logger.info(bot.user.username + " - (" + bot.user.id + ")")
 })
 
-bot.on("message", message => {
+bot.on("message", (message) => {
   if (message.author.username.indexOf("Majel") > -1) {
     console.log("Preventing Majel from spamming.")
     return
@@ -66,7 +77,7 @@ bot.on("message", message => {
     let msg = ""
     let embed = null
     const cmdPrefix = message.content.substring(0, 1)
-    if (["!", "/"].includes(cmdPrefix)) {
+    if (CommandPrefix === cmdPrefix) {
       let args = message.content.substring(1).split(" ")
       let cmd = args[0]
       args = args.splice(1)
@@ -108,8 +119,7 @@ bot.on("message", message => {
           embed = msgBuilder.buildGeneratedAlienMsg()
           break
         case "addme":
-          msg =
-            "https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot"
+          msg = addMeMsg
           break
         default:
           msg = `Didn't recognize '${cmd}' please type !help for supported commands.`

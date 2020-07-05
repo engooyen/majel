@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 John H. Nguyen
+ * Copyright 2019-2020 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -29,7 +29,7 @@ var effects = []
 var devices = []
 
 module.exports = {
-  loadReferenceSheets: function() {
+  loadReferenceSheets: function () {
     // babble
     var fileContent = fs.readFileSync("./data/babble.csv", { encoding: "utf8" })
     var rows = fileContent.split("\r\n")
@@ -50,7 +50,7 @@ module.exports = {
     )
     this.pcAttackProperties = JSON.parse(
       fs.readFileSync("./data/pcAttackProperties.json", {
-        encoding: "utf8"
+        encoding: "utf8",
       })
     )
 
@@ -67,7 +67,7 @@ module.exports = {
 
     this.shipActionsOverview = JSON.parse(
       fs.readFileSync("./data/shipActionsOverview.json", {
-        encoding: "utf8"
+        encoding: "utf8",
       })
     )
     this.shipAttackProperties = JSON.parse(
@@ -75,7 +75,7 @@ module.exports = {
     )
   },
 
-  generateTechnobabble: function() {
+  generateTechnobabble: function () {
     let action = actions[Math.floor(Math.random() * actions.length)]
     let descriptor = descriptors[Math.floor(Math.random() * descriptors.length)]
     let source = sources[Math.floor(Math.random() * sources.length)]
@@ -94,5 +94,5 @@ module.exports = {
       " " +
       device
     )
-  }
+  },
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 John H. Nguyen
+ * Copyright 2019-2020 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -87,7 +87,7 @@ module.exports = {
         ")",
       "Reason (" +
         (attributePool[5] + this.findAttribute("Reason", race.AttributeBonus)) +
-        ")"
+        ")",
     ]
 
     let disciplinePool = this.shuffle([4, 3, 2, 2, 1, 1])
@@ -97,7 +97,7 @@ module.exports = {
       "Security (" + disciplinePool[2] + ")",
       "Engineering (" + disciplinePool[3] + ")",
       "Science (" + disciplinePool[4] + ")",
-      "Medicine (" + disciplinePool[5] + ")"
+      "Medicine (" + disciplinePool[5] + ")",
     ]
 
     let talent = this.shuffle(race.Talents)[0]
@@ -108,25 +108,25 @@ module.exports = {
       fields: [
         {
           name: "Race",
-          value: race.Name
+          value: race.Name,
         },
         {
           name: "Gender",
-          value: gender
+          value: gender,
         },
         {
           name: "Attributes",
-          value: attributes.join(", ")
+          value: attributes.join(", "),
         },
         {
           name: "Disciplines",
-          value: disciplines.join(", ")
+          value: disciplines.join(", "),
         },
         {
           name: "Talent",
-          value: talent
-        }
-      ]
+          value: talent,
+        },
+      ],
     }
   },
 
@@ -154,7 +154,7 @@ module.exports = {
     for (let c in channels) {
       let channel = channels[c]
       if (channel.name.toLowerCase() === "player-sheets") {
-        channel.fetchMessages().then(messages => {
+        channel.fetchMessages().then((messages) => {
           try {
             let msgs = messages.array()
             for (let m in msgs) {
@@ -179,7 +179,7 @@ module.exports = {
                       Fitness: attributes[2],
                       Insight: attributes[3],
                       Presence: attributes[4],
-                      Reason: attributes[5]
+                      Reason: attributes[5],
                     }
                   } else if (kvp[0] === "Disciplines") {
                     let disciplines = kvp[1].split(" ")
@@ -189,7 +189,7 @@ module.exports = {
                       Security: disciplines[2],
                       Engineering: disciplines[3],
                       Science: disciplines[4],
-                      Medicine: disciplines[5]
+                      Medicine: disciplines[5],
                     }
                   } else if (kvp[0] === "Systems") {
                     let systems = kvp[1].split(" ")
@@ -199,7 +199,7 @@ module.exports = {
                       Weapons: systems[2],
                       Structure: systems[3],
                       Sensors: systems[4],
-                      Communications: systems[5]
+                      Communications: systems[5],
                     }
                   } else if (kvp[0] === "Departments") {
                     let departments = kvp[1].split(" ")
@@ -209,7 +209,7 @@ module.exports = {
                       Science: departments[2],
                       Conn: departments[3],
                       Engineering: departments[4],
-                      Medicine: departments[5]
+                      Medicine: departments[5],
                     }
                   } else {
                     player[kvp[0]] = kvp[1]
@@ -231,5 +231,5 @@ module.exports = {
       }
     }
     console.warn("player-sheets channel not found on this server!")
-  }
+  },
 }

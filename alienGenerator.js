@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 John H. Nguyen
+ * Copyright 2019-2020 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -35,7 +35,7 @@ var carbonBasedClasses = [
   anthropoid,
   fungal,
   plant,
-  plant
+  plant,
 ]
 
 // exotic-based
@@ -51,7 +51,7 @@ var exoticBasedClasses = [
   gaseous,
   magnetic,
   nucleogenic,
-  neurogenic
+  neurogenic,
 ]
 
 // non-corporeal
@@ -66,7 +66,7 @@ var nonCorporealClassed = [
   darkMatter,
   silicon,
   silicon,
-  xenon
+  xenon,
 ]
 
 var environment = [
@@ -88,7 +88,7 @@ var environment = [
   "Class-T world",
   "Class-Y world",
   "Anomalous world",
-  "Deep Space"
+  "Deep Space",
 ]
 
 var culture = [
@@ -97,7 +97,7 @@ var culture = [
   "Expansion",
   "Affluence",
   "Purity",
-  "Supremacy"
+  "Supremacy",
 ]
 
 var traits = {
@@ -122,7 +122,7 @@ var traits = {
   "Immune to Physical Damage":
     "The creature does not exist in the material Galaxy, and therefore is immune to physical effects.",
   "Gravity Sense":
-    "The creature perceives the Galaxy and manipulates matter through altering gravity and detecting the mass of objects. It cannot detect waves or radiation."
+    "The creature perceives the Galaxy and manipulates matter through altering gravity and detecting the mass of objects. It cannot detect waves or radiation.",
 }
 
 function roll() {
@@ -130,7 +130,7 @@ function roll() {
 }
 
 module.exports = {
-  origin: function() {
+  origin: function () {
     let rollMain = roll()
     let origin = {}
     if (rollMain <= 17) {
@@ -156,28 +156,28 @@ module.exports = {
     return origin
   },
 
-  environment: function() {
+  environment: function () {
     return environment[Math.floor(Math.random() * environment.length)]
   },
 
-  culture: function() {
+  culture: function () {
     return culture[Math.floor(Math.random() * culture.length)]
   },
 
-  trait: function() {
+  trait: function () {
     let keys = Object.keys(traits)
     let key = keys[Math.floor(Math.random() * keys.length)]
     return { name: key, description: traits[key] }
   },
 
-  alien: function() {
+  alien: function () {
     let origin = this.origin()
     return {
       Origin: origin.Origin,
       "Sub-origin": origin["Sub-origin"],
       Environment: this.environment(),
       Culture: this.culture(),
-      Traits: this.trait()
+      Traits: this.trait(),
     }
-  }
+  },
 }

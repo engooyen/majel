@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 John H. Nguyen
+ * Copyright 2019-2020 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -53,7 +53,7 @@ module.exports = {
     return {
       rawResult,
       numericResult,
-      fxResult
+      fxResult,
     }
   },
 
@@ -105,7 +105,7 @@ module.exports = {
       compRange,
       rawResult,
       success,
-      complication
+      complication,
     }
-  }
+  },
 }
