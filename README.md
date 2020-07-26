@@ -13,6 +13,7 @@ https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permiss
 https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permissions=51200&scope=bot
 
 # Majel - Star Trek Adventures Bot Command List
+
 > Note - "/" prefix Is also supported depending which bot is added to your server.
 
 `!help` - Displays all possible commands Majel can understand.
@@ -49,7 +50,7 @@ https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permiss
 
 `!alien` - Generate a random alien species.
 
-**Reference for player characters (PC).**
+**Reference for player characters (PC)**
 
 `!pc actions` - The actions the PC can perform.
 
@@ -61,7 +62,7 @@ https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permiss
 
 `!determination` - Determination spend table.
 
-**Reference for ship characters.**
+**Reference for ship characters**
 
 `!ship actions` - Lists the stations and the name of the actions that can be performed at that station.
 
@@ -70,6 +71,22 @@ https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permiss
 `!ship [action or minor action or station]` - Details of a ship action by name. See `!ship actions` or `!ship minor actions` for possible actions.
 
 `!ship attack properties` - Attack properties of a ship attack.
+
+**Momemtum and Threat Pools**
+
+`!pool` - Show the global pool and all channels' pool on server.
+
+`!pool here` - Show the global pool and the current channel's pool.
+
+`!pool reset` - Reset the global pool and delete all other pools on this server. This can only be triggered by admins.
+
+`!pool reset here` - Delete this channe's pool. This can only be triggered by admins.
+
+`!m or !t` - Show the global momentum or threat and the current channel's momentum or threat.
+
+`!m or !t [add, sub, set][some value]` - Add, subtract, or set the momentum or threat to the global pool. This can only be triggered by admins.
+
+`!m or !t [add, sub, set][some value] here` - Add, subtract, or set the momentum or threat to the current channel's pool. This can only be triggered by admins.
 
 # Developer Setup
 

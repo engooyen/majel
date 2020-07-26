@@ -5,12 +5,14 @@
   "main": "app.js",
   "author": "John H. Nguyen",
   "dependencies": {
+    "async-redis": "^1.1.7",
     "csv": "^5.1.1",
     "discord.js": "^11.5.1",
     "dotenv": "^6.2.0",
     "fast-csv": "^2.4.1",
     "fs": "0.0.1-security",
     "googleapis": "^39.2.0",
+    "nodemon": "^2.0.4",
     "redis": "^3.0.2",
     "winston": "^3.2.1"
   }

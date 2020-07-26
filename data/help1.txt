@@ -11,3 +11,10 @@
 `!babble` - Generate a random techno babble phrase and DMs the user.
 `!support` - Generate a random support character (In development).
 `!alien` - Generate a random alien species.
+`!pool` - Show the global pool and all channels' pool on server.
+`!pool here` - Show the global pool and the current channel's pool.
+`!pool reset` - Reset the global pool and delete all other pools on this server. This can only be triggered by admins.
+`!pool reset here` - Delete this channe's pool. This can only be triggered by admins.
+`!m or !t` - Show the global momentum or threat and the current channel's momentum or threat
+`!m or !t` [add, sub, set] [some value] - add, subtract, or set the momentum or threat to the global pool. This can only be triggered by admins.
+`!m or !t` [add, sub, set] [some value] here - add, subtract, or set the momentum or threat to the current channel's pool. This can only be triggered by admins.

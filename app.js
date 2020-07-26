@@ -25,6 +25,7 @@ const fs = require("fs")
 const utils = require("./utils")
 const referenceSheets = require("./referenceSheets")
 const msgBuilder = require("./messageBuilder")
+const pool = require("./pool")
 require("dotenv").config()
 
 referenceSheets.loadReferenceSheets()
@@ -45,7 +46,7 @@ if (CommandPrefix === "/") {
 }
 
 //Configure logger settings
-let logger = winston.createLogger({
+const logger = winston.createLogger({
   level: "debug",
   format: winston.format.json(),
   defaultMeta: {
@@ -54,8 +55,12 @@ let logger = winston.createLogger({
   transports: [new winston.transports.Console()],
 })
 
+const betaTesters = process.env.beta_testers
+  ? process.env.beta_testers.split(",")
+  : []
+
 // Initialize Discord Bot
-let bot = new Discord.Client()
+const bot = new Discord.Client()
 
 bot.login(process.env.token)
 
@@ -65,7 +70,7 @@ bot.on("ready", (evt) => {
   logger.info(bot.user.username + " - (" + bot.user.id + ")")
 })
 
-bot.on("message", (message) => {
+bot.on("message", async (message) => {
   if (message.author.username.indexOf("Majel") > -1) {
     console.log("Preventing Majel from spamming.")
     return
@@ -92,7 +97,6 @@ bot.on("message", (message) => {
       }
 
       let option = args.length > 0 ? args.join(" ").toLowerCase() : ""
-      console.warn(option)
       switch (cmd) {
         case "help":
           message.channel.send(help1)
@@ -121,8 +125,32 @@ bot.on("message", (message) => {
         case "addme":
           msg = addMeMsg
           break
+
+        case "beta":
+          if (betaTesters.includes(message.guild.id.toString())) {
+            msg = "You have access to the beta features."
+          } else {
+            msg = "You don't have access to the beta features."
+          }
+          break
         default:
-          msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
+          if (betaTesters.includes(message.guild.id.toString())) {
+            switch (cmd) {
+              case "pool":
+                embed = await pool.status(message, option)
+                break
+              case "m":
+                embed = await pool.adjustMomentum(message, option)
+                break
+              case "t":
+                embed = await pool.adjustThreat(message, option)
+                break
+              default:
+                msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
+            }
+          } else {
+            msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
+          }
       }
     }
 
@@ -132,6 +160,7 @@ bot.on("message", (message) => {
       message.channel.send({ embed })
     }
   } catch (error) {
+    console.error(error)
     message.channel.send(error)
   }
 })
