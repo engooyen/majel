@@ -125,7 +125,15 @@ bot.on("message", async (message) => {
         case "addme":
           msg = addMeMsg
           break
-
+        case "pool":
+          embed = await pool.status(message, option)
+          break
+        case "m":
+          embed = await pool.adjustMomentum(message, option)
+          break
+        case "t":
+          embed = await pool.adjustThreat(message, option)
+          break
         case "beta":
           if (betaTesters.includes(message.guild.id.toString())) {
             msg = "You have access to the beta features."
@@ -134,23 +142,15 @@ bot.on("message", async (message) => {
           }
           break
         default:
-          if (betaTesters.includes(message.guild.id.toString())) {
-            switch (cmd) {
-              case "pool":
-                embed = await pool.status(message, option)
-                break
-              case "m":
-                embed = await pool.adjustMomentum(message, option)
-                break
-              case "t":
-                embed = await pool.adjustThreat(message, option)
-                break
-              default:
-                msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
-            }
-          } else {
-            msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
-          }
+          // if (betaTesters.includes(message.guild.id.toString())) {
+          //   switch (cmd) {
+          //     default:
+          //       msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
+          //   }
+          // } else {
+          //   msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
+          // }
+          msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
       }
     }
 
