@@ -11,6 +11,7 @@
 `!babble` - Generate a random techno babble phrase and DMs the user.
 `!support` - Generate a random support character (In development).
 `!alien` - Generate a random alien species.
+**Momentum and threat pool management.**
 `!pool` - Show the global pool and all channels' pool on server.
 `!pool here` - Show the global pool and the current channel's pool.
 `!pool reset` - Reset the global pool and delete all other pools on this server. This can only be triggered by admins.
