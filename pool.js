@@ -241,6 +241,10 @@ module.exports = {
         pool = channelId
       }
 
+      if (guildData[pool].threat === null) {
+        guildData[pool].threat = 0;
+      }
+
       if (isAdmin) {
         if (op === "add") {
           guildData[pool].threat += amount
@@ -250,11 +254,7 @@ module.exports = {
           guildData[pool].threat = amount
         }
 
-        if (guildData.global.threat > 20) {
-          guildData.global.threat = 20
-        }
-
-        if (guildData.global.threat < 0) {
+        if (guildData.global.threat < 0 || guildData.global.threat === null) {
           guildData.global.threat = 0
         }
       }
