@@ -57,6 +57,9 @@ module.exports = {
     this.determination = JSON.parse(
       fs.readFileSync("./data/determination.json", { encoding: "utf8" })
     )
+    this.momentum = JSON.parse(
+      fs.readFileSync("./data/momentum.json", { encoding: "utf8" })
+    )
 
     this.shipMinorActions = JSON.parse(
       fs.readFileSync("./data/shipMinorActions.json", { encoding: "utf8" })

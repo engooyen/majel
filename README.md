@@ -62,6 +62,8 @@ https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permiss
 
 `!determination` - Determination spend table.
 
+`!momentum` - Momentum spend table.
+
 **Reference for ship characters**
 
 `!ship actions` - Lists the stations and the name of the actions that can be performed at that station.

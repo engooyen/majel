@@ -1,0 +1,6 @@
+{
+    "CREATE OPPORTUNITY": "Must be declared before a roll. Points of Momentum may be spent to grant the character up to 3 bonus d20. The first costs 1 Momentum, the second 2 Momentum, the third 3 Momentum. The normal limit of additional d20s bought for a Task still applies.",
+    "CREATE PROBLEM": "Must be declared before an opponent's roll. A character can increase the opposing character's Complication Range by 1 per 2 Momentum spent.",
+    "CREATE ADVANTAGE": "For 2 points of Momentum, the character immediately creates an Advantage that applies to the current scene, or removes a Complication that applies to the current scene.",
+    "OBTAIN INFORMATION": "For 1 point of Momentum per question, the character may ask the Gamemaster additional questions about the situation, which will be answered truthfully (but not necessarily exhaustively)."
+}
