@@ -123,6 +123,9 @@ bot.on("message", async (message) => {
         case "determination":
           embed = msgBuilder.buildDeterminationMsg()
           break
+        case "momentum":
+          embed = msgBuilder.buildMomentumMsg()
+          break
         case "alien":
           embed = msgBuilder.buildGeneratedAlienMsg()
           break

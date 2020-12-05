@@ -237,6 +237,23 @@ module.exports = {
     console.warn(embed)
     return embed
   },
+  buildMomentumMsg() {
+    const embed = {
+      title: "MOMENTUM SPENDS",
+      fields: [],
+    }
+
+    const momentumSpends = referenceSheets.momentum
+    for (let key in momentumSpends) {
+      embed.fields.push({
+        name: key,
+        value: momentumSpends[key],
+      })
+    }
+
+    console.warn(embed)
+    return embed
+  },
   buildGeneratedAlienMsg() {
     const embed = {
       title: "GENERATED ALIEN",

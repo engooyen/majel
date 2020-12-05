@@ -4,6 +4,7 @@
 `!pc [action or minor action]` - Details of a PC action or minor action by name. See `!pc actions` or `!pc minor actions`.
 `!pc attack properties` - Attack properties of a PC attack.
 `!determination` - Determination spend table.
+`!momentum` - Momentum spend table.
 **Reference for ship characters.**
 `!ship actions` - Lists the stations and the name of the actions that can be performed at that station.
 `!ship minor actions` - The minor actions the PC can perform.
