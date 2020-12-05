@@ -43,6 +43,16 @@ module.exports = {
   },
 
   /**
+   * Lists supported species
+   * @return Returns a list of supported species
+   */
+  listSpecies() {
+    const list = species.map(s => s.Name)
+    list.sort()
+    return list.join(", ")
+  },
+
+  /**
    * Finds the attribute in a map and returns the modifier value. If the
    * attribute doesn't exist, 0 is returned.
    * @param name The name of the attribute.
@@ -63,6 +73,15 @@ module.exports = {
     let gender = this.shuffle(["Female", "Male"])[0]
     let firstName = this.shuffle(race[gender])[0]
     let lastName = this.shuffle(race["Family"])[0]
+
+    let randomAttributes = this.shuffle(["Control", "Daring", "Fitness", "Insight", "Presence", "Reason"])
+
+    if (race.Name === "Human") {
+      race.AttributeBonus = {}
+      race.AttributeBonus[randomAttributes[0]] = 1
+      race.AttributeBonus[randomAttributes[1]] = 1
+      race.AttributeBonus[randomAttributes[2]] = 1
+    }
 
     let attributePool = this.shuffle([10, 10, 9, 9, 8, 7])
     let attributes = [

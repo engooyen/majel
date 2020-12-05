@@ -44,7 +44,9 @@ https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permiss
 
 ![Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
 
-`!support` - Generate a random support character (In development).
+`!support` - Generate a random support character.
+
+`!support list` - Lists all supported species.
 
 ![Generate a random alien](https://i.imgur.com/kuuDYnj.jpg "Generate a random alien")
 

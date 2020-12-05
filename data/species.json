@@ -46,5 +46,53 @@
             "Reason": 1
         },
         "Talents": ["CULTURAL FLEXIBILITY", "PARENT FIGURE"]
+    },
+    {
+        "Name": "Human",
+        "Female": ["Olivia", "Emma", "Ava", "Sophia", "Isabella", "Charlotte", "Amelia", "Mia", "Harper", "Evelyn", "Abigail", "Emily", "Ella", "Camila", "Luna", "Sofia", "Avery", "Mila"],
+        "Male": ["Liam", "Noah", "Oliver", "William", "Elijah", "James", "Benjamin", "Lucas", "Mason", "Ethan", "Alexander", "Henry", "Jacob", "Michael", "Daniel", "Logan", "Jackson"],
+        "Family": ["Nguyen", "Smith", "Johnson", "Williams", "Brown", "Garcia", "Rodriguez", "Lopez", "Lee", "Jones", "Miller", "Sato", "Suzuki", "Tran", "Pak"],
+        "AttributeBonus": {
+            "Fitness": 1,
+            "Insight": 1,
+            "Reason": 1
+        },
+        "Talents": ["RESOLUTE", "SPIRIT OF DISCOVERY"]
+    },
+    {
+        "Name": "Tellarite",
+        "Female": ["Pagonn glasch", "Rahrunn", "Frothann", "Nenke", "Zhulish", "Cilla", "Ghaargo", "Jaro glov", "Skav", "Bloshi blasch", "Hosorg", "Befonn", "Gluraall", "Tlonkon", "Thaoto blasch", "Haave", "Wunsh", "Shurra"],
+        "Male": ["Prillv", "Hirsh glov", "Gunch glov", "Thesh chim", "Zherg bav", "Dvolunn bav", "Laagagm jav", "Zallem", "Jurtak", "Shularc jav", "Cund blasch", "Xunn", "Chaanch bav", "Gullv bim", "Nullv blasch", "Caogrash", "Maalim glasch"],
+        "Family": ["Zham", "Cran", "Frev", "Blom", "Call", "Fattuk", "Lotigh", "Vagarsh", "Thaattish", "Blaorsh", "Brell", "Frenn", "Fonsh", "Zhugm"],
+        "AttributeBonus": {
+            "Control": 1,
+            "Fitness": 1,
+            "Insight": 1
+        },
+        "Talents": ["INCISIVE SCRUTINY", "STURDY"]
+    },
+    {
+        "Name": "Trill",
+        "Female": ["Bebe", "Lunhan", "Nuzrih", "Meenhi", "Vanhul", "Midru", "Lano", "Monhaun", "Hidrid", "Yillau", "Risoh", "Laudra", "Jeso", "Rallias", "Gilluh", "Hobe", "Lonad", "Nari", "Vima", "Menod "],
+        "Male": ["Vudo ", "Tejur", "Grelem ", "Gaagor ", "Erjur ", "Emblug ", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        "Family": ["Boraud", "Gries", "Grirrehl", "Tibex", "Niaohn", "Lam", "Bozax", "Tamar", "Rizad", "Lamun", "Runeg", "Viax", "Bisug", "Degruhl", "Berohl", "Nellaal", "Marias", "Pam", "Praain"],
+        "AttributeBonus": {
+            "Control": 1,
+            "Presence": 1,
+            "Reason": 1
+        },
+        "Talents": ["FORMER INITATE", "JOINED"]
+    },
+    {
+        "Name": "Vulcan",
+        "Female": ["T'per", "Nang", "Les", "T'pith", "T'shith", "Avik", "T'shaannur", "Murin", "T'penes", "Nunung", "V'luk", "Meng", "T'mok", "T'rir", "Heth", "Unne", "Enan", "T'shinnaas", "V'linvas", "Imer"],
+        "Male": ["Strurk", "Vo", "Liark", "Soss", "Straun", "T'Koviam", "Hypunn", "Skolleck", "Spafeck", "Salvork", "Pa", "Soth", "Hos", "Chur", "Hyk", "Sostrat", "Chovik", "Horrat", "Nelvuc", "Sevuc"],
+        "Family": [""],
+        "AttributeBonus": {
+            "Control": 1,
+            "Fitness": 1,
+            "Reason": 1
+        },
+        "Talents": ["KOLINAHR", "MIND-MELD", "NERVE PINCH"]
     }
 ]

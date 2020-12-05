@@ -103,7 +103,11 @@ bot.on("message", async (message) => {
           message.channel.send(help2)
           return
         case "support":
-          embed = utils.generateSupportCharacter()
+          if (option.includes("list")) {
+            msg = "Supported species: " + utils.listSpecies()
+          } else {
+            embed = utils.generateSupportCharacter()
+          }
           break
         // !babble
         case "babble":
