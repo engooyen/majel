@@ -15,7 +15,9 @@ https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permiss
 # Community & Donations
 
 Twitter: https://twitter.com/majeldiscordbot
+
 Facebook: https://www.facebook.com/majeldiscordbot
+
 Support this project: https://www.patreon.com/majeldiscordbot
 
 # Majel - Star Trek Adventures Bot Command List
