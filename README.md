@@ -12,7 +12,7 @@ https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permiss
 
 https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permissions=51200&scope=bot
 
-# Community & Donations
+# Community & Support
 
 Twitter: https://twitter.com/majeldiscordbot
 
