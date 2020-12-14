@@ -12,6 +12,12 @@ https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permiss
 
 https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permissions=51200&scope=bot
 
+# Community & Donations
+
+Twitter: https://twitter.com/majeldiscordbot
+Facebook: https://www.facebook.com/majeldiscordbot
+Support this project: https://www.patreon.com/majeldiscordbot
+
 # Majel - Star Trek Adventures Bot Command List
 
 > Note - "/" prefix Is also supported depending which bot is added to your server.
