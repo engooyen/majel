@@ -50,6 +50,8 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `!babble` - Generate a random techno babble phrase and DMs the user.
 
+`!medbabble` - Generate a random medical babble phrase and DMs the user.
+
 ![Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
 
 `!support` - Generate a random support character.

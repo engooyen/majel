@@ -9,6 +9,7 @@
 `!Xd20` [Target] [Crit Range] - Roll x d20s with a target number and crit range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 = !2d20 15 5). X can be left blank, defaults to 1.
 `!Xd20` [Target] [Crit Range] [Complication Range] - Roll x d20s with a target number, crit range, and complication range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 and comp range to 17 = !2d20 15 5 17). X can be left blank, defaults to 1.
 `!babble` - Generate a random techno babble phrase and DMs the user.
+`!medbabble` - Generate a random medical babble phrase and DMs the user.
 `!support` - Generate a random support character (In development).
 `!alien` - Generate a random alien species.
 **Momentum and threat pool management.**
