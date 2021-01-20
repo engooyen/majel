@@ -33,6 +33,7 @@ referenceSheets.loadReferenceSheets()
 // help content
 let help1 = fs.readFileSync("./data/help1.txt", { encoding: "utf8" })
 let help2 = fs.readFileSync("./data/help2.txt", { encoding: "utf8" })
+let about = fs.readFileSync("./data/about.txt", { encoding: "utf8" })
 
 let addMeMsg =
   "https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot"
@@ -101,6 +102,9 @@ bot.on("message", async (message) => {
         case "help":
           message.channel.send(help1)
           message.channel.send(help2)
+          return
+        case "about":
+          message.channel.send(about)
           return
         case "support":
           if (option.includes("list")) {

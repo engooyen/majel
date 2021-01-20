@@ -28,6 +28,8 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `!addme` - Invite me to your game!
 
+`!about` - Information on development and source code.
+
 ![d6 Rolls](https://i.imgur.com/DOaORZP.png "d6 Rolls")
 
 `!d6` - Roll a challenge die.
