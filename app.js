@@ -118,6 +118,10 @@ bot.on("message", async (message) => {
           msg = message.author + " Technobabble generated. Check your DM."
           message.author.send(referenceSheets.generateTechnobabble())
           break
+        case "medbabble":
+          msg = message.author + " Medical babble generated. Check your DM."
+          message.author.send(referenceSheets.generateMedbabble())
+          break
         case "pc":
           embed = msgBuilder.buildPCMsg(option)
           break

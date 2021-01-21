@@ -28,6 +28,11 @@ var sources = []
 var effects = []
 var devices = []
 
+// medbabble
+var medActions = []
+var medDescriptors = []
+var medSystems = []
+
 module.exports = {
   loadReferenceSheets: function () {
     // babble
@@ -40,6 +45,16 @@ module.exports = {
       sources[sources.length] = columns[2]
       effects[effects.length] = columns[3]
       devices[devices.length] = columns[4]
+    }
+
+    // medbabble
+    var medFileContent = fs.readFileSync("./data/medbabble.csv", { encoding: "utf8" })
+    var medRows = medFileContent.split("\r\n")
+    for (let i = 0; i < rows.length; ++i) {
+      let columns = medRows[i].split(", ")
+      medActions[medActions.length] = columns[0]
+      medDescriptors[medDescriptors.length] = columns[1]
+      medSystems[medSystems.length] = columns[2]
     }
 
     this.pcMinorActions = JSON.parse(
@@ -96,6 +111,21 @@ module.exports = {
       effect +
       " " +
       device
+    )
+  },
+
+  generateMedbabble: function () {
+    let action = medActions[Math.floor(Math.random() * medActions.length)]
+    let descriptor = medDescriptors[Math.floor(Math.random() * medDescriptors.length)]
+    let system = medSystems[Math.floor(Math.random() * medSystems.length)]
+
+    return (
+      "Medical Babble: [Action] [Descriptor] [Body system]\n" +
+      action +
+      " " +
+      descriptor +
+      " " +
+      system
     )
   },
 }
