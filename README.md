@@ -106,17 +106,58 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 # Developer Setup
 
-To install the required dependencies.
+## NPM
+This section assumes that you're familiar with javascript and node.js. Ensure you have npm installed on your workstation by following the steps outlined here:
 
-`npm install`
+https://www.npmjs.com/get-npm
 
-Ensure 'token' is set somewhere in your environment. Easiest option is to use a .env file with:
+To install the required dependencies, go to this repository's folder (majel by default), and type this command.
 
-`token=ADD YOUR AUTH TOKEN HERE`
+```
+npm install
+```
 
-Start your bot.
+## Redis Cache
+Redis cache needs to be up and running before starting the bot server. Ensure redis is installed and the server running:
 
-`nodemon .`
+Windows: https://github.com/microsoftarchive/redis/releases/tag/win-3.0.504
+
+Mac: https://gist.github.com/tomysmile/1b8a321e7c58499ef9f9441b2faa0aa8
+
+Linux: https://redis.io/download
+
+For your own development purposes, you will need to create your own bot, and invite it to your own server. Use the steps outlined here:
+
+https://www.writebots.com/discord-bot-token/
+
+There's a section mentioning how to generate the bot's auth token. That token is needed to run the bot server and allow clients to connect to it. Ensure 'token' is set somewhere in your environment. Easiest option is to create a .env file in the respository's folder. Copy and paste the following environment variables into your .env file.
+
+```
+token=[ADD YOUR AUTH TOKEN HERE]
+prefix=!
+redis_host=127.0.0.1
+redis_port=6379
+```
+Copy the auth token as mentioned in the tutorial and replace [ADD YOUR AUTH TOKEN HERE]
+
+## Start your bot
+
+```
+nodemon .
+```
+
+Your terminal should look something like this:
+```
+[nodemon] 2.0.6
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,json
+[nodemon] starting `node .`
+Redis client ready.
+{"message":"Connected","level":"info","service":"user-service"}
+{"message":"Logged in as: ","level":"info","service":"user-service"}
+{"message":"Majel-Local - (12345678901234567890)","level":"info","service":"user-service"}
+```
 
 # Hosting Options
 
