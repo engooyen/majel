@@ -20,6 +20,7 @@
  */
 
 var fs = require("fs")
+var os = require("os")
 
 // babble
 var actions = []
@@ -37,7 +38,7 @@ module.exports = {
   loadReferenceSheets: function () {
     // babble
     var fileContent = fs.readFileSync("./data/babble.csv", { encoding: "utf8" })
-    var rows = fileContent.split("\r\n")
+    var rows = fileContent.split(os.EOL)
     for (let i = 0; i < rows.length; ++i) {
       let columns = rows[i].split(", ")
       actions[actions.length] = columns[0]
@@ -49,7 +50,7 @@ module.exports = {
 
     // medbabble
     var medFileContent = fs.readFileSync("./data/medbabble.csv", { encoding: "utf8" })
-    var medRows = medFileContent.split("\r\n")
+    var medRows = medFileContent.split(os.EOL)
     for (let i = 0; i < rows.length; ++i) {
       let columns = medRows[i].split(", ")
       medActions[medActions.length] = columns[0]
