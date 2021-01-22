@@ -22,7 +22,7 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 # Majel - Star Trek Adventures Bot Command List
 
-> Note - "/" prefix Is also supported depending which bot is added to your server.
+> Note - "/" prefix is also supported depending which bot is added to your server.
 
 `!help` - Displays all possible commands Majel can understand.
 
@@ -50,9 +50,9 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 ![Generate technobabble](https://i.imgur.com/ZjEKeUc.jpg "Generate technobabble")
 
-`!babble` - Generate a random techno babble phrase and DMs the user.
+`!babble` - Generate a random techno babble phrase and DM the user.
 
-`!medbabble` - Generate a random medical babble phrase and DMs the user.
+`!medbabble` - Generate a random medical babble phrase and DM the user.
 
 ![Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
 
@@ -96,7 +96,7 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `!pool reset` - Reset the global pool and delete all other pools on this server. This can only be triggered by admins.
 
-`!pool reset here` - Delete this channe's pool. This can only be triggered by admins.
+`!pool reset here` - Delete this channel's pool. This can only be triggered by admins.
 
 `!m or !t` - Show the global momentum or threat and the current channel's momentum or threat.
 
@@ -165,7 +165,7 @@ On your computer, needs to be on at least during the game session if not all the
 
 You can also deploy to AWS free tier, which is my current solution.
 
-# Contributers
+# Contributors
 
 **Developers**
 
