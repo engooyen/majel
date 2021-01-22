@@ -189,6 +189,7 @@ You can also deploy to AWS free tier, which is my current solution.
 **Developers**
 
 - John Nguyen - john@engooyen.com
+- Konstantin Kotenko
 
 **Players**
 
