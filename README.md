@@ -117,6 +117,10 @@ To install the required dependencies, go to this repository's folder (majel by d
 npm install
 ```
 
+Make sure `nodemon` is installed:
+
+https://www.npmjs.com/package/nodemon
+
 ## Redis Cache
 Redis cache needs to be up and running before starting the bot server. Ensure redis is installed and the server running:
 
@@ -140,11 +144,24 @@ redis_port=6379
 ```
 Copy the auth token as mentioned in the tutorial and replace [ADD YOUR AUTH TOKEN HERE]
 
+## Invite the bot to your server
+
+The writebots.com link above also contains a section on how to generate the invite link for the bot. Follow the instructions.
+When you get to the point where you need to specify the permissions for the bot in the Discord developer interface, check
+
+* Send Messages
+* Embed Links
+* Attach Files
+
+This should give a permissions mask of 51200, which will be part of the generated URL in the `permissions` parameter.
+
 ## Start your bot
 
 ```
 nodemon .
 ```
+
+(If you have a non-global installation of `nodemon`, the command to start `nodemon` may look differently. Refer to the `nodemon` installation instructions above.)
 
 Your terminal should look something like this:
 ```
@@ -158,6 +175,8 @@ Redis client ready.
 {"message":"Logged in as: ","level":"info","service":"user-service"}
 {"message":"Majel-Local - (12345678901234567890)","level":"info","service":"user-service"}
 ```
+
+The bot is now running. If you have invited it to your server as above, it is now functional.
 
 # Hosting Options
 
