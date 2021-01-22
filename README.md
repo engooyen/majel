@@ -22,7 +22,7 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 # Majel - Star Trek Adventures Bot Command List
 
-> Note - "/" prefix Is also supported depending which bot is added to your server.
+> Note - "/" prefix is also supported depending which bot is added to your server.
 
 `!help` - Displays all possible commands Majel can understand.
 
@@ -50,9 +50,9 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 ![Generate technobabble](https://i.imgur.com/ZjEKeUc.jpg "Generate technobabble")
 
-`!babble` - Generate a random techno babble phrase and DMs the user.
+`!babble` - Generate a random techno babble phrase and DM the user.
 
-`!medbabble` - Generate a random medical babble phrase and DMs the user.
+`!medbabble` - Generate a random medical babble phrase and DM the user.
 
 ![Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
 
@@ -96,7 +96,7 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `!pool reset` - Reset the global pool and delete all other pools on this server. This can only be triggered by admins.
 
-`!pool reset here` - Delete this channe's pool. This can only be triggered by admins.
+`!pool reset here` - Delete this channel's pool. This can only be triggered by admins.
 
 `!m or !t` - Show the global momentum or threat and the current channel's momentum or threat.
 
@@ -116,6 +116,10 @@ To install the required dependencies, go to this repository's folder (majel by d
 ```
 npm install
 ```
+
+Make sure `nodemon` is installed:
+
+https://www.npmjs.com/package/nodemon
 
 ## Redis Cache
 Redis cache needs to be up and running before starting the bot server. Ensure redis is installed and the server running:
@@ -140,11 +144,24 @@ redis_port=6379
 ```
 Copy the auth token as mentioned in the tutorial and replace [ADD YOUR AUTH TOKEN HERE]
 
+## Invite the bot to your server
+
+The writebots.com link above also contains a section on how to generate the invite link for the bot. Follow the instructions.
+When you get to the point where you need to specify the permissions for the bot in the Discord developer interface, check
+
+* Send Messages
+* Embed Links
+* Attach Files
+
+This should give a permissions mask of 51200, which will be part of the generated URL in the `permissions` parameter.
+
 ## Start your bot
 
 ```
 nodemon .
 ```
+
+(If you have a non-global installation of `nodemon`, the command to start `nodemon` may look differently. Refer to the `nodemon` installation instructions above.)
 
 Your terminal should look something like this:
 ```
@@ -159,17 +176,20 @@ Redis client ready.
 {"message":"Majel-Local - (12345678901234567890)","level":"info","service":"user-service"}
 ```
 
+The bot is now running. If you have invited it to your server as above, it is now functional.
+
 # Hosting Options
 
 On your computer, needs to be on at least during the game session if not all the time. I initially hosted Majel on a Raspberry PI.
 
 You can also deploy to AWS free tier, which is my current solution.
 
-# Contributers
+# Contributors
 
 **Developers**
 
 - John Nguyen - john@engooyen.com
+- Konstantin Kotenko
 
 **Players**
 
