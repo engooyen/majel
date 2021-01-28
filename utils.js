@@ -91,11 +91,18 @@ module.exports = {
 
     let randomAttributes = this.shuffle(["Control", "Daring", "Fitness", "Insight", "Presence", "Reason"])
 
-    if (race.Name === "Human") {
+    // Some species have ranomized attributes increased
+    if (["Human", "Borg", "Hologram"].includes(race.Name)) {
       race.AttributeBonus = {}
       race.AttributeBonus[randomAttributes[0]] = 1
       race.AttributeBonus[randomAttributes[1]] = 1
       race.AttributeBonus[randomAttributes[2]] = 1
+    }
+    // Ktarian pick Control, Reason and {Fitness OR Presence}
+    else if (race.Name === "Ktarian") {
+      let ktarianAttribute = this.randomElement(["Fitness", "Presence"])
+      race.AttributeBonus[ktarianAttribute] = 1
+      //The other two are defined in the species file
     }
 
     let attributePool = this.shuffle([10, 10, 9, 9, 8, 7])
