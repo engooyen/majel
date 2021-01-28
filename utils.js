@@ -27,6 +27,8 @@ let species = JSON.parse(
 module.exports = {
   /**
    * this.shuffles elements of an array and returns the this.shuffled array.
+   * If you just need a random element, use this.randomElement instead, because
+   * it does not operate on the whole array.
    * @param a The array to this.shuffle.
    * @return The this.shuffled array.
    */
@@ -42,6 +44,19 @@ module.exports = {
     return a
   },
 
+  /**
+  * this.randomElement picks a random element from an array and returns it
+  * @param a The non-empty array to pick a random element from
+  * @return The picked element
+  */
+  randomElement(a) {
+    if (a.length > 0) {
+      return a[Math.floor(Math.random() * a.length)]
+    } else {
+      console.error("Tried picking a random element from empty array")
+      return null
+    }
+  },
   /**
    * Lists supported species
    * @return Returns a list of supported species
@@ -70,17 +85,24 @@ module.exports = {
   generateSupportCharacter() {
     species = this.shuffle(species)
     let race = species[0]
-    let gender = this.shuffle(["Female", "Male"])[0]
-    let firstName = this.shuffle(race[gender])[0]
-    let lastName = this.shuffle(race["Family"])[0]
+    let gender = this.randomElement(["Female", "Male"])
+    let firstName = this.randomElement(race[gender])
+    let lastName = this.randomElement(race["Family"])
 
     let randomAttributes = this.shuffle(["Control", "Daring", "Fitness", "Insight", "Presence", "Reason"])
 
-    if (race.Name === "Human") {
+    // Some species have ranomized attributes increased
+    if (["Human", "Borg", "Hologram"].includes(race.Name)) {
       race.AttributeBonus = {}
       race.AttributeBonus[randomAttributes[0]] = 1
       race.AttributeBonus[randomAttributes[1]] = 1
       race.AttributeBonus[randomAttributes[2]] = 1
+    }
+    // Ktarian pick Control, Reason and {Fitness OR Presence}
+    else if (race.Name === "Ktarian") {
+      let ktarianAttribute = this.randomElement(["Fitness", "Presence"])
+      race.AttributeBonus[ktarianAttribute] = 1
+      //The other two are defined in the species file
     }
 
     let attributePool = this.shuffle([10, 10, 9, 9, 8, 7])
@@ -119,7 +141,7 @@ module.exports = {
       "Medicine (" + disciplinePool[5] + ")",
     ]
 
-    let talent = this.shuffle(race.Talents)[0]
+    let talent = this.randomElement(race.Talents)
 
     return {
       title: firstName + " " + lastName,
