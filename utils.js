@@ -121,13 +121,17 @@ module.exports = {
 
     let talent = this.shuffle(race.Talents)[0]
 
+    if (race.Source === undefined) {
+      console.warn("Source book for " + race.Name + " is undefined")
+    }
+
     return {
       title: firstName + " " + lastName,
       description: "Generated support character",
       fields: [
         {
           name: "Race",
-          value: race.Name,
+          value: race.Name + " (" + race.Source + " source book)",
         },
         {
           name: "Gender",
