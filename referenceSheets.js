@@ -94,11 +94,11 @@ module.exports = {
   },
 
   generateTechnobabble: function () {
-    let action = actions[Math.floor(Math.random() * actions.length)]
-    let descriptor = descriptors[Math.floor(Math.random() * descriptors.length)]
-    let source = sources[Math.floor(Math.random() * sources.length)]
-    let effect = effects[Math.floor(Math.random() * effects.length)]
-    let device = devices[Math.floor(Math.random() * devices.length)]
+    let action = utils.randomElement(actions)
+    let descriptor = utils.randomElement(descriptors)
+    let source = utils.randomElement(sources)
+    let effect = utils.randomElement(effects)
+    let device = utils.randomElement(devices)
 
     return (
       "Babble: [Action] [Descriptor] [Source] [Effect] [Device]\n" +
@@ -115,9 +115,9 @@ module.exports = {
   },
 
   generateMedbabble: function () {
-    let action = medActions[Math.floor(Math.random() * medActions.length)]
-    let descriptor = medDescriptors[Math.floor(Math.random() * medDescriptors.length)]
-    let system = medSystems[Math.floor(Math.random() * medSystems.length)]
+    let action = utils.randomElement(medActions)
+    let descriptor = utils.randomElement(medDescriptors)
+    let system = utils.randomElement(medSystems)
 
     return (
       "Medical Babble: [Action] [Descriptor] [Body system]\n" +

@@ -19,6 +19,8 @@
  * IN THE SOFTWARE.
  */
 
+var utils = require("./utils")
+
 // origin
 const carbonBased = "Carbon-based"
 const exoticBased = "Exotic-based"
@@ -60,7 +62,7 @@ const biomimetic = "Biomimetic"
 const darkMatter = "Dark matter"
 const silicon = "Silicon-based"
 const xenon = "Xenon-based"
-var nonCorporealClassed = [
+var nonCorporealClasses = [
   artificial,
   biomimetic,
   darkMatter,
@@ -135,38 +137,29 @@ module.exports = {
     let origin = {}
     if (rollMain <= 17) {
       origin["Origin"] = carbonBased
-      origin["Sub-origin"] =
-        carbonBasedClasses[
-          Math.floor(Math.random() * carbonBasedClasses.length)
-        ]
+      origin["Sub-origin"] = utils.randomElement(carbonBasedClasses)
     } else if (rollMain <= 19) {
       origin["Origin"] = exoticBased
-      origin["Sub-origin"] =
-        exoticBasedClasses[
-          Math.floor(Math.random() * exoticBasedClasses.length)
-        ]
+      origin["Sub-origin"] = utils.randomElement(exoticBasedClasses)
     } else {
       origin["Origin"] = nonCorporeal
-      origin["Sub-origin"] =
-        nonCorporealClassed[
-          Math.floor(Math.random() * nonCorporealClassed.length)
-        ]
+      origin["Sub-origin"] = utils.randomElement(nonCorporealClasses)
     }
 
     return origin
   },
 
   environment: function () {
-    return environment[Math.floor(Math.random() * environment.length)]
+    return utils.randomElement(environment)
   },
 
   culture: function () {
-    return culture[Math.floor(Math.random() * culture.length)]
+    return utils.randomElement(culture)
   },
 
   trait: function () {
     let keys = Object.keys(traits)
-    let key = keys[Math.floor(Math.random() * keys.length)]
+    let key = utils.randomElement(keys)
     return { name: key, description: traits[key] }
   },
 
