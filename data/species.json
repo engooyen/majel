@@ -9,7 +9,8 @@
             "Control": 1,
             "Presence": 1
         },
-        "Talents": ["PROUD AND HONORABLE", "THE USHAAN"]
+        "Talents": ["PROUD AND HONORABLE", "THE USHAAN"],
+        "Source": "core"
     },
     {
         "Name": "Bajoran",
@@ -21,7 +22,8 @@
             "Daring": 1,
             "Insight": 1
         },
-        "Talents": ["ORB EXPERIENCE", "STRONG PAGH"]
+        "Talents": ["ORB EXPERIENCE", "STRONG PAGH"],
+        "Source": "core"
     },
     {
         "Name": "Betazoid",
@@ -33,7 +35,8 @@
             "Presence": 1,
             "Reason": 1
         },
-        "Talents": ["EMPATH", "TELEPATH"]
+        "Talents": ["EMPATH", "TELEPATH"],
+        "Source": "core"
     },
     {
         "Name": "Denobulan",
@@ -45,7 +48,8 @@
             "Insight": 1,
             "Reason": 1
         },
-        "Talents": ["CULTURAL FLEXIBILITY", "PARENT FIGURE"]
+        "Talents": ["CULTURAL FLEXIBILITY", "PARENT FIGURE"],
+        "Source": "core"
     },
     {
         "Name": "Human",
@@ -57,7 +61,8 @@
             "Insight": 1,
             "Reason": 1
         },
-        "Talents": ["RESOLUTE", "SPIRIT OF DISCOVERY"]
+        "Talents": ["RESOLUTE", "SPIRIT OF DISCOVERY"],
+        "Source": "core"
     },
     {
         "Name": "Tellarite",
@@ -69,7 +74,8 @@
             "Fitness": 1,
             "Insight": 1
         },
-        "Talents": ["INCISIVE SCRUTINY", "STURDY"]
+        "Talents": ["INCISIVE SCRUTINY", "STURDY"],
+        "Source": "core"
     },
     {
         "Name": "Trill",
@@ -81,7 +87,8 @@
             "Presence": 1,
             "Reason": 1
         },
-        "Talents": ["FORMER INITATE", "JOINED"]
+        "Talents": ["FORMER INITATE", "JOINED"],
+        "Source": "core"
     },
     {
         "Name": "Vulcan",
@@ -93,6 +100,7 @@
             "Fitness": 1,
             "Reason": 1
         },
-        "Talents": ["KOLINAHR", "MIND-MELD", "NERVE PINCH"]
+        "Talents": ["KOLINAHR", "MIND-MELD", "NERVE PINCH"],
+        "Source": "core"
     }
 ]

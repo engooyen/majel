@@ -109,6 +109,8 @@ bot.on("message", async (message) => {
         case "support":
           if (option.includes("list")) {
             msg = "Supported species: " + utils.listSpecies()
+            msg += "\n"
+            msg += "Supported sources: " + utils.listSpeciesSources()
           } else {
             embed = utils.generateSupportCharacter()
           }
