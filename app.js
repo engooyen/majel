@@ -36,6 +36,12 @@ let help2 = fs.readFileSync("./data/help2.txt", { encoding: "utf8" })
 let about = fs.readFileSync("./data/about.txt", { encoding: "utf8" })
 let supporthelp = fs.readFileSync("./data/supporthelp.txt", { encoding: "utf8" })
 
+let overflow = (help1.length > 2000) || (help2.length > 2000)
+overflow = overflow || (about.length > 2000) || (supporthelp.length > 2000)
+if (overflow) {
+  console.warn("At least one of the help files is longer than 2000 symbols and will be rejected by Discord")
+}
+
 let addMeMsg =
   "https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot"
 
