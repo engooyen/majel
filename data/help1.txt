@@ -13,5 +13,5 @@
 **Randomizers.**
 `!babble` - Generate a random techno babble phrase and DMs the user.
 `!medbabble` - Generate a random medical babble phrase and DMs the user.
-`!support` - Generate a random support character (In development).
+`!support` - Generate a random support character. Use `!support help` for more details.
 `!alien` - Generate a random alien species.

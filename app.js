@@ -34,6 +34,7 @@ referenceSheets.loadReferenceSheets()
 let help1 = fs.readFileSync("./data/help1.txt", { encoding: "utf8" })
 let help2 = fs.readFileSync("./data/help2.txt", { encoding: "utf8" })
 let about = fs.readFileSync("./data/about.txt", { encoding: "utf8" })
+let supporthelp = fs.readFileSync("./data/supporthelp.txt", { encoding: "utf8" })
 
 let addMeMsg =
   "https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot"
@@ -42,6 +43,7 @@ const CommandPrefix = process.env.prefix
 if (CommandPrefix === "/") {
   help1 = help1.split("!").join("/")
   help2 = help2.split("!").join("/")
+  supporthelp = supporthelp.split("!").join("/")
   addMeMsg =
     "https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permissions=51200&scope=bot"
 }
@@ -111,6 +113,8 @@ bot.on("message", async (message) => {
             msg = "Supported species: " + utils.listSpecies()
             msg += "\n"
             msg += "Supported sources: " + utils.listSpeciesSources()
+          } else if (option.includes("help")) {
+            message.channel.send(supporthelp)
           } else {
             embed = utils.generateSupportCharacter()
           }

@@ -56,9 +56,7 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 ![Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
 
-`!support` - Generate a random support character.
-
-`!support list` - Lists all supported species.
+`!support` - Generate a random support character. Use `!support help`for more details.
 
 ![Generate a random alien](https://i.imgur.com/kuuDYnj.jpg "Generate a random alien")
 
