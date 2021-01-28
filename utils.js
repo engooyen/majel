@@ -53,6 +53,16 @@ module.exports = {
   },
 
   /**
+   * Lists supported source books for species
+   * @return Returns a list of supported sources
+   */
+  listSpeciesSources() {
+    // remove duplicates by casting to Set and back
+    const list = [...new Set(species.map(s => s.Source))]
+    list.sort()
+    return list.join(", ")
+  },
+  /**
    * Finds the attribute in a map and returns the modifier value. If the
    * attribute doesn't exist, 0 is returned.
    * @param name The name of the attribute.
