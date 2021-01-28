@@ -1,0 +1,3 @@
+`!support` - Generates a random character.
+`!support help` - Shows this help message.
+`!support list` - Lists available species and source books.
