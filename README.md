@@ -98,9 +98,9 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `!m or !t` - Show the global momentum or threat and the current channel's momentum or threat.
 
-`!m or !t [add, sub, set][some value]` - Add, subtract, or set the momentum or threat to the global pool. This can only be triggered by admins.
+`!m or !t [add, sub, set][some value]` - Add, subtract, or set the momentum or threat to the global pool.
 
-`!m or !t [add, sub, set][some value] here` - Add, subtract, or set the momentum or threat to the current channel's pool. This can only be triggered by admins.
+`!m or !t [add, sub, set][some value] here` - Add, subtract, or set the momentum or threat to the current channel's pool.
 
 # Developer Setup
 

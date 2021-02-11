@@ -111,7 +111,6 @@ module.exports = {
   async adjustMomentum(msg, option) {
     const guildId = msg.guild.id.toString()
     const channelId = msg.channel.id.toString()
-    const isAdmin = msg.member.hasPermission("ADMINISTRATOR")
 
     let guildData = await redis.get(guildId)
     if (guildData) {
@@ -151,22 +150,20 @@ module.exports = {
         pool = channelId
       }
 
-      if (isAdmin) {
-        if (op === "add") {
-          guildData[pool].momentum += amount
-        } else if (op === "sub") {
-          guildData[pool].momentum -= amount
-        } else if (op === "set") {
-          guildData[pool].momentum = amount
-        }
+      if (op === "add") {
+        guildData[pool].momentum += amount
+      } else if (op === "sub") {
+        guildData[pool].momentum -= amount
+      } else if (op === "set") {
+        guildData[pool].momentum = amount
+      }
 
-        if (guildData.global.momentum > 6) {
-          guildData.global.momentum = 6
-        }
+      if (guildData.global.momentum > 6) {
+        guildData.global.momentum = 6
+      }
 
-        if (guildData.global.momentum < 0) {
-          guildData.global.momentum = 0
-        }
+      if (guildData.global.momentum < 0) {
+        guildData.global.momentum = 0
       }
     }
 
@@ -187,9 +184,6 @@ module.exports = {
       ],
     }
 
-    if (!isAdmin && ["add", "sub", "set"].includes(op)) {
-      msg.channel.send(`${msg.author}, only admins can modify the pool.`)
-    }
 
     console.warn("redis set", guildId, guildData)
     await redis.set(guildId, JSON.stringify(guildData))
@@ -198,7 +192,6 @@ module.exports = {
   async adjustThreat(msg, option) {
     const guildId = msg.guild.id.toString()
     const channelId = msg.channel.id.toString()
-    const isAdmin = msg.member.hasPermission("ADMINISTRATOR")
 
     let guildData = await redis.get(guildId)
     if (guildData) {
@@ -242,19 +235,17 @@ module.exports = {
         guildData[pool].threat = 0;
       }
 
-      if (isAdmin) {
-        if (op === "add") {
-          guildData[pool].threat += amount
-        } else if (op === "sub") {
-          guildData[pool].threat -= amount
-        } else if (op === "set") {
-          guildData[pool].threat = amount
-        }
+      if (op === "add") {
+        guildData[pool].threat += amount
+      } else if (op === "sub") {
+        guildData[pool].threat -= amount
+      } else if (op === "set") {
+        guildData[pool].threat = amount
+      }
 
         if (guildData.global.threat < 0 || guildData.global.threat === null) {
           guildData.global.threat = 0
         }
-      }
     }
 
     const embed = {
@@ -274,9 +265,6 @@ module.exports = {
       ],
     }
 
-    if (!isAdmin && ["add", "sub", "set"].includes(op)) {
-      msg.channel.send(`${msg.author}, only admins can modify the pool.`)
-    }
 
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
