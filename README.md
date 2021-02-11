@@ -92,9 +92,9 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `!pool here` - Show the global pool and the current channel's pool.
 
-`!pool reset` - Reset the global pool and delete all other pools on this server. This can only be triggered by admins.
+`!pool reset` - Reset the global pool and delete all other pools on this server.
 
-`!pool reset here` - Delete this channel's pool. This can only be triggered by admins.
+`!pool reset here` - Delete this channel's pool.
 
 `!m or !t` - Show the global momentum or threat and the current channel's momentum or threat.
 

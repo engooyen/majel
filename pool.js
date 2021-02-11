@@ -65,7 +65,7 @@ module.exports = {
       thisChannelOnly = op === "here"
     }
 
-    if (reset && isAdmin) {
+    if (reset) {
       for (let currentId in guildData) {
         console.warn("currentId", currentId)
         if (!thisChannelOnly && currentId === "global") {
@@ -103,9 +103,6 @@ module.exports = {
       }
     }
 
-    if (reset && !isAdmin) {
-      msg.channel.send(`${msg.author}, only admins can modify the pool.`)
-    }
 
     console.warn("set redis", guildData)
     await redis.set(guildId, JSON.stringify(guildData))
