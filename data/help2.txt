@@ -18,3 +18,8 @@
 `!ship minor actions` - The minor actions the PC can perform.
 `!ship [action or minor action or station]` - Details of a ship action by name. See `!ship actions` or `!ship minor actions` for possible actions.
 `!ship attack properties` - Attack properties of a ship attack.
+**Traits**
+`!trait` - List all containers and their traits.
+`!trait set [container] [trait] [value]` - Set a value to a trait within a container.
+`!trait del [container] [trait]` - Delete a trait within a container.
+`!trait del [container]` - Delete a container.

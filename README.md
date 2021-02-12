@@ -102,6 +102,16 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `!m or !t [add, sub, set][some value] here` - Add, subtract, or set the momentum or threat to the current channel's pool.
 
+**Traits**
+
+`!trait` - List all containers and their traits.
+
+`!trait set [container] [trait] [value]` - Set a value to a trait within a container.
+
+`!trait del [container] [trait]` - Delete a trait within a container.
+
+`!trait del [container]` - Delete a container.
+
 # Developer Setup
 
 ## NPM
