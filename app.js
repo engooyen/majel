@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2020 John H. Nguyen
+ * Copyright 2019-2021 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -26,6 +26,7 @@ const utils = require("./utils")
 const referenceSheets = require("./referenceSheets")
 const msgBuilder = require("./messageBuilder")
 const pool = require("./pool")
+const trait = require("./trait")
 require("dotenv").config()
 
 referenceSheets.loadReferenceSheets()
@@ -162,6 +163,9 @@ bot.on("message", async (message) => {
           embed = await pool.adjustThreat(message, option)
           break
         case "beta":
+        case "trait":
+          embed = await trait.trait(message, option)
+          break
           if (betaTesters.includes(message.guild.id.toString())) {
             msg = "You have access to the beta features."
           } else {
