@@ -90,7 +90,28 @@ module.exports = {
                     let key = options.shift()
                     let value = options.shift()
                     console.warn(containerName, key, value)
-                    if (containerName && key && value) {
+                    // reject too long names - otherwise DiscordAPI will complain
+                    // we need the name of the embed field to be 256 characters max
+                    // to be sure, we restrict it here to 64 for each part
+                    if (containerName && containerName.length >= 64) {
+                        embed.fields.push({
+                            name: "Error",
+                            value: "!trait set requires [container name] to be shorter than 64 symbols!",
+                        })
+                    }
+                    else if (key && key.length >= 64) {
+                        embed.fields.push({
+                            name: "Error",
+                            value: "!trait set requires [trait name] to be shorter than 64 symbols!",
+                        })
+                    }
+                    else if (value && value.length >= 64) {
+                        embed.fields.push({
+                            name: "Error",
+                            value: "!trait set requires [trait value] to be shorter than 64 symbols!",
+                        })
+                    }
+                    else if (containerName && key && value) {
                         if (!guildData.traits[containerName]) {
                             guildData.traits[containerName] = {}
                         }
@@ -104,7 +125,7 @@ module.exports = {
                             value: "!trait set requires arguments: [container name] [trait name] [trait value]",
                         })
                     }
-                } else if (args = "del") {
+                } else if (arg === "del") {
                     let containerName = options.shift()
                     let key = options.shift()
                     if (containerName && key) {
