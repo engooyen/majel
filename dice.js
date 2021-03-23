@@ -61,7 +61,7 @@ module.exports = {
     let rawResult = ""
     let critRange = 1
     let compRange = this.globalComplication
-    let target = 20
+    let target = compRange - 1 // everything under a complication can be a success
     let success = 0
     let complication = 0
 
