@@ -19,28 +19,28 @@
  * IN THE SOFTWARE.
  */
 
-var fs = require("fs")
-var os = require("os")
+const os = require("os")
+const utils = require("./utils")
 
 // babble
-var actions = []
-var descriptors = []
-var sources = []
-var effects = []
-var devices = []
+const actions = []
+const descriptors = []
+const sources = []
+const effects = []
+const devices = []
 
 // medbabble
-var medActions = []
-var medDescriptors = []
-var medSystems = []
+const medActions = []
+const medDescriptors = []
+const medSystems = []
 
 module.exports = {
-  loadReferenceSheets: function () {
+  loadReferenceSheets: () => {
     // babble
-    var fileContent = fs.readFileSync("./data/babble.csv", { encoding: "utf8" })
-    var rows = fileContent.split(os.EOL)
+    const fileContent = utils.loadFile("./data/babble.csv")
+    const rows = fileContent.split(os.EOL)
     for (let i = 0; i < rows.length; ++i) {
-      let columns = rows[i].split(", ")
+      const columns = rows[i].split(", ")
       actions[actions.length] = columns[0]
       descriptors[descriptors.length] = columns[1]
       sources[sources.length] = columns[2]
@@ -49,84 +49,47 @@ module.exports = {
     }
 
     // medbabble
-    var medFileContent = fs.readFileSync("./data/medbabble.csv", { encoding: "utf8" })
-    var medRows = medFileContent.split(os.EOL)
+    const medFileContent = utils.loadFile("./data/medbabble.csv")
+    const medRows = medFileContent.split(os.EOL)
     for (let i = 0; i < rows.length; ++i) {
-      let columns = medRows[i].split(", ")
+      const columns = medRows[i].split(", ")
       medActions[medActions.length] = columns[0]
       medDescriptors[medDescriptors.length] = columns[1]
       medSystems[medSystems.length] = columns[2]
     }
 
-    this.pcMinorActions = JSON.parse(
-      fs.readFileSync("./data/pcMinorActions.json", { encoding: "utf8" })
-    )
-    this.pcActions = JSON.parse(
-      fs.readFileSync("./data/pcActions.json", { encoding: "utf8" })
-    )
-    this.pcAttackProperties = JSON.parse(
-      fs.readFileSync("./data/pcAttackProperties.json", {
-        encoding: "utf8",
-      })
-    )
-
-    this.determination = JSON.parse(
-      fs.readFileSync("./data/determination.json", { encoding: "utf8" })
-    )
-    this.momentum = JSON.parse(
-      fs.readFileSync("./data/momentum.json", { encoding: "utf8" })
-    )
-
-    this.shipMinorActions = JSON.parse(
-      fs.readFileSync("./data/shipMinorActions.json", { encoding: "utf8" })
-    )
-    this.shipActions = JSON.parse(
-      fs.readFileSync("./data/shipActions.json", { encoding: "utf8" })
-    )
-
-    this.shipActionsOverview = JSON.parse(
-      fs.readFileSync("./data/shipActionsOverview.json", {
-        encoding: "utf8",
-      })
-    )
-    this.shipAttackProperties = JSON.parse(
-      fs.readFileSync("./data/shipAttackProperties.json", { encoding: "utf8" })
-    )
+    this.pcMinorActions = utils.loadJsonFile("./data/pcMinorActions.json")
+    this.pcActions = utils.loadJsonFile("./data/pcActions.json")
+    this.pcAttackProperties = utils.loadJsonFile("./data/pcAttackProperties.json")
+    this.determination = utils.loadJsonFile("./data/determination.json")
+    this.momentum = utils.loadJsonFile("./data/momentum.json")
+    this.shipMinorActions = utils.loadJsonFile("./data/shipMinorActions.json")
+    this.shipActions = utils.loadJsonFile("./data/shipActions.json")
+    this.shipActionsOverview = utils.loadJsonFile("./data/shipActionsOverview.json")
+    this.shipAttackProperties = utils.loadJsonFile("./data/shipAttackProperties.json")
   },
 
-  generateTechnobabble: function () {
-    let action = utils.randomElement(actions)
-    let descriptor = utils.randomElement(descriptors)
-    let source = utils.randomElement(sources)
-    let effect = utils.randomElement(effects)
-    let device = utils.randomElement(devices)
+  generateTechnobabble: () => {
+    const action = utils.randomElement(actions)
+    const descriptor = utils.randomElement(descriptors)
+    const source = utils.randomElement(sources)
+    const effect = utils.randomElement(effects)
+    const device = utils.randomElement(devices)
 
     return (
       "Babble: [Action] [Descriptor] [Source] [Effect] [Device]\n" +
-      action +
-      " " +
-      descriptor +
-      " " +
-      source +
-      " " +
-      effect +
-      " " +
-      device
+      `${action} ${descriptor} ${source} ${effect} ${device}`
     )
   },
 
-  generateMedbabble: function () {
-    let action = utils.randomElement(medActions)
-    let descriptor = utils.randomElement(medDescriptors)
-    let system = utils.randomElement(medSystems)
+  generateMedbabble: () => {
+    const action = utils.randomElement(medActions)
+    const descriptor = utils.randomElement(medDescriptors)
+    const system = utils.randomElement(medSystems)
 
     return (
       "Medical Babble: [Action] [Descriptor] [Body system]\n" +
-      action +
-      " " +
-      descriptor +
-      " " +
-      system
+      `${action} ${descriptor} ${system}`
     )
   },
 }

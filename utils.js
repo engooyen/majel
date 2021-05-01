@@ -19,10 +19,27 @@
  * IN THE SOFTWARE.
  */
 
-let fs = require("fs")
-let species = JSON.parse(
-  fs.readFileSync("./data/species.json", { encoding: "utf8" })
-)
+const fs = require("fs")
+
+/**
+ * Reads in a file synchronously with the default encoding specified.
+ * @param path The file path. 
+ * @returns The raw file as a string.
+ */
+const loadFile = path => {
+  return fs.readFileSync(path, { encoding: "utf8" })
+}
+
+/**
+ * Reads in a file then attempts to parse the file into a Json object.
+ * @param path The file path. 
+ * @returns The parsed Json object.
+ */
+const loadJsonFile = path => {
+  return loadFile(path)
+}
+
+let species = loadJsonFile("./data/species.json")
 
 module.exports = {
   /**
@@ -287,4 +304,6 @@ module.exports = {
     }
     console.warn("player-sheets channel not found on this server!")
   },
+  loadFile,
+  loadJsonFile
 }
