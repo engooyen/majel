@@ -6,13 +6,11 @@
   "author": "John H. Nguyen",
   "dependencies": {
     "async-redis": "^1.1.7",
-    "csv": "^5.1.1",
-    "discord.js": "^11.5.1",
-    "dotenv": "^6.2.0",
-    "fast-csv": "^4.3.6",
+    "discord.js": "^12.5.3",
+    "dotenv": "^9.0.0",
     "fs": "0.0.1-security",
-    "nodemon": "^2.0.4",
-    "redis": "^3.1.1",
-    "winston": "^3.2.1"
+    "nodemon": "^2.0.7",
+    "redis": "^3.1.2",
+    "winston": "^3.3.3"
   }
 }

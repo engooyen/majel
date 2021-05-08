@@ -192,6 +192,8 @@ bot.on("message", async (message) => {
     }
   } catch (error) {
     console.error(error)
-    message.channel.send(error)
+    if (message && message.channel) {
+      message.channel.send(error)
+    }
   }
 })
