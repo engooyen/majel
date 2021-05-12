@@ -36,7 +36,7 @@ const loadFile = path => {
  * @returns The parsed Json object.
  */
 const loadJsonFile = path => {
-  return loadFile(path)
+  return JSON.parse(loadFile(path))
 }
 
 let species = loadJsonFile("./data/species.json")
