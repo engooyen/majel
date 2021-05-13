@@ -128,11 +128,11 @@ bot.on("message", async (message) => {
           break
         // !babble
         case "babble":
-          msg = message.author + " Technobabble generated. Check your DM."
+          msg =  `${message.author} Technobabble generated. Check your DM.`
           message.author.send(referenceSheets.generateTechnobabble())
           break
         case "medbabble":
-          msg = message.author + " Medical babble generated. Check your DM."
+          msg = `${message.author} Medical babble generated. Check your DM.`
           message.author.send(referenceSheets.generateMedbabble())
           break
         case "pc":

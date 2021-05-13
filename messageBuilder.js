@@ -169,6 +169,7 @@ module.exports = {
   buildShipMsg(option) {
     const embed = {
       title: "",
+      description: "",
       fields: [],
     }
 
@@ -212,9 +213,29 @@ module.exports = {
           })
         }
       } else {
-        embed.description =
-          referenceSheets.shipMinorActions[embed.title] ||
-          referenceSheets.shipActions[embed.title]
+        embed.description = referenceSheets.shipMinorActions[embed.title]
+          || referenceSheets.shipActions[embed.title]
+
+        if (!embed.description) {
+          embed.title = "Help with !ship command"
+          embed.description = "!ship commands require an argument."
+          embed.fields.push({
+            name: "!ship actions",
+            value: "Lists the stations and the name of the actions that can be performed at that station.",
+          })
+          embed.fields.push({
+            name: "!ship minor actions",
+            value: "The minor actions the PC can perform.",
+          })
+          embed.fields.push({
+            name: "!ship [action or minor action or station]",
+            value: "Details of a ship action by name. See `!ship actions` or `!ship minor actions` for possible actions.",
+          })
+          embed.fields.push({
+            name: "!ship actions",
+            value: "Attack properties of a ship attack.",
+          })
+        }
       }
     }
 

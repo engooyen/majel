@@ -34,6 +34,16 @@ const medActions = []
 const medDescriptors = []
 const medSystems = []
 
+const pcMinorActions = utils.loadJsonFile("./data/pcMinorActions.json")
+const pcActions = utils.loadJsonFile("./data/pcActions.json")
+const pcAttackProperties = utils.loadJsonFile("./data/pcAttackProperties.json")
+const determination = utils.loadJsonFile("./data/determination.json")
+const momentum = utils.loadJsonFile("./data/momentum.json")
+const shipMinorActions = utils.loadJsonFile("./data/shipMinorActions.json")
+const shipActions = utils.loadJsonFile("./data/shipActions.json")
+const shipActionsOverview = utils.loadJsonFile("./data/shipActionsOverview.json")
+const shipAttackProperties = utils.loadJsonFile("./data/shipAttackProperties.json")
+
 module.exports = {
   loadReferenceSheets: () => {
     // babble
@@ -57,16 +67,6 @@ module.exports = {
       medDescriptors[medDescriptors.length] = columns[1]
       medSystems[medSystems.length] = columns[2]
     }
-
-    this.pcMinorActions = utils.loadJsonFile("./data/pcMinorActions.json")
-    this.pcActions = utils.loadJsonFile("./data/pcActions.json")
-    this.pcAttackProperties = utils.loadJsonFile("./data/pcAttackProperties.json")
-    this.determination = utils.loadJsonFile("./data/determination.json")
-    this.momentum = utils.loadJsonFile("./data/momentum.json")
-    this.shipMinorActions = utils.loadJsonFile("./data/shipMinorActions.json")
-    this.shipActions = utils.loadJsonFile("./data/shipActions.json")
-    this.shipActionsOverview = utils.loadJsonFile("./data/shipActionsOverview.json")
-    this.shipAttackProperties = utils.loadJsonFile("./data/shipAttackProperties.json")
   },
 
   generateTechnobabble: () => {
@@ -92,4 +92,13 @@ module.exports = {
       `${action} ${descriptor} ${system}`
     )
   },
+  pcMinorActions,
+  pcActions,
+  pcAttackProperties,
+  determination,
+  momentum,
+  shipMinorActions,
+  shipActions,
+  shipActionsOverview,
+  shipAttackProperties,
 }
