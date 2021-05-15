@@ -2,8 +2,13 @@
   "name": "majel",
   "version": "1.0.0",
   "description": "Helper bot Star Trek Adventures roleplaying game.",
+  "license": "SEE LICENSE IN LICENSE",
   "main": "app.js",
   "author": "John H. Nguyen",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/engooyen/majel.git"
+  },
   "dependencies": {
     "async-redis": "^1.1.7",
     "discord.js": "^12.5.3",

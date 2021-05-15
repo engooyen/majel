@@ -112,6 +112,8 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `!trait del [container]` - Delete a container.
 
+`!trait [container]` - List all traits for this container.
+
 # Developer Setup
 
 ## NPM

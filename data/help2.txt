@@ -23,3 +23,4 @@
 `!trait set [container] [trait] [value]` - Set a value to a trait within a container.
 `!trait del [container] [trait]` - Delete a trait within a container.
 `!trait del [container]` - Delete a container.
+`!trait [container]` - List all traits for this container.

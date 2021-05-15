@@ -104,7 +104,7 @@ module.exports = {
                             value: "!trait set requires arguments: [container name] [trait name] [trait value]",
                         })
                     }
-                } else if (args = "del") {
+                } else if (arg === "del") {
                     let containerName = options.shift()
                     let key = options.shift()
                     if (containerName && key) {
