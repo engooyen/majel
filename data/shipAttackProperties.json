@@ -3,7 +3,7 @@
   "DEVASTATING": "Increase DIFFICULTY by 1 to repair DAMAGE by this attack.",
   "HIDDEN X": "Weapon may be hidden as a MINOR ACTION. Scans to locate weapons increase DIFFICULTY by X when hidden.",
   "HIGH-YIELD": "If attack inflicts one or more BREACHES, incur one additional BREACH.",
-  "VERSATILE X": "If MOMENTUM is generated, gain + X MOMENTUM.",
+  "VERSATILE X": "Attack gains X points of bonus Momentum if successful.",
   "AREA": "Attack affects every creature or object in CONTACT with the TARGET, plus one additional target within CLOSE for each EFFECT rolled. Allies may be hit for a COMPLICATION.",
   "DAMPENING": "Remove 1 POWER for each EFFECT rolled.",
   "PERSISTENT X": "TARGET suffers an additional X damage at the end of each ROUND. This lasts for a number of rounds equal to the number of EFFECTS rolled.",
