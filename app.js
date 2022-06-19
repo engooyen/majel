@@ -1,7 +1,7 @@
 /**
- * Copyright 2019-2021 John H. Nguyen
+ * Copyright 2019-2022 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
+ * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
  * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
@@ -10,7 +10,7 @@
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -19,181 +19,124 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require("discord.js")
-const winston = require("winston")
-const fs = require("fs")
-const utils = require("./utils")
-const referenceSheets = require("./referenceSheets")
-const msgBuilder = require("./messageBuilder")
-const pool = require("./pool")
-const trait = require("./trait")
-require("dotenv").config()
-
-referenceSheets.loadReferenceSheets()
+require('dotenv').config()
+const Discord = require('discord.js')
+const { REST } = require('@discordjs/rest')
+const { Routes } = require('discord-api-types/v9')
+const winston = require('winston')
+const utils = require('./utils')
+const babble = require('./babble')
+const builders = require('./interaction-builder')
+const pool = require('./pool')
+const trait = require('./trait')
+const commands = require('./commands/commands');
+const diceRollInteraction = require('./interactions/dice-roll')
+const gmInteraction = require('./interactions/gm')
+const poolInteraction = require('./interactions/pool')
+const playerSheetInteraction = require('./interactions/player-sheet')
 
 // help content
-let help1 = fs.readFileSync("./data/help1.txt", { encoding: "utf8" })
-let help2 = fs.readFileSync("./data/help2.txt", { encoding: "utf8" })
-let about = fs.readFileSync("./data/about.txt", { encoding: "utf8" })
-let supporthelp = fs.readFileSync("./data/supporthelp.txt", { encoding: "utf8" })
-
-let overflow = (help1.length > 2000) || (help2.length > 2000)
-overflow = overflow || (about.length > 2000) || (supporthelp.length > 2000)
-if (overflow) {
-  console.warn("At least one of the help files is longer than 2000 symbols and will be rejected by Discord")
-}
-
 let addMeMsg =
-  "https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot"
-
-const CommandPrefix = process.env.prefix
-if (CommandPrefix === "/") {
-  help1 = help1.split("!").join("/")
-  help2 = help2.split("!").join("/")
-  supporthelp = supporthelp.split("!").join("/")
-  addMeMsg =
-    "https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permissions=51200&scope=bot"
-}
+  'https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot'
 
 //Configure logger settings
 const logger = winston.createLogger({
-  level: "debug",
+  level: 'debug',
   format: winston.format.json(),
   defaultMeta: {
-    service: "user-service",
+    service: 'user-service',
   },
   transports: [new winston.transports.Console()],
 })
 
-const betaTesters = process.env.beta_testers
-  ? process.env.beta_testers.split(",")
-  : []
-
 // Initialize Discord Bot
-const bot = new Discord.Client()
+const bot = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] })
 
 bot.login(process.env.token)
+const rest = new REST({ version: '9' }).setToken(process.env.token);
 
-bot.on("ready", (evt) => {
-  logger.info("Connected")
-  logger.info("Logged in as: ")
-  logger.info(bot.user.username + " - (" + bot.user.id + ")")
+bot.on('ready', (evt) => {
+  logger.info('Connected')
+  logger.info('Logged in as: ')
+  logger.info(bot.user.username + ' - (' + bot.user.id + ')')
+  logger.info(evt.guilds.cache)
+  bot.guilds.cache.forEach(guild => {
+    (async () => {
+      try {
+        console.log('Started refreshing application (/) commands.');
+
+        await rest.put(
+          Routes.applicationGuildCommands(bot.user.id, guild.id),
+          { body: commands },
+        );
+
+        console.log('Successfully reloaded application (/) commands.');
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  })
 })
 
-bot.on("message", async (message) => {
-  if (message.author.username.indexOf("Majel") > -1) {
-    console.log("Preventing Majel from spamming.")
-    return
-  }
-
+bot.on('interactionCreate', async interaction => {
   try {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    let msg = ""
-    let embed = null
-    const cmdPrefix = message.content.substring(0, 1)
-    if (CommandPrefix === cmdPrefix) {
-      let args = message.content.substring(1).split(" ")
-      let cmd = args[0]
-      args = args.splice(1)
-      let isD6 = cmd.indexOf("d6") > -1
-      let isD20 = cmd.indexOf("d20") > -1
-      if (isD6) {
-        msgBuilder.buildD6Msg(cmd, message)
-        return
-      } else if (isD20) {
-        msgBuilder.buildD20msg(cmd, args, message)
-        return
+    if (!interaction.isCommand()) {
+      const payload = JSON.parse(interaction.customId)
+      if (payload.action === 'd20') {
+        await gmInteraction.handleResponse(interaction)
+      } else if (payload.action === 'm' || payload.action === 't') {
+        await poolInteraction.handleResponse(interaction);
       }
 
-      let option = args.length > 0 ? args.join(" ").toLowerCase() : ""
-      switch (cmd) {
-        case "help":
-          message.channel.send(help1)
-          message.channel.send(help2)
-          return
-        case "about":
-          message.channel.send(about)
-          return
-        case "support":
-          if (option.includes("list")) {
-            msg = "Supported species: " + utils.listSpecies()
-            msg += "\n"
-            msg += "Supported sources: " + utils.listSpeciesSources()
-          } else if (option.includes("help")) {
-            message.channel.send(supporthelp)
-          } else {
-            embed = utils.generateSupportCharacter()
-          }
-          break
-        // !babble
-        case "babble":
-          msg =  `${message.author} Technobabble generated. Check your DM.`
-          message.author.send(referenceSheets.generateTechnobabble())
-          break
-        case "medbabble":
-          msg = `${message.author} Medical babble generated. Check your DM.`
-          message.author.send(referenceSheets.generateMedbabble())
-          break
-        case "pc":
-          embed = msgBuilder.buildPCMsg(option)
-          break
-        case "ship":
-          embed = msgBuilder.buildShipMsg(option)
-          break
-        case "determination":
-          embed = msgBuilder.buildDeterminationMsg()
-          break
-        case "momentum":
-          embed = msgBuilder.buildMomentumMsg()
-          break
-        case "alien":
-          embed = msgBuilder.buildGeneratedAlienMsg()
-          break
-        case "addme":
-          msg = addMeMsg
-          break
-        case "pool":
-          embed = await pool.status(message, option)
-          break
-        case "m":
-          embed = await pool.adjustMomentum(message, option)
-          break
-        case "t":
-          embed = await pool.adjustThreat(message, option)
-          break
-        case "beta":
-        case "trait":
-          embed = await trait.trait(message, option)
-          break
-          if (betaTesters.includes(message.guild.id.toString())) {
-            msg = "You have access to the beta features."
-          } else {
-            msg = "You don't have access to the beta features."
-          }
-          break
-        default:
-          // if (betaTesters.includes(message.guild.id.toString())) {
-          //   switch (cmd) {
-          //     default:
-          //       msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
-          //   }
-          // } else {
-          //   msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
-          // }
-          msg = `Didn't recognize '${cmd}' please type !help for supported commands.`
-      }
+      return
     }
 
-    if (msg) {
-      message.channel.send(msg)
-    } else if (embed) {
-      message.channel.send({ embed })
+    const { commandName, member, options } = interaction;
+    if (commandName === 'addme') {
+      await interaction.reply({
+        content: addMeMsg
+      });
+    } else if (commandName === 'd6') {
+      await diceRollInteraction.handleD6Roll(interaction)
+    } else if (commandName === 'babble') {
+      await interaction.reply({
+        content: `<@${member.user.id}> Technobabble generated. Check your DM.`
+      });
+
+      member.user.send(babble.generateTechnobabble());
+    } else if (commandName === 'medbabble') {
+      await interaction.reply({
+        content: `<@${member.user.id}> Technobabble generated. Check your DM.`
+      });
+
+      member.user.send(babble.generateMedbabble());
+    } else if (commandName === 'alien') {
+      await interaction.reply({
+        embeds: [builders.generateAlien()]
+      });
+    } else if (commandName === 'gm') {
+      const subCmd = options.getSubcommand()
+      if (subCmd === 'promptd20') {
+        gmInteraction.buildPrompt(interaction)
+      }
+    } else if (commandName === 'support') {
+      await interaction.reply({
+        embeds: [utils.generateSupportCharacter()]
+      });
+    } else if (commandName === 'playersheet') {
+      const subCmd = options.getSubcommand()
+      if (subCmd === 'set') {
+        await playerSheetInteraction.handleSet(interaction)
+      } else if (subCmd === 'get') {
+        await playerSheetInteraction.handleGet(interaction)
+      }
+    } else if (commandName === 'm' || commandName === 't') {
+        const subCmd = options.getSubcommand()
+        await poolInteraction.buildPrompt(interaction, commandName, subCmd)
     }
   } catch (error) {
-    console.error(error)
-    if (message && message.channel) {
-      message.channel.send(error)
-    }
+    await interaction. reply({
+      content: error.toString()
+    })
   }
 })

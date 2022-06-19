@@ -1,7 +1,7 @@
 {
     "AIM": "PC may re-roll a single die made during an ATTACK until the start of their next turn.",
     "DRAW ITEM": "PC may pick up an item within REACH, or draw a weapon/item on their person. If item does not require a TASK for use, PC may use it immediately upon drawing.",
-    "DROP PRONE/STAND": "PC may not do both in the same turn.",
-    "INTERACT/PREPARE": "PC interacts with an object in the environment or readies for a TASK. Complex interactions may require a TASK.",
+    "DROP PRONE or STAND": "PC may not do both in the same turn.",
+    "INTERACT or PREPARE": "PC interacts with an object in the environment or readies for a TASK. Complex interactions may require a TASK.",
     "MOVEMENT": "PC moves up to Medium range. Cannot be combined with a TASK related movement action."
 }

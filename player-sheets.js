@@ -19,32 +19,28 @@
  * IN THE SOFTWARE.
  */
 
- 
-const { createClient } = require("redis")
-const { redis_host, redis_port, redis_password } = process.env
-const redis = createClient({
-  url: `rediss://${redis_host}:${redis_port}`,
-  password: redis_password
-})
-
-redis.on("error", (error) => {
-  console.error("Redis error:", error)
-})
-
-redis.on("ready", () => {
-  console.log("Redis client ready.")
-})
-
-redis.setJson = async (key, jsonData) => {
-  await redis.set(key, JSON.stringify(jsonData))
-}
-
-redis.getJson = async (key) => {
-  return JSON.parse(await redis.get(this.guildId) || '{}')
-}
-
-redis.connect()
+const { redis } = require("./redis")
 
 module.exports = {
-    redis
+    async playerSheetSet(guildId, playerId, sheet) {
+        let guildData = await redis.get(guildId) || '{}'
+        guildData = JSON.parse(guildData)
+
+        if (!guildData.playerSheets) {
+            guildData.playerSheets = {}
+        }
+
+        guildData.playerSheets[playerId] = sheet
+        await redis.set(guildId, JSON.stringify(guildData))
+    },
+    async playerSheetGet(guildId, playerId) {
+        let guildData = await redis.get(guildId) || '{}'
+        guildData = JSON.parse(guildData)
+
+        if (!guildData.playerSheets) {
+            guildData.playerSheets = {}
+        }
+
+        return guildData.playerSheets[playerId]
+    }
 }

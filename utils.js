@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2021 John H. Nguyen
+ * Copyright 2019-2022 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -19,27 +19,7 @@
  * IN THE SOFTWARE.
  */
 
-const fs = require("fs")
-
-/**
- * Reads in a file synchronously with the default encoding specified.
- * @param path The file path. 
- * @returns The raw file as a string.
- */
-const loadFile = path => {
-  return fs.readFileSync(path, { encoding: "utf8" })
-}
-
-/**
- * Reads in a file then attempts to parse the file into a Json object.
- * @param path The file path. 
- * @returns The parsed Json object.
- */
-const loadJsonFile = path => {
-  return JSON.parse(loadFile(path))
-}
-
-let species = loadJsonFile("./data/species.json")
+const species = require("./data/species.json")
 
 module.exports = {
   /**
@@ -303,7 +283,5 @@ module.exports = {
       }
     }
     console.warn("player-sheets channel not found on this server!")
-  },
-  loadFile,
-  loadJsonFile
+  }
 }

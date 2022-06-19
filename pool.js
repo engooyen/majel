@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2021 John H. Nguyen
+ * Copyright 2019-2022 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
  * deal in the Software without restriction, including without limitation the
@@ -19,6 +19,7 @@
  * IN THE SOFTWARE.
  */
 
+const Discord = require('discord.js')
 const { redis } = require("./redis")
 
 module.exports = {
@@ -114,9 +115,9 @@ module.exports = {
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
   },
-  async adjustMomentum(msg, option) {
-    const guildId = msg.guild.id.toString()
-    const channelId = msg.channel.id.toString()
+  async adjustMomentum(guild, channel, op, amount, isChannelPool) {
+    const guildId = guild.id
+    const channelId = channel.id
 
     let guildData = await redis.get(guildId)
     if (guildData) {
@@ -138,66 +139,54 @@ module.exports = {
       guildData[channelId] = {
         momentum: 0,
         threat: 0,
-        name: msg.channel.name,
+        name: channel.name,
       }
     }
 
-    const options = option.split(" ")
-
-    let op = ""
-    if (options.length > 0) {
-      op = options[0].toLowerCase()
-      const amount = parseInt(options[1])
-      const isChannelPool =
-        options.length >= 3 && options[2].toLowerCase() === "here"
-
-      let pool = "global"
-      if (isChannelPool) {
-        pool = channelId
-      }
-
-      if (op === "add") {
-        guildData[pool].momentum += amount
-      } else if (op === "sub") {
-        guildData[pool].momentum -= amount
-      } else if (op === "set") {
-        guildData[pool].momentum = amount
-      }
-
-      if (guildData.global.momentum > 6) {
-        guildData.global.momentum = 6
-      }
-
-      if (guildData.global.momentum < 0) {
-        guildData.global.momentum = 0
-      }
+    let pool = "global"
+    if (isChannelPool) {
+      pool = channelId
     }
 
-    const embed = {
-      title: "Momentum Pools",
-      color: 3447003,
-      fields: [
+    if (op === "add") {
+      guildData[pool].momentum += amount
+    } else if (op === "sub") {
+      guildData[pool].momentum -= amount
+    } else if (op === "set") {
+      guildData[pool].momentum = amount
+    }
+
+    if (guildData.global.momentum > 6) {
+      guildData.global.momentum = 6
+    }
+
+    if (guildData.global.momentum < 0) {
+      guildData.global.momentum = 0
+    }
+
+    let value = guildData.global.momentum || '0'
+    if (pool !== 'global') {
+      value = guildData[channelId].momentum || '0'
+    }
+
+    value = value.toString()
+
+    const embed = new Discord.MessageEmbed()
+      .setColor(3447003)
+      .setFields([
         {
-          name: "Global",
-          value: guildData.global.momentum,
-          inline: true,
-        },
-        {
-          name: `#${msg.channel.name}`,
-          value: guildData[channelId].momentum,
-          inline: true,
-        },
-      ],
-    }
-
+          name: (pool === 'global' ? "Global" : `#${channel.name}`) + ' Momentum',
+          value
+        }
+      ])
 
     console.warn("redis set", guildId, guildData)
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
   },
-  async adjustThreat(msg, option) {
-    const guildId = msg.guild.id.toString()
-    const channelId = msg.channel.id.toString()
+  async adjustThreat(guild, channel, op, amount, isChannelPool) {
+    const guildId = guild.id
+    const channelId = channel.id
 
     let guildData = await redis.get(guildId)
     if (guildData) {
@@ -223,54 +212,42 @@ module.exports = {
       }
     }
 
-    const options = option.split(" ")
+    let pool = "global"
+    if (isChannelPool) {
+      pool = channelId
+    }
 
-    let op = ""
-    if (options.length > 0) {
-      op = options[0].toLowerCase()
-      const amount = parseInt(options[1])
-      const isChannelPool =
-        options.length >= 3 && options[2].toLowerCase() === "here"
+    if (guildData[pool].threat === null) {
+      guildData[pool].threat = 0;
+    }
 
-      let pool = "global"
-      if (isChannelPool) {
-        pool = channelId
-      }
+    if (op === "add") {
+      guildData[pool].threat += amount
+    } else if (op === "sub") {
+      guildData[pool].threat -= amount
+    } else if (op === "set") {
+      guildData[pool].threat = amount
+    }
 
-      if (guildData[pool].threat === null) {
-        guildData[pool].threat = 0;
-      }
+    if (guildData.global.threat < 0 || guildData.global.threat === null) {
+      guildData.global.threat = 0
+    }
 
-      if (op === "add") {
-        guildData[pool].threat += amount
-      } else if (op === "sub") {
-        guildData[pool].threat -= amount
-      } else if (op === "set") {
-        guildData[pool].threat = amount
-      }
+    let value = guildData.global.threat || '0'
+    if (pool !== 'global') {
+      value = guildData[channelId].threat || '0'
+    }
 
-        if (guildData.global.threat < 0 || guildData.global.threat === null) {
-          guildData.global.threat = 0
+    value = value.toString()
+
+    const embed = new Discord.MessageEmbed()
+      .setColor(15158332)
+      .setFields([
+        {
+          name: (pool === 'global' ? "Global" : `#${channel.name}`) + ' Threat',
+          value
         }
-    }
-
-    const embed = {
-      title: "Threat Pools",
-      color: 15158332,
-      fields: [
-        {
-          name: "Global",
-          value: guildData.global.threat,
-          inline: true,
-        },
-        {
-          name: `#${msg.channel.name}`,
-          value: guildData[channelId].threat,
-          inline: true,
-        },
-      ],
-    }
-
+      ])
 
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
