@@ -54,6 +54,8 @@ const bot = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord
 
 bot.login(process.env.token)
 const rest = new REST({ version: '9' }).setToken(process.env.token);
+logger.info('@@@redis host:')
+logger.log(process.env.redis_host)
 
 bot.on('ready', (evt) => {
   logger.info('Connected')
@@ -131,11 +133,11 @@ bot.on('interactionCreate', async interaction => {
         await playerSheetInteraction.handleGet(interaction)
       }
     } else if (commandName === 'm' || commandName === 't') {
-        const subCmd = options.getSubcommand()
-        await poolInteraction.buildPrompt(interaction, commandName, subCmd)
+      const subCmd = options.getSubcommand()
+      await poolInteraction.buildPrompt(interaction, commandName, subCmd)
     }
   } catch (error) {
-    await interaction. reply({
+    await interaction.reply({
       content: error.toString()
     })
   }
