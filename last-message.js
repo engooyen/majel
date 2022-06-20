@@ -63,4 +63,6 @@ class LastMessage {
     }
 }
 
-module.exports = LastMessage
+module.exports = {
+    LastMessage
+}

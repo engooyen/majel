@@ -20,6 +20,7 @@
  */
 
 require('dotenv').config()
+process.setMaxListeners(0)
 const Discord = require('discord.js')
 const { REST } = require('@discordjs/rest')
 const { Routes } = require('discord-api-types/v9')
