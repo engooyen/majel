@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'majel-dev'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF271A6B59454C059C83D1E17F15ED85 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AC3A6AB935034B0798A98EB32540931A }}
           package: .
