@@ -33,7 +33,7 @@ module.exports = {
         const guild = interaction.guild
         const channel = interaction.channel
         const action = cmd
-        const lastMsg = new LastMessage(guild, channel, action)
+        // const lastMsg = new LastMessage(guild, channel, action)
 
         let row = new Discord.MessageActionRow()
             .addComponents(
@@ -61,7 +61,7 @@ module.exports = {
                     .setStyle('PRIMARY')
             )
 
-        await lastMsg.delete(interaction)
+        // await lastMsg.delete(interaction)
 
         const embed = await poolFunctions[cmd](guild, channel, 'add', 0, subCmd === 'here')
         await interaction.reply({
@@ -69,7 +69,7 @@ module.exports = {
             components: [row]
         })
 
-        await lastMsg.save(interaction)
+        // await lastMsg.save(interaction)
     },
     async handleResponse(interaction) {
         const payload = JSON.parse(interaction.customId)
