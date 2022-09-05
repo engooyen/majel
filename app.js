@@ -28,8 +28,6 @@ const winston = require('winston')
 const utils = require('./utils')
 const babble = require('./babble')
 const builders = require('./interaction-builder')
-const pool = require('./pool')
-const trait = require('./trait')
 const commands = require('./commands/commands');
 const diceRollInteraction = require('./interactions/dice-roll')
 const gmInteraction = require('./interactions/gm')
@@ -84,7 +82,7 @@ bot.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) {
       const payload = JSON.parse(interaction.customId)
       if (payload.action === 'd20') {
-        await gmInteraction.handleResponse(interaction)
+        await diceRollInteraction.handled20Response(interaction)
       } else if (payload.action === 'm' || payload.action === 't') {
         await poolInteraction.handleResponse(interaction);
       }
@@ -99,6 +97,8 @@ bot.on('interactionCreate', async interaction => {
       });
     } else if (commandName === 'd6') {
       await diceRollInteraction.handleD6Roll(interaction)
+    } else if (commandName === 'd20') {
+      await diceRollInteraction.handleD20Roll(interaction)
     } else if (commandName === 'babble') {
       await interaction.reply({
         content: `<@${member.user.id}> Technobabble generated. Check your DM.`
@@ -115,11 +115,6 @@ bot.on('interactionCreate', async interaction => {
       await interaction.reply({
         embeds: [builders.generateAlien()]
       });
-    } else if (commandName === 'gm') {
-      const subCmd = options.getSubcommand()
-      if (subCmd === 'promptd20') {
-        gmInteraction.buildPrompt(interaction)
-      }
     } else if (commandName === 'support') {
       await interaction.reply({
         embeds: [utils.generateSupportCharacter()]
@@ -136,7 +131,7 @@ bot.on('interactionCreate', async interaction => {
         await poolInteraction.buildPrompt(interaction, commandName, subCmd)
     }
   } catch (error) {
-    await interaction. reply({
+    await interaction.reply({
       content: error.toString()
     })
   }

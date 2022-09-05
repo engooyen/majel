@@ -76,84 +76,138 @@ commands.push(new SlashCommandBuilder()
 )
 
 commands.push(new SlashCommandBuilder()
-    .setName('gm')
-    .setDescription('Some GM commands to present to a channel')
-    .addSubcommand(subcommand =>
-        subcommand
-            .setName('promptd20')
-            .setDescription('Prompt user for a d20 roll.')
-            .addUserOption(option =>
-                option.setName('player')
-                    .setDescription('Choose player to perform the roll.')
-                    .setRequired(true)
+    .setName('d20')
+    .setDescription('Roll d20')
+    .addUserOption(option =>
+        option.setName('player')
+            .setDescription('Choose player to perform the roll.')
+            .setRequired(true)
+    )
+    .addIntegerOption(option =>
+        option.setName('target')
+            .setDescription('Set the target range for the roll.')
+            .setRequired(true)
+    )
+    .addIntegerOption(option =>
+        option.setName('difficulty')
+            .setDescription('Difficulty of this action.')
+            .setRequired(true)
+            .addChoices(
+                { name: '1', value: 1 },
+                { name: '2', value: 2 },
+                { name: '3', value: 3 },
+                { name: '4', value: 4 },
+                { name: '5', value: 5 }
             )
-            .addStringOption(option =>
-                option.setName('attribute')
-                    .setDescription('Default attribute for this action.')
-                    .setRequired(true)
-                    .addChoices(
-                        { name: 'Control', value: 'control' },
-                        { name: 'Fitness', value: 'fitness' },
-                        { name: 'Presence', value: 'presence' },
-                        { name: 'Daring', value: 'daring' },
-                        { name: 'Insight', value: 'insight' },
-                        { name: 'Reason', value: 'reason' }
-                    )
+    )
+    .addIntegerOption(option =>
+        option.setName('crit')
+            .setDescription('Critical range.')
+            .setRequired(true)
+            .addChoices(
+                { name: '1', value: 1 },
+                { name: '2', value: 2 },
+                { name: '3', value: 3 },
+                { name: '4', value: 4 },
+                { name: '5', value: 5 }
             )
-            .addStringOption(option =>
-                option.setName('discipline')
-                    .setDescription('Default discipline for this action.')
-                    .setRequired(true)
-                    .addChoices(
-                        { name: 'Command', value: 'command' },
-                        { name: 'Security', value: 'security' },
-                        { name: 'Science', value: 'science' },
-                        { name: 'Conn', value: 'conn' },
-                        { name: 'Engineering', value: 'engineering' },
-                        { name: 'Medicine', value: 'medicine' }
-                    )
-            )
-            .addIntegerOption(option =>
-                option.setName('difficulty')
-                    .setDescription('Difficulty of this action.')
-                    .setRequired(true)
-                    .addChoices(
-                        { name: '1', value: 1 },
-                        { name: '2', value: 2 },
-                        { name: '3', value: 3 },
-                        { name: '4', value: 4 },
-                        { name: '5', value: 5 }
-                    )
-            )
-            .addIntegerOption(option =>
-                option.setName('crit')
-                    .setDescription('Critical range.')
-                    .setRequired(true)
-                    .addChoices(
-                        { name: '1', value: 1 },
-                        { name: '2', value: 2 },
-                        { name: '3', value: 3 },
-                        { name: '4', value: 4 },
-                        { name: '5', value: 5 }
-                    )
-            )
-            .addIntegerOption(option =>
-                option.setName('comp')
-                    .setDescription('Complication range.')
-                    .setRequired(true)
-                    .addChoices(
-                        { name: '20', value: 10 },
-                        { name: '19', value: 19 },
-                        { name: '18', value: 18 },
-                        { name: '17', value: 17 },
-                        { name: '16', value: 16 },
-                        { name: '15', value: 15 },
-                        { name: '14', value: 14 }
-                    )
+    )
+    .addIntegerOption(option =>
+        option.setName('comp')
+            .setDescription('Complication range.')
+            .setRequired(true)
+            .addChoices(
+                { name: '20', value: 10 },
+                { name: '19', value: 19 },
+                { name: '18', value: 18 },
+                { name: '17', value: 17 },
+                { name: '16', value: 16 },
+                { name: '15', value: 15 },
+                { name: '14', value: 14 }
             )
     )
     .toJSON()
 )
+
+// commands.push(new SlashCommandBuilder()
+//     .setName('gm')
+//     .setDescription('Some GM commands to present to a channel')
+//     .addSubcommand(subcommand =>
+//         subcommand
+//             .setName('promptd20')
+//             .setDescription('Prompt user for a d20 roll.')
+//             .addUserOption(option =>
+//                 option.setName('player')
+//                     .setDescription('Choose player to perform the roll.')
+//                     .setRequired(true)
+//             )
+//             .addStringOption(option =>
+//                 option.setName('attribute')
+//                     .setDescription('Default attribute for this action.')
+//                     .setRequired(true)
+//                     .addChoices(
+//                         { name: 'Control', value: 'control' },
+//                         { name: 'Fitness', value: 'fitness' },
+//                         { name: 'Presence', value: 'presence' },
+//                         { name: 'Daring', value: 'daring' },
+//                         { name: 'Insight', value: 'insight' },
+//                         { name: 'Reason', value: 'reason' }
+//                     )
+//             )
+//             .addStringOption(option =>
+//                 option.setName('discipline')
+//                     .setDescription('Default discipline for this action.')
+//                     .setRequired(true)
+//                     .addChoices(
+//                         { name: 'Command', value: 'command' },
+//                         { name: 'Security', value: 'security' },
+//                         { name: 'Science', value: 'science' },
+//                         { name: 'Conn', value: 'conn' },
+//                         { name: 'Engineering', value: 'engineering' },
+//                         { name: 'Medicine', value: 'medicine' }
+//                     )
+//             )
+//             .addIntegerOption(option =>
+//                 option.setName('difficulty')
+//                     .setDescription('Difficulty of this action.')
+//                     .setRequired(true)
+//                     .addChoices(
+//                         { name: '1', value: 1 },
+//                         { name: '2', value: 2 },
+//                         { name: '3', value: 3 },
+//                         { name: '4', value: 4 },
+//                         { name: '5', value: 5 }
+//                     )
+//             )
+//             .addIntegerOption(option =>
+//                 option.setName('crit')
+//                     .setDescription('Critical range.')
+//                     .setRequired(true)
+//                     .addChoices(
+//                         { name: '1', value: 1 },
+//                         { name: '2', value: 2 },
+//                         { name: '3', value: 3 },
+//                         { name: '4', value: 4 },
+//                         { name: '5', value: 5 }
+//                     )
+//             )
+//             .addIntegerOption(option =>
+//                 option.setName('comp')
+//                     .setDescription('Complication range.')
+//                     .setRequired(true)
+//                     .addChoices(
+//                         { name: '20', value: 10 },
+//                         { name: '19', value: 19 },
+//                         { name: '18', value: 18 },
+//                         { name: '17', value: 17 },
+//                         { name: '16', value: 16 },
+//                         { name: '15', value: 15 },
+//                         { name: '14', value: 14 }
+//                     )
+//             )
+//     )
+//     .toJSON()
+// )
 
 commands.push(new SlashCommandBuilder()
     .setName('playersheet')

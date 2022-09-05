@@ -10,6 +10,7 @@
     "url": "git://github.com/engooyen/majel.git"
   },
   "scripts": {
+    "start": "node .",
     "dev": "nodemon .",
     "debug": "nodemon --inspect ."
   },
@@ -17,12 +18,12 @@
     "@discordjs/builders": "^0.15.0",
     "@discordjs/rest": "^0.5.0",
     "axios": "^0.27.2",
-    "discord-api-types": "^0.33.5",
-    "discord.js": "^13.8.0",
+    "discord-api-types": "^0.36.2",
+    "discord.js": "^13.8.1",
     "dotenv": "^16.0.1",
     "fs": "0.0.1-security",
-    "nodemon": "^2.0.16",
-    "redis": "^4.1.0",
-    "winston": "^3.7.2"
+    "nodemon": "^2.0.19",
+    "redis": "^4.2.0",
+    "winston": "^3.8.1"
   }
 }
