@@ -30,9 +30,8 @@ const babble = require('./babble')
 const builders = require('./interaction-builder')
 const commands = require('./commands/commands');
 const diceRollInteraction = require('./interactions/dice-roll')
-const gmInteraction = require('./interactions/gm')
+const traiutInteraction = require('./interactions/trait')
 const poolInteraction = require('./interactions/pool')
-const playerSheetInteraction = require('./interactions/player-sheet')
 
 // help content
 let addMeMsg =
@@ -119,16 +118,12 @@ bot.on('interactionCreate', async interaction => {
       await interaction.reply({
         embeds: [utils.generateSupportCharacter()]
       });
-    } else if (commandName === 'playersheet') {
-      const subCmd = options.getSubcommand()
-      if (subCmd === 'set') {
-        await playerSheetInteraction.handleSet(interaction)
-      } else if (subCmd === 'get') {
-        await playerSheetInteraction.handleGet(interaction)
-      }
     } else if (commandName === 'm' || commandName === 't') {
         const subCmd = options.getSubcommand()
         await poolInteraction.buildPrompt(interaction, commandName, subCmd)
+    } else if (commandName === 'trait') {
+        const subCmd = options.getSubcommand()
+        await traiutInteraction.buildPrompt(interaction, subCmd)
     }
   } catch (error) {
     await interaction.reply({

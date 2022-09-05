@@ -209,26 +209,26 @@ commands.push(new SlashCommandBuilder()
 //     .toJSON()
 // )
 
-commands.push(new SlashCommandBuilder()
-    .setName('playersheet')
-    .setDescription('Committing a player sheet')
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('set')
-        .setDescription('Set a player sheet.')
-        .addAttachmentOption(option =>
-            option.setName('sheet')
-                .setDescription('Player sheet to upload.')
-                .setRequired(true)
-        )
-    )
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('get')
-        .setDescription('Get a player sheet.')
-    )
-    .toJSON()
-)
+// commands.push(new SlashCommandBuilder()
+//     .setName('playersheet')
+//     .setDescription('Committing a player sheet')
+//     .addSubcommand(subcommand =>
+//         subcommand
+//         .setName('set')
+//         .setDescription('Set a player sheet.')
+//         .addAttachmentOption(option =>
+//             option.setName('sheet')
+//                 .setDescription('Player sheet to upload.')
+//                 .setRequired(true)
+//         )
+//     )
+//     .addSubcommand(subcommand =>
+//         subcommand
+//         .setName('get')
+//         .setDescription('Get a player sheet.')
+//     )
+//     .toJSON()
+// )
 
 commands.push(new SlashCommandBuilder()
     .setName('m')
@@ -258,6 +258,56 @@ commands.push(new SlashCommandBuilder()
         subcommand
         .setName('here')
         .setDescription('Manage threat pool for this channel only.')
+    )
+    .toJSON()
+)
+
+commands.push(new SlashCommandBuilder()
+    .setName('trait')
+    .setDescription('Manage traits.')
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('get')
+        .setDescription('Get containers and their traits or list traits for a specific container.')
+        .addStringOption(option =>
+            option.setName('container')
+                .setDescription('List all traits for this container.')
+        )
+    )
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('set')
+        .setDescription('Set a value to a trait within a container.')
+        .addStringOption(option =>
+            option.setName('container')
+                .setDescription('The container to modify.')
+                .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('trait')
+                .setDescription('The trait to modify.')
+                .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('value')
+                .setDescription('The value of the trait to set.')
+                .setRequired(true)
+        )
+    )
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('del')
+        .setDescription('Delete a trait from a container.')
+        .addStringOption(option =>
+            option.setName('container')
+                .setDescription('The container to modify.')
+                .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('trait')
+                .setDescription('The trait to modify.')
+                .setRequired(true)
+        )
     )
     .toJSON()
 )

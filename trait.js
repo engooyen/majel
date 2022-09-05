@@ -19,6 +19,7 @@
  * IN THE SOFTWARE.
  */
 
+const Discord = require('discord.js')
 const { redis } = require("./redis")
 
 // It's a key-value store within a container. Keys are traits for the end user.
@@ -40,7 +41,7 @@ function dumpTraits(container, embed) {
     if (traits.length === 0) {
         embed.fields.push({
             name: "No traits Found",
-            value: "Use !trait set [container name] [trait name] [trait value] to set a trait.",
+            value: "Use /trait set [container name] [trait name] [trait value] to set a trait.",
         })
     } else {
         for (let trait of traits) {
@@ -54,12 +55,7 @@ function dumpTraits(container, embed) {
 }
 
 module.exports = {
-    async trait(msg, option) {
-        const guildId = msg.guild.id.toString()
-        console.warn(msg.author.username)
-        console.warn("guild id", guildId)
-        console.warn("options", option)
-
+    async doTrait(guildId, subCmd, container, trait, value) {
         let guildData = await redis.get(guildId)
         if (guildData) {
             guildData = JSON.parse(guildData)
@@ -74,81 +70,51 @@ module.exports = {
             guildData.traits = {}
         }
 
-        const embed = {
-            title: "Traits",
-            color: 15158332,
-            fields: [],
-        }
+        const embed = new Discord.MessageEmbed()
+            .setTitle('Traits')
+            .setColor(15158332)
 
-        if (option) {
-            const options = option.toLowerCase().split(" ");
-            console.warn(options)
-            if (options.length > 0) {
-                let arg = options.shift()
-                if (arg === "set") {
-                    let containerName = options.shift()
-                    let key = options.shift()
-                    let value = options.shift()
-                    console.warn(containerName, key, value)
-                    if (containerName && key && value) {
-                        if (!guildData.traits[containerName]) {
-                            guildData.traits[containerName] = {}
-                        }
 
-                        guildData.traits[containerName][key] = value
-                        embed.title += " for " + containerName
-                        dumpTraits(guildData.traits[containerName], embed)
-                    } else {
-                        embed.fields.push({
-                            name: "Error",
-                            value: "!trait set requires arguments: [container name] [trait name] [trait value]",
-                        })
+        if (container) {
+            if (subCmd === "set") {
+                if (container && trait && value) {
+                    if (!guildData.traits[container]) {
+                        guildData.traits[container] = {}
                     }
-                } else if (arg === "del") {
-                    let containerName = options.shift()
-                    let key = options.shift()
-                    if (containerName && key) {
-                        delete guildData.traits[containerName][key]
-                        dumpTraits(guildData.traits[containerName], embed)
-                    } else if (containerName) {
-                        delete guildData.traits[containerName]
-                        embed.fields.push({
-                            name: "Success",
-                            value: `${containerName} deleted`,
-                        })
-                    } else {
-                        embed.fields.push({
-                            name: "Error",
-                            value: "!trait del requires arguments: [container name] [trait name (optional)]",
-                        })
-                    }
+
+                    guildData.traits[container][trait] = value
+                    embed.title += " for " + container
+                    dumpTraits(guildData.traits[container], embed)
                 } else {
-                    if (!guildData.traits[arg]) {
-                        embed.fields.push({
-                            name: "Error",
-                            value: `Container '${arg}' not found`,
-                        })
-                    } else {
-                        embed.title += " for " + arg
-                        dumpTraits(guildData.traits[arg], embed)
-                    }
+                    embed.addField("Error", "/trait set requires arguments: [container name] [trait name] [trait value]")
+                }
+            } else if (subCmd === "del") {
+                if (container && trait) {
+                    delete guildData.traits[container][trait]
+                    dumpTraits(guildData.traits[container], embed)
+                } else if (container) {
+                    delete guildData.traits[container]
+                    embed.addField("Success", `${container} deleted`)
+                } else {
+                    embed.addField("Error", "/trait del requires arguments: [container name] [trait name (optional)]")
+                }
+            } else {
+                if (!guildData.traits[arg]) {
+                    embed.addField("Error", `Container '${arg}' not found`)
+                } else {
+                    embed.title += " for " + arg
+                    dumpTraits(guildData.traits[arg], embed)
                 }
             }
         } else {
             const containers = Object.keys(guildData.traits);
             console.warn(containers)
             if (containers.length === 0) {
-                embed.fields.push({
-                    name: "No traits Found",
-                    value: "Use !trait set [container name] [trait name] [trait value] to set a trait.",
-                })
+                embed.addField("No traits Found", "Use /trait set [container name] [trait name] [trait value] to set a trait.")
             } else {
                 embed.title = "All Traits"
                 for (let container of containers) {
-                    embed.fields.push({
-                        name: "Traits for:",
-                        value: container
-                    })
+                    embed.addField("Traits for:", container)
                     dumpTraits(guildData.traits[container], embed)
                 }
             }
