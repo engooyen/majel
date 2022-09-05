@@ -32,6 +32,9 @@ const commands = require('./commands/commands');
 const diceRollInteraction = require('./interactions/dice-roll')
 const traiutInteraction = require('./interactions/trait')
 const poolInteraction = require('./interactions/pool')
+const express = require('express')
+const app = express()
+const port = process.env.port
 
 // help content
 let addMeMsg =
@@ -130,4 +133,12 @@ bot.on('interactionCreate', async interaction => {
       content: error.toString()
     })
   }
+})
+
+app.get('/', (res) => {
+  res.send(`${process.env.bot_name} is up and running.`)
+})
+
+app.listen(port, () => {
+  console.log(`${process.env.bot_name} listening on port ${port}`)
 })
