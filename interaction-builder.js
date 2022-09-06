@@ -32,12 +32,12 @@ const determination = require("./data/determination.json")
 const momentum = require("./data/momentum.json")
 
 module.exports = {
-  rollD6(numDice, msg) {
+  rollD6(numDice, msg, game) {
     const { rawResult, numericResult, fxResult } = dice.rollD6(numDice)
     return new MessageEmbed()
       .setTitle(msg.user.username)
       .setDescription('D6 Roll Result')
-      .setThumbnail('https://i.imgur.com/gN5LDfH.png')
+      .setThumbnail(game.images.d6)
       .addFields(
         {
           name: "Raw Result",
@@ -57,7 +57,7 @@ module.exports = {
       )
   },
 
-  rollD20(numDice, args, msg) {
+  rollD20(numDice, args, msg, game) {
     const {
       target,
       critRange,
@@ -70,7 +70,7 @@ module.exports = {
     return new MessageEmbed()
       .setTitle(msg.user.username)
       .setDescription('D20 Roll Result')
-      .setThumbnail('https://i.imgur.com/sBWwCxI.png')
+      .setThumbnail(game.images.d20)
       .addFields(
         {
           name: "Target",

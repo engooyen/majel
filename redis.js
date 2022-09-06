@@ -40,7 +40,25 @@ redis.setJson = async (key, jsonData) => {
 }
 
 redis.getJson = async (key) => {
-  return JSON.parse(await redis.get(this.guildId) || '{}')
+  return JSON.parse(await redis.get(key) || '{}')
+}
+
+redis.getGuildData = async (guildId) => {
+  let guildData = await redis.get(guildId)
+  if (guildData) {
+    guildData = JSON.parse(guildData)
+  }
+
+  console.warn("get redis", guildId, guildData)
+  if (!guildData) {
+    guildData = {}
+  }
+
+  return guildData
+}
+
+redis.setGuildData = async (guildId, guildData) => {
+  await redis.set(guildId, JSON.stringify(guildData))
 }
 
 redis.connect()

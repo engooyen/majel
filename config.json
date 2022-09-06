@@ -1,0 +1,44 @@
+{
+    "sta": {
+        "display": "Star Trek Adventures",
+        "images": {
+            "d20": "https://i.imgur.com/sBWwCxI.png",
+            "d6": "https://i.imgur.com/gN5LDfH.png"
+        },
+        "dice": {}
+    },
+    "fa": {
+        "display": "Fallout",
+        "images": {
+            "d20": "https://i.imgur.com/2bAEmPN.png",
+            "d6": "https://i.imgur.com/nHhtfo1.png"
+        },
+        "dice": {
+            "hit": {
+                "display": "Hit Location",
+                "values": [
+                    "Head",
+                    "Head",
+                    "Torso",
+                    "Torso",
+                    "Torso",
+                    "Torso",
+                    "Torso",
+                    "Torso",
+                    "Left Arm",
+                    "Left Arm",
+                    "Left Arm",
+                    "Right Arm",
+                    "Right Arm",
+                    "Right Arm",
+                    "Left Leg",
+                    "Left Leg",
+                    "Left Leg",
+                    "Right Leg",
+                    "Right Leg",
+                    "Right Leg"
+                ]
+            }
+        }
+    }
+}

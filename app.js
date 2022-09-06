@@ -35,10 +35,11 @@ const poolInteraction = require('./interactions/pool')
 const express = require('express')
 const app = express()
 const port = process.env.port
+const clientId = process.env.client_id
 
 // help content
 let addMeMsg =
-  'https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot'
+  `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&permissions=51200&scope=bot`
 
 //Configure logger settings
 const logger = winston.createLogger({
@@ -97,6 +98,9 @@ bot.on('interactionCreate', async interaction => {
       await interaction.reply({
         content: addMeMsg
       });
+    } else if (commandName === 'game') {
+      const subCmd = options.getSubcommand()
+      await diceRollInteraction.handleGame(interaction, subCmd)
     } else if (commandName === 'd6') {
       await diceRollInteraction.handleD6Roll(interaction)
     } else if (commandName === 'd20') {
@@ -122,11 +126,11 @@ bot.on('interactionCreate', async interaction => {
         embeds: [utils.generateSupportCharacter()]
       });
     } else if (commandName === 'm' || commandName === 't') {
-        const subCmd = options.getSubcommand()
-        await poolInteraction.buildPrompt(interaction, commandName, subCmd)
+      const subCmd = options.getSubcommand()
+      await poolInteraction.buildPrompt(interaction, commandName, subCmd)
     } else if (commandName === 'trait') {
-        const subCmd = options.getSubcommand()
-        await traiutInteraction.buildPrompt(interaction, subCmd)
+      const subCmd = options.getSubcommand()
+      await traiutInteraction.buildPrompt(interaction, subCmd)
     }
   } catch (error) {
     await interaction.reply({
@@ -135,7 +139,7 @@ bot.on('interactionCreate', async interaction => {
   }
 })
 
-app.get('/', (res) => {
+app.get('/', (req, res) => {
   res.send(`${process.env.bot_name} is up and running.`)
 })
 

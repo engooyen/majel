@@ -21,6 +21,8 @@
 
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const commands = []
+const isStaFeature = process.env.feature_sta
+const is2d20Feature = process.env.feature_2d20
 
 commands.push(new SlashCommandBuilder()
     .setName('about')
@@ -31,12 +33,6 @@ commands.push(new SlashCommandBuilder()
 commands.push(new SlashCommandBuilder()
     .setName('addme')
     .setDescription('Invite me to your game!')
-    .toJSON()
-)
-
-commands.push(new SlashCommandBuilder()
-    .setName('rules')
-    .setDescription('Bring up a rules lookup menu.')
     .toJSON()
 )
 
@@ -52,37 +48,8 @@ commands.push(new SlashCommandBuilder()
 )
 
 commands.push(new SlashCommandBuilder()
-    .setName('babble')
-    .setDescription('Generate a random techno babble phrase and DMs the user.')
-    .toJSON()
-)
-
-commands.push(new SlashCommandBuilder()
-    .setName('medbabble')
-    .setDescription('Generate a random medical babble phrase and DMs the user.')
-    .toJSON()
-)
-
-commands.push(new SlashCommandBuilder()
-    .setName('support')
-    .setDescription('Generate a random support character. Use `!support help` for more details.')
-    .toJSON()
-)
-
-commands.push(new SlashCommandBuilder()
-    .setName('alien')
-    .setDescription('Generate a random alien species.')
-    .toJSON()
-)
-
-commands.push(new SlashCommandBuilder()
     .setName('d20')
     .setDescription('Roll d20')
-    .addUserOption(option =>
-        option.setName('player')
-            .setDescription('Choose player to perform the roll.')
-            .setRequired(true)
-    )
     .addIntegerOption(option =>
         option.setName('target')
             .setDescription('Set the target range for the roll.')
@@ -128,6 +95,159 @@ commands.push(new SlashCommandBuilder()
     )
     .toJSON()
 )
+
+commands.push(new SlashCommandBuilder()
+    .setName('m')
+    .setDescription('Manage momentum.')
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('global')
+        .setDescription('Manage global momentum pool.')
+    )
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('here')
+        .setDescription('Manage momentum pool for this channel only.')
+    )
+    .toJSON()
+)
+
+commands.push(new SlashCommandBuilder()
+    .setName('t')
+    .setDescription('Manage threat.')
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('global')
+        .setDescription('Manage global threat pool.')
+    )
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('here')
+        .setDescription('Manage threat pool for this channel only.')
+    )
+    .toJSON()
+)
+
+commands.push(new SlashCommandBuilder()
+    .setName('trait')
+    .setDescription('Manage traits.')
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('get')
+        .setDescription('Get containers and their traits or list traits for a specific container.')
+        .addStringOption(option =>
+            option.setName('container')
+                .setDescription('List all traits for this container.')
+        )
+    )
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('set')
+        .setDescription('Set a value to a trait within a container.')
+        .addStringOption(option =>
+            option.setName('container')
+                .setDescription('The container to modify.')
+                .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('trait')
+                .setDescription('The trait to modify.')
+                .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('value')
+                .setDescription('The value of the trait to set.')
+                .setRequired(true)
+        )
+    )
+    .addSubcommand(subcommand =>
+        subcommand
+        .setName('del')
+        .setDescription('Delete a trait from a container.')
+        .addStringOption(option =>
+            option.setName('container')
+                .setDescription('The container to modify.')
+                .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('trait')
+                .setDescription('The trait to modify.')
+                .setRequired(true)
+        )
+    )
+    .toJSON()
+)
+
+// STA specific features
+if (isStaFeature) {
+    commands.push(new SlashCommandBuilder()
+        .setName('rules')
+        .setDescription('Bring up a rules lookup menu.')
+        .toJSON()
+    )
+
+    commands.push(new SlashCommandBuilder()
+        .setName('babble')
+        .setDescription('Generate a random techno babble phrase and DMs the user.')
+        .toJSON()
+    )
+
+    commands.push(new SlashCommandBuilder()
+        .setName('medbabble')
+        .setDescription('Generate a random medical babble phrase and DMs the user.')
+        .toJSON()
+    )
+
+    commands.push(new SlashCommandBuilder()
+        .setName('support')
+        .setDescription('Generate a random support character. Use `!support help` for more details.')
+        .toJSON()
+    )
+
+    commands.push(new SlashCommandBuilder()
+        .setName('alien')
+        .setDescription('Generate a random alien species.')
+        .toJSON()
+    )
+}
+
+if (is2d20Feature) {
+    commands.push(new SlashCommandBuilder()
+        .setName('game')
+        .setDescription('Set the support game to enable dice rolls specific to that game.')
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('list')
+            .setDescription('List the supported games.')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('help')
+            .setDescription('Get help for a specific game. Game must be set first! Use /game set [game]')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('set')
+            .setDescription('Set the supported game.')
+            .addStringOption(option =>
+                option.setName('game')
+                    .setDescription('The game code. /game list to see the game codes.')
+                    .setRequired(true)
+            )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('custom')
+            .setDescription('The custom dice command enabled for this game.')
+            .addStringOption(option =>
+                option.setName('cmd')
+                    .setDescription('The custom game dice command to run. /game help to see the custom dice commands.')
+                    .setRequired(true)
+            )
+        )
+        .toJSON()
+    )
+}
 
 // commands.push(new SlashCommandBuilder()
 //     .setName('gm')
@@ -229,87 +349,5 @@ commands.push(new SlashCommandBuilder()
 //     )
 //     .toJSON()
 // )
-
-commands.push(new SlashCommandBuilder()
-    .setName('m')
-    .setDescription('Manage momentum.')
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('global')
-        .setDescription('Manage global momentum pool.')
-    )
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('here')
-        .setDescription('Manage momentum pool for this channel only.')
-    )
-    .toJSON()
-)
-
-commands.push(new SlashCommandBuilder()
-    .setName('t')
-    .setDescription('Manage threat.')
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('global')
-        .setDescription('Manage global threat pool.')
-    )
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('here')
-        .setDescription('Manage threat pool for this channel only.')
-    )
-    .toJSON()
-)
-
-commands.push(new SlashCommandBuilder()
-    .setName('trait')
-    .setDescription('Manage traits.')
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('get')
-        .setDescription('Get containers and their traits or list traits for a specific container.')
-        .addStringOption(option =>
-            option.setName('container')
-                .setDescription('List all traits for this container.')
-        )
-    )
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('set')
-        .setDescription('Set a value to a trait within a container.')
-        .addStringOption(option =>
-            option.setName('container')
-                .setDescription('The container to modify.')
-                .setRequired(true)
-        )
-        .addStringOption(option =>
-            option.setName('trait')
-                .setDescription('The trait to modify.')
-                .setRequired(true)
-        )
-        .addStringOption(option =>
-            option.setName('value')
-                .setDescription('The value of the trait to set.')
-                .setRequired(true)
-        )
-    )
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('del')
-        .setDescription('Delete a trait from a container.')
-        .addStringOption(option =>
-            option.setName('container')
-                .setDescription('The container to modify.')
-                .setRequired(true)
-        )
-        .addStringOption(option =>
-            option.setName('trait')
-                .setDescription('The trait to modify.')
-                .setRequired(true)
-        )
-    )
-    .toJSON()
-)
 
 module.exports = commands
