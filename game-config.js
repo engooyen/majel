@@ -19,7 +19,7 @@ class GameConfig {
 
     async setGame(game) {
         const embed = new Discord.MessageEmbed()
-            .setTitle('Setting Game to ${game}')
+            .setTitle(`Setting Game to ${game}`)
         const guildData = await redis.getGuildData(this.guildId)
         if (!config[game]) {
             embed.addField('Error', `'${game}' not supported!`)
@@ -38,7 +38,9 @@ class GameConfig {
             return config.sta
         }
 
-        return await redis.getGuildData(this.guildId)?.game
+        const guildData = await redis.getGuildData(this.guildId)
+        const game = guildData?.game
+        return config[game]
     }
 
     supportedGames() {

@@ -139,6 +139,10 @@ bot.on('interactionCreate', async interaction => {
   }
 })
 
+bot.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error);
+});
+
 app.get('/', (req, res) => {
   res.send(`${process.env.bot_name} is up and running.`)
 })
