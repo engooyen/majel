@@ -32,6 +32,7 @@ const commands = require('./commands/commands');
 const diceRollInteraction = require('./interactions/dice-roll')
 const traiutInteraction = require('./interactions/trait')
 const poolInteraction = require('./interactions/pool')
+const about = require('./data/about.json')[0]
 const express = require('express')
 const app = express()
 const port = process.env.port
@@ -105,7 +106,13 @@ bot.on('interactionCreate', async interaction => {
       await diceRollInteraction.handleD6Roll(interaction)
     } else if (commandName === 'd20') {
       await diceRollInteraction.handleD20Roll(interaction)
-    } else if (commandName === 'babble') {
+    } else if (commandName === 'about') {
+      await interaction.reply({
+        content: about
+      });
+
+      member.user.send(babble.generateTechnobabble());
+    }else if (commandName === 'babble') {
       await interaction.reply({
         content: `<@${member.user.id}> Technobabble generated. Check your DM.`
       });
