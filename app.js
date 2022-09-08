@@ -33,10 +33,47 @@ const diceRollInteraction = require('./interactions/dice-roll')
 const traiutInteraction = require('./interactions/trait')
 const poolInteraction = require('./interactions/pool')
 const about = require('./data/about.json')[0]
-const express = require('express')
-const app = express()
+const { redis } = require('./redis')
 const port = process.env.port
+const bodyParser = require("body-parser");
 const clientId = process.env.client_id
+
+const express = require('express')
+const app = new express()
+
+app.use(bodyParser.json({ limit: '50mb', extended: true }))
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
+app.get('/', (req, res) => {
+  res.send(`${process.env.bot_name} is up and running.`)
+})
+
+app.get('/backup', async (req, res) => {
+  const keys = await redis.keys('*')
+  const entries = []
+  for (const key of keys) {
+    if (!key.includes('object')) {
+      const data = await redis.get(key)
+      entries.push({
+        key,
+        data
+      })
+    }
+  }
+  res.send(entries)
+})
+
+app.post('/backup', (req, res) => {
+  const body = req.body
+  for (const item of body) {
+    const { key, data} = item;
+    redis.set(key, data)
+  }
+  res.send('ok')
+})
+
+app.listen(port, () => {
+  console.log(`${process.env.bot_name} listening on port ${port}`)
+})
 
 // help content
 let addMeMsg =
@@ -147,13 +184,5 @@ bot.on('interactionCreate', async interaction => {
 })
 
 bot.on('unhandledRejection', error => {
-	console.error('Unhandled promise rejection:', error);
+  console.error('Unhandled promise rejection:', error);
 });
-
-app.get('/', (req, res) => {
-  res.send(`${process.env.bot_name} is up and running.`)
-})
-
-app.listen(port, () => {
-  console.log(`${process.env.bot_name} listening on port ${port}`)
-})
