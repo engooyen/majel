@@ -23,7 +23,7 @@
 const { createClient } = require("redis")
 const { redis_host, redis_port, redis_password } = process.env
 const redis = createClient({
-  url: `redis://${redis_host}:${redis_port}`,
+  url: `rediss://${redis_host}:${redis_port}`,
   password: redis_password,
 })
 

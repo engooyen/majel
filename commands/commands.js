@@ -84,7 +84,7 @@ commands.push(new SlashCommandBuilder()
             .setDescription('Complication range.')
             .setRequired(true)
             .addChoices(
-                { name: '20', value: 10 },
+                { name: '20', value: 20 },
                 { name: '19', value: 19 },
                 { name: '18', value: 18 },
                 { name: '17', value: 17 },
