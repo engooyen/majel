@@ -110,9 +110,7 @@ bot.on('interactionCreate', async interaction => {
       await interaction.reply({
         content: about
       });
-
-      member.user.send(babble.generateTechnobabble());
-    }else if (commandName === 'babble') {
+    } else if (commandName === 'babble') {
       await interaction.reply({
         content: `<@${member.user.id}> Technobabble generated. Check your DM.`
       });
