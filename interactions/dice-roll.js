@@ -22,6 +22,7 @@
 const Discord = require('discord.js')
 const builders = require('../interaction-builder')
 const { GameConfig } = require('../game-config')
+const is2d20Feature = process.env.feature_2d20
 
 module.exports = {
   async handleGame(interaction, subCmd) {
@@ -73,6 +74,18 @@ module.exports = {
           crit
         })
       })
+    }
+
+    if (is2d20Feature && !game) {
+      const warning = new MessageEmbed()
+      .setTitle('Game not set!')
+      .setDescription('/game set [game] to set game and /game list to show supported games.')
+
+      await interaction.reply({
+        embeds: [warning]
+      })
+
+      return
     }
 
     const row = new Discord.MessageActionRow()

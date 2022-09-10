@@ -30,10 +30,17 @@ const shipMinorActions = require("./data/ship-minor-actions.json")
 const shipAttackProperties = require("./data/ship-attack-properties.json")
 const determination = require("./data/determination.json")
 const momentum = require("./data/momentum.json")
+const is2d20Feature = process.env.feature_2d20
 
 module.exports = {
   rollD6(numDice, msg, game) {
     const { rawResult, numericResult, fxResult } = dice.rollD6(numDice)
+    if (is2d20Feature && !game) {
+      return new MessageEmbed()
+      .setTitle('Game not set!')
+      .setDescription('/game set [game] to set game and /game list to show supported games.')
+    }
+
     return new MessageEmbed()
       .setTitle(msg.user.username)
       .setDescription('D6 Roll Result')
@@ -66,6 +73,12 @@ module.exports = {
       success,
       complication,
     } = dice.rollD20(numDice, args)
+
+    if (is2d20Feature && !game) {
+      return new MessageEmbed()
+      .setTitle('Game not set!')
+      .setDescription('/game set [game] to set game and /game list to show supported games.')
+    }
 
     return new MessageEmbed()
       .setTitle(msg.user.username)
