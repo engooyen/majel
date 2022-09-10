@@ -151,7 +151,7 @@ bot.on('unhandledRejection', error => {
 });
 
 app.get('/', (req, res) => {
-  res.send(`${process.env.bot_name} is up and running.`)
+  res.send(`${process.env.bot_name} is up and running. Testing.`)
 })
 
 app.listen(port, () => {
