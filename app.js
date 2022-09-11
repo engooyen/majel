@@ -58,27 +58,33 @@ const bot = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord
 bot.login(process.env.token)
 const rest = new REST({ version: '9' }).setToken(process.env.token);
 
+const registerCmds = async (botId, guildId) => {
+  try {
+    console.log('Started refreshing application (/) commands.');
+
+    await rest.put(
+      Routes.applicationGuildCommands(botId, guildId),
+      { body: commands },
+    )
+
+    console.log('Successfully reloaded application (/) commands.')
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 bot.on('ready', (evt) => {
   logger.info('Connected')
   logger.info('Logged in as: ')
   logger.info(bot.user.username + ' - (' + bot.user.id + ')')
   logger.info(evt.guilds.cache)
   bot.guilds.cache.forEach(guild => {
-    (async () => {
-      try {
-        console.log('Started refreshing application (/) commands.');
-
-        await rest.put(
-          Routes.applicationGuildCommands(bot.user.id, guild.id),
-          { body: commands },
-        );
-
-        console.log('Successfully reloaded application (/) commands.');
-      } catch (error) {
-        console.error(error);
-      }
-    })();
+    registerCmds(bot.user.id, guild.id)
   })
+})
+
+bot.on("guildCreate", guild => {
+  registerCmds(bot.user.id, guild.id)
 })
 
 bot.on('interactionCreate', async interaction => {
@@ -145,7 +151,7 @@ bot.on('interactionCreate', async interaction => {
 })
 
 bot.on('unhandledRejection', error => {
-	console.error('Unhandled promise rejection:', error);
+  console.error('Unhandled promise rejection:', error);
 });
 
 app.get('/', (req, res) => {
