@@ -19,7 +19,7 @@
  * IN THE SOFTWARE.
  */
 
-const species = require("./data/species.json")
+let species = require("./data/species.json")
 
 module.exports = {
   /**
