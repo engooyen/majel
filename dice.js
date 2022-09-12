@@ -38,7 +38,8 @@ module.exports = {
    * @returns Formatted result as a string/
    */
   rollD6(numDice) {
-    let rawResult = ""
+    let rawResult = ''
+    let rawResultValues = ''
     let numericResult = 0
     let fxResult = 0
     let maxDice = Math.min(numDice, 36)
@@ -55,12 +56,18 @@ module.exports = {
       }
 
       rawResult += d6Result[roll - 1]
+      if (rawResultValues) {
+        rawResultValues += ', '
+      }
+
+      rawResultValues += roll
     }
 
     return {
       rawResult,
       numericResult,
       fxResult,
+      rawResultValues
     }
   },
 

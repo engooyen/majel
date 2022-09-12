@@ -23,8 +23,6 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 # Majel - Star Trek Adventures Bot Command List
 
-`/help` - Displays all possible commands Majel can understand.
-
 `/addme` - Invite me to your game.
 
 `/about` - Information on development and source code.
