@@ -6,13 +6,20 @@ Discord bot for use with Star Trek Adventures role playing game. This will help 
 
 https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot
 
+> Note: If your bot isn't working with the "/" command, you may have a version of Majel that is no longer supported. Try kicking that bot and adding Majel with this link.
+
 # Community & Support
+
+Support this project: https://www.patreon.com/majeldiscordbot
+All updates will be posted on patreon and then shared to the other social media accounts.
 
 Twitter: https://twitter.com/majeldiscordbot
 
 Facebook: https://www.facebook.com/majeldiscordbot
 
-Support this project: https://www.patreon.com/majeldiscordbot
+Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
+
+2d20 Beta and Support Server: https://discord.gg/WecBWtjV2n
 
 # Majel - Star Trek Adventures Bot Command List
 
@@ -22,11 +29,13 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 `/about` - Information on development and source code.
 
-/[d6 Rolls](https://i.imgur.com/DOaORZP.png "d6 Rolls")
+`/d6 [x: required]` - Roll X challenge dice. Minimum 1. Maximum 36.
 
-`/d6 [x: required]` - Roll X challenge dice.
+![d6 Rolls](https://i.imgur.com/hmTpq4z.png "d6 Rolls")
 
 `/d20` [target: required] [difficulty: default 0, optional] [crit range: default 1, optional] [complication range: default 20, optional] [dice: default 2, optional] - Perform d20 roll(s) with the target range to meet.
+
+![d20 Rolls](https://i.imgur.com/8xcZ9F7.png "d20 Rolls")
 
 /[Generate technobabble](https://i.imgur.com/ZjEKeUc.jpg "Generate technobabble")
 
@@ -117,9 +126,14 @@ There's a section mentioning how to generate the bot's auth token. That token is
 
 ```
 token=[ADD YOUR AUTH TOKEN HERE]
-prefix=/
+client_id=[BOT'S CLIENT ID]
+port=8080 # will differ depending on your server's deployment requirements
+bot_name='Majel'
 redis_host=127.0.0.1
 redis_port=6379
+redis_password=[REDIS SERVER PASSWORD]
+feature_sta=true # if using STA features
+feature_2d20=true # if using 2d20 features
 ```
 Copy the auth token as mentioned in the tutorial and replace [ADD YOUR AUTH TOKEN HERE]
 
@@ -161,7 +175,7 @@ The bot is now running. If you have invited it to your server as above, it is no
 
 On your computer, needs to be on at least during the game session if not all the time. I initially hosted Majel on a Raspberry PI.
 
-You can also deploy to AWS free tier, which is my current solution.
+I'm currently using Microsoft Azure to host my servers and connected to github to perform automatic deployments.
 
 # Contributors
 

@@ -18,8 +18,17 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
+const d6Result = [
+  '<:d6_1:1018721305601777704> ',
+  '<:d6_2:1018721306730049557> ',
+  '<:d6_0:1018721944650121237> ',
+  '<:d6_0:1018721944650121237> ',
+  '<:d6_fx:1018719877906837545> ',
+  '<:d6_fx:1018719877906837545> '
+]
 
 module.exports = {
+  d6Result,
   globalComplication: 20,
 
   /**
@@ -32,11 +41,9 @@ module.exports = {
     let rawResult = ""
     let numericResult = 0
     let fxResult = 0
-    for (let i = 0; i < numDice; ++i) {
-      if (rawResult !== "") {
-        rawResult += ", "
-      }
-
+    let maxDice = Math.min(numDice, 36)
+    maxDice = Math.max(maxDice, 1)
+    for (let i = 0; i < maxDice; ++i) {
       let roll = Math.floor(Math.random() * 6) + 1
 
       if (roll < 3) {
@@ -47,7 +54,7 @@ module.exports = {
         ++fxResult
       }
 
-      rawResult += roll
+      rawResult += d6Result[roll - 1]
     }
 
     return {

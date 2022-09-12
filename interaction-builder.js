@@ -20,16 +20,16 @@
  */
 
 const { MessageEmbed } = require('discord.js');
-const alienGenerator = require("./alien-generator")
-const dice = require("./dice")
+const alienGenerator = require('./alien-generator')
+const dice = require('./dice')
 const pcActions = require('./data/pc-actions.json')
 const pcMinorActions = require('./data/pc-minor-actions.json')
 const pcAttackProperties = require('./data/pc-attack-properties.json')
-const shipActions = require("./data/ship-actions.json")
-const shipMinorActions = require("./data/ship-minor-actions.json")
-const shipAttackProperties = require("./data/ship-attack-properties.json")
-const determination = require("./data/determination.json")
-const momentum = require("./data/momentum.json")
+const shipActions = require('./data/ship-actions.json')
+const shipMinorActions = require('./data/ship-minor-actions.json')
+const shipAttackProperties = require('./data/ship-attack-properties.json')
+const determination = require('./data/determination.json')
+const momentum = require('./data/momentum.json')
 const is2d20Feature = process.env.feature_2d20
 
 module.exports = {
@@ -43,24 +43,23 @@ module.exports = {
 
     return new MessageEmbed()
       .setTitle(msg.user.username)
-      .setDescription('D6 Roll Result')
+      .setDescription('D6 Roll Result\n<:d6_0:1018721944650121237> = 0\n<:d6_1:1018721305601777704> = 1\n<:d6_2:1018721306730049557> = 2\n<:d6_fx:1018719877906837545> = 1, plus Effect')
       .setThumbnail(game.images.d6)
       .addFields(
         {
-          name: "Raw Result",
-          value: rawResult,
-          inline: true,
-        },
-        {
-          name: "Numeric Result",
+          name: 'Numeric Result',
           value: numericResult.toString(),
           inline: true,
         },
         {
-          name: "FX Result",
+          name: 'FX Result',
           value: fxResult.toString(),
           inline: true,
-        }
+        },
+        {
+          name: 'Raw Result',
+          value: rawResult,
+        },
       )
   },
 
@@ -87,37 +86,37 @@ module.exports = {
       .setThumbnail(game.images.d20)
       .addFields(
         {
-          name: "Target",
+          name: 'Target',
           value: target.toString(),
           inline: true,
         },
         {
-          name: "Difficulty",
+          name: 'Difficulty',
           value: difficulty.toString(),
           inline: true,
         },
         {
-          name: "Critical Range",
+          name: 'Critical Range',
           value: critRange.toString(),
           inline: true,
         },
         {
-          name: "Complication Range",
+          name: 'Complication Range',
           value: compRange.toString(),
           inline: true,
         },
         {
-          name: "Raw Result",
+          name: 'Raw Result',
           value: rawResult,
           inline: true,
         },
         {
-          name: "Success(es)",
+          name: 'Success(es)',
           value: success.toString(),
           inline: true,
         },
         {
-          name: "Complication(s)",
+          name: 'Complication(s)',
           value: complication.toString(),
           inline: true,
         }
@@ -182,14 +181,14 @@ module.exports = {
 
     let alien = alienGenerator.alien()
     for (let key in alien) {
-      if (key !== "Traits") {
+      if (key !== 'Traits') {
         fields.push({
           name: key,
           value: alien[key],
         })
       } else {
         fields.push({
-          name: "Trait - " + alien[key].name,
+          name: 'Trait - ' + alien[key].name,
           value: alien[key].description,
           inline: true,
         })
