@@ -37,17 +37,17 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 ![d20 Rolls](https://i.imgur.com/8xcZ9F7.png "d20 Rolls")
 
-/[Generate technobabble](https://i.imgur.com/ZjEKeUc.jpg "Generate technobabble")
+![Generate technobabble](https://i.imgur.com/ZjEKeUc.jpg "Generate technobabble")
 
 `/babble` - Generate a random techno babble phrase and DM the user.
 
 `/medbabble` - Generate a random medical babble phrase and DM the user.
 
-/[Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
+![Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
 
 `/support` - Generate a random support character. Use `/support help`for more details.
 
-/[Generate a random alien](https://i.imgur.com/kuuDYnj.jpg "Generate a random alien")
+![Generate a random alien](https://i.imgur.com/kuuDYnj.jpg "Generate a random alien")
 
 `/alien` - Generate a random alien species.
 
