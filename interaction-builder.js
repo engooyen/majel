@@ -72,6 +72,7 @@ module.exports = {
       rawResult,
       success,
       complication,
+      difficulty
     } = dice.rollD20(numDice, args)
 
     if (is2d20Feature && !game) {
@@ -88,6 +89,11 @@ module.exports = {
         {
           name: "Target",
           value: target.toString(),
+          inline: true,
+        },
+        {
+          name: "Difficulty",
+          value: difficulty.toString(),
           inline: true,
         },
         {

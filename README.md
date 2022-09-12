@@ -4,13 +4,7 @@ Discord bot for use with Star Trek Adventures role playing game. This will help 
 
 # Add Majel To Your Server
 
-> Add this bot if you want the command prefixes to start with "!".
-
 https://discordapp.com/api/oauth2/authorize?client_id=538555398521618432&permissions=51200&scope=bot
-
-> Add this bot if you want the command prefixes to start with "/".
-
-https://discordapp.com/api/oauth2/authorize?client_id=729181873024139294&permissions=51200&scope=bot
 
 # Community & Support
 
@@ -22,97 +16,72 @@ Support this project: https://www.patreon.com/majeldiscordbot
 
 # Majel - Star Trek Adventures Bot Command List
 
-> Note - "/" prefix is also supported depending which bot is added to your server.
+`/help` - Displays all possible commands Majel can understand.
 
-`!help` - Displays all possible commands Majel can understand.
+`/addme` - Invite me to your game.
 
-`!addme` - Invite me to your game!
+`/about` - Information on development and source code.
 
-`!about` - Information on development and source code.
+/[d6 Rolls](https://i.imgur.com/DOaORZP.png "d6 Rolls")
 
-![d6 Rolls](https://i.imgur.com/DOaORZP.png "d6 Rolls")
+`/d6 [x: required]` - Roll X challenge dice.
 
-`!d6` - Roll a challenge die.
+`/d20` [target: required] [difficulty: default 0, optional] [crit range: default 1, optional] [complication range: default 20, optional] [dice: default 2, optional] - Perform d20 roll(s) with the target range to meet.
 
-`!Xd6` - Roll X challenge dice (e.g. Roll 5 d6 = !5d6). X can be left blank, defaults to 1.
+/[Generate technobabble](https://i.imgur.com/ZjEKeUc.jpg "Generate technobabble")
 
-![d20 Rolls](https://i.imgur.com/BliWREK.png "d20 Rolls")
+`/babble` - Generate a random techno babble phrase and DM the user.
 
-`!d20` - Roll a d20.
+`/medbabble` - Generate a random medical babble phrase and DM the user.
 
-`!Xd20` - Roll x d20s (e.g. Roll 2 d20 = !2d20). X can be left blank, defaults to 1.
+/[Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
 
-`!Xd20` [Target] - Roll x d20s with a target number (e.g. Roll 2 d20 with target number of 15 = !2d20 15). X can be left blank, defaults to 1.
+`/support` - Generate a random support character. Use `/support help`for more details.
 
-`!Xd20` [Target][crit range] - Roll x d20s with a target number and crit range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 = !2d20 15 5). X can be left blank, defaults to 1.
+/[Generate a random alien](https://i.imgur.com/kuuDYnj.jpg "Generate a random alien")
 
-`!Xd20` [Target][crit range] [Complication Range] - Roll x d20s with a target number, crit range, and complication range (e.g. Roll 2 d20 with target number of 15 with crit range to 5 and comp range to 17 = !2d20 15 5 17). X can be left blank, defaults to 1.
+`/alien` - Generate a random alien species.
 
-![Generate technobabble](https://i.imgur.com/ZjEKeUc.jpg "Generate technobabble")
+**Reference for player characters (PC)** TODO: Disabled for now. Move this into the rules menu
 
-`!babble` - Generate a random techno babble phrase and DM the user.
+`/pc actions` - The actions the PC can perform.
 
-`!medbabble` - Generate a random medical babble phrase and DM the user.
+`/pc action minor actions` - The minor actions the PC can perform.
 
-![Generate a random support character](https://i.imgur.com/66gHBEU.png "Generate a random support character")
+`/pc [action or minor action]` - Details of a PC action or minor action by name. See `/pc actions` or `/pc minor actions`.
 
-`!support` - Generate a random support character. Use `!support help`for more details.
+`/pc attack properties` - Attack properties of a PC attack.
 
-![Generate a random alien](https://i.imgur.com/kuuDYnj.jpg "Generate a random alien")
+`/determination` - Determination spend table.
 
-`!alien` - Generate a random alien species.
+`/momentum` - Momentum spend table.
 
-**Reference for player characters (PC)**
+**Reference for ship characters** TODO: Disabled for now. Move this into the rules menu
 
-`!pc actions` - The actions the PC can perform.
+`/ship actions` - Lists the stations and the name of the actions that can be performed at that station.
 
-`!pc action minor actions` - The minor actions the PC can perform.
+`/ship minor actions` - The minor actions the PC can perform.
 
-`!pc [action or minor action]` - Details of a PC action or minor action by name. See `!pc actions` or `!pc minor actions`.
+`/ship [action or minor action or station]` - Details of a ship action by name. See `/ship actions` or `/ship minor actions` for possible actions.
 
-`!pc attack properties` - Attack properties of a PC attack.
-
-`!determination` - Determination spend table.
-
-`!momentum` - Momentum spend table.
-
-**Reference for ship characters**
-
-`!ship actions` - Lists the stations and the name of the actions that can be performed at that station.
-
-`!ship minor actions` - The minor actions the PC can perform.
-
-`!ship [action or minor action or station]` - Details of a ship action by name. See `!ship actions` or `!ship minor actions` for possible actions.
-
-`!ship attack properties` - Attack properties of a ship attack.
+`/ship attack properties` - Attack properties of a ship attack.
 
 **Momemtum and Threat Pools**
 
-`!pool` - Show the global pool and all channels' pool on server.
+`/m or /t global` - A prompt will be presented to the user to add or subtract the momentum or threat to the global pool.
 
-`!pool here` - Show the global pool and the current channel's pool.
-
-`!pool reset` - Reset the global pool and delete all other pools on this server.
-
-`!pool reset here` - Delete this channel's pool.
-
-`!m or !t` - Show the global momentum or threat and the current channel's momentum or threat.
-
-`!m or !t [add, sub, set][some value]` - Add, subtract, or set the momentum or threat to the global pool.
-
-`!m or !t [add, sub, set][some value] here` - Add, subtract, or set the momentum or threat to the current channel's pool.
+`/m or /t here` - A prompt will be presented to the user to add or subtract the momentum or threat to the current channel's pool.
 
 **Traits**
 
-`!trait` - List all containers and their traits.
+`/trait get [container]` - List all containers if container is left blank otherwise show the traits and values for a specific container.
 
-`!trait set [container] [trait] [value]` - Set a value to a trait within a container.
+`/trait set [container] [trait] [value]` - Set a value to a trait within a container.
 
-`!trait del [container] [trait]` - Delete a trait within a container.
+`/trait del [container] [trait]` - Delete a trait within a container.
 
-`!trait del [container]` - Delete a container.
+`/trait del [container]` - Delete a container. TODO: Delete container by container name
 
-`!trait [container]` - List all traits for this container.
 
 # Developer Setup
 
@@ -148,7 +117,7 @@ There's a section mentioning how to generate the bot's auth token. That token is
 
 ```
 token=[ADD YOUR AUTH TOKEN HERE]
-prefix=!
+prefix=/
 redis_host=127.0.0.1
 redis_port=6379
 ```

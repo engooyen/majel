@@ -57,9 +57,9 @@ commands.push(new SlashCommandBuilder()
     )
     .addIntegerOption(option =>
         option.setName('difficulty')
-            .setDescription('Difficulty of this action.')
-            .setRequired(true)
+            .setDescription('Difficulty of this action (Default 0).')
             .addChoices(
+                { name: '0', value: 0 },
                 { name: '1', value: 1 },
                 { name: '2', value: 2 },
                 { name: '3', value: 3 },
@@ -69,10 +69,9 @@ commands.push(new SlashCommandBuilder()
     )
     .addIntegerOption(option =>
         option.setName('crit')
-            .setDescription('Critical range.')
-            .setRequired(true)
+            .setDescription('Critical range (Default 1).')
             .addChoices(
-                { name: '1', value: 1 },
+                { name: '1', value: 1, default: true },
                 { name: '2', value: 2 },
                 { name: '3', value: 3 },
                 { name: '4', value: 4 },
@@ -81,16 +80,26 @@ commands.push(new SlashCommandBuilder()
     )
     .addIntegerOption(option =>
         option.setName('comp')
-            .setDescription('Complication range.')
-            .setRequired(true)
+            .setDescription('Complication range (Default 20).')
             .addChoices(
-                { name: '20', value: 20 },
+                { name: '20', value: 20, default: true },
                 { name: '19', value: 19 },
                 { name: '18', value: 18 },
                 { name: '17', value: 17 },
                 { name: '16', value: 16 },
                 { name: '15', value: 15 },
                 { name: '14', value: 14 }
+            )
+    )
+    .addIntegerOption(option =>
+        option.setName('dice')
+            .setDescription('Number of dice to roll (Default 2).')
+            .addChoices(
+                { name: '1', value: 1 },
+                { name: '2', value: 2, default: true },
+                { name: '3', value: 3 },
+                { name: '4', value: 4 },
+                { name: '5', value: 5 }
             )
     )
     .toJSON()

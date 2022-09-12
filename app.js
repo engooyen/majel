@@ -30,7 +30,7 @@ const babble = require('./babble')
 const builders = require('./interaction-builder')
 const commands = require('./commands/commands');
 const diceRollInteraction = require('./interactions/dice-roll')
-const traiutInteraction = require('./interactions/trait')
+const traitInteraction = require('./interactions/trait')
 const poolInteraction = require('./interactions/pool')
 const about = require('./data/about.json')[0]
 const express = require('express')
@@ -141,7 +141,7 @@ bot.on('interactionCreate', async interaction => {
       await poolInteraction.buildPrompt(interaction, commandName, subCmd)
     } else if (commandName === 'trait') {
       const subCmd = options.getSubcommand()
-      await traiutInteraction.buildPrompt(interaction, subCmd)
+      await traitInteraction.buildPrompt(interaction, subCmd)
     }
   } catch (error) {
     await interaction.reply({

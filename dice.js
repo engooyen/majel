@@ -64,6 +64,7 @@ module.exports = {
     let target = compRange - 1 // everything under a complication can be a success
     let success = 0
     let complication = 0
+    let difficulty = 0
 
     if (args.length > 0) {
       target = parseInt(args[0])
@@ -75,6 +76,10 @@ module.exports = {
 
     if (args.length > 2) {
       compRange = parseInt(args[2])
+    }
+
+    if (args.length > 3) {
+      difficulty = parseInt(args[3])
     }
 
     for (let i = 0; i < numDice; ++i) {
@@ -106,6 +111,7 @@ module.exports = {
       rawResult,
       success,
       complication,
+      difficulty
     }
   },
 }
