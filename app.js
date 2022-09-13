@@ -33,6 +33,7 @@ const diceRollInteraction = require('./interactions/dice-roll')
 const traitInteraction = require('./interactions/trait')
 const poolInteraction = require('./interactions/pool')
 const about = require('./data/about.json')[0]
+const help = require('./data/help.json')
 const express = require('express')
 const app = express()
 const port = process.env.port
@@ -41,7 +42,7 @@ const clientId = process.env.client_id
 // help content
 let addMeMsg =
   `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&permissions=51200&scope=bot`
-
+//https://discordapp.com/api/oauth2/authorize?client_id=734409451162959962&permissions=51200&scope=bot
 //Configure logger settings
 const logger = winston.createLogger({
   level: 'debug',
@@ -53,7 +54,12 @@ const logger = winston.createLogger({
 })
 
 // Initialize Discord Bot
-const bot = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] })
+const bot = new Discord.Client({
+  intents: [
+    Discord.Intents.FLAGS.GUILDS,
+    Discord.Intents.FLAGS.GUILD_MESSAGES
+  ]
+})
 
 bot.login(process.env.token)
 const rest = new REST({ version: '9' }).setToken(process.env.token);
@@ -105,6 +111,9 @@ bot.on('interactionCreate', async interaction => {
       await interaction.reply({
         content: addMeMsg
       });
+    } else if (commandName === 'help') {
+      await interaction.reply({ content: help.help })
+      await interaction.followUp({ content: help.help2 })
     } else if (commandName === 'game') {
       const subCmd = options.getSubcommand()
       await diceRollInteraction.handleGame(interaction, subCmd)

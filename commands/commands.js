@@ -31,6 +31,12 @@ commands.push(new SlashCommandBuilder()
 )
 
 commands.push(new SlashCommandBuilder()
+    .setName('help')
+    .setDescription('List available commands.')
+    .toJSON()
+)
+
+commands.push(new SlashCommandBuilder()
     .setName('addme')
     .setDescription('Invite me to your game!')
     .toJSON()
