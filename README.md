@@ -31,7 +31,7 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 `/d6 [x: required]` - Roll X challenge dice. Minimum 1. Maximum 36.
 
-![d6 Rolls](https://i.imgur.com/hmTpq4z.png "d6 Rolls")
+![d6 Rolls](https://i.imgur.com/9DrLkjB.png "d6 Rolls")
 
 `/d20` [target: required] [difficulty: default 0, optional] [crit range: default 1, optional] [complication range: default 20, optional] [dice: default 2, optional] - Perform d20 roll(s) with the target range to meet.
 
@@ -51,35 +51,41 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 `/alien` - Generate a random alien species.
 
-**Reference for player characters (PC)** TODO: Disabled for now. Move this into the rules menu
+**Reference for player characters (PC)**
 
-`/pc actions` - The actions the PC can perform.
+`/pc list` - List pc rules lookup sub-commands.
 
-`/pc action minor actions` - The minor actions the PC can perform.
+`/pc actions [action]` - Get description of an action.
 
-`/pc [action or minor action]` - Details of a PC action or minor action by name. See `/pc actions` or `/pc minor actions`.
+`/pc minor-action [action]` - Get description of a minor action.
 
-`/pc attack properties` - Attack properties of a PC attack.
+`/pc attack-property [property]`. Get description of a pc attack property.
 
 `/determination` - Determination spend table.
 
 `/momentum` - Momentum spend table.
 
-**Reference for ship characters** TODO: Disabled for now. Move this into the rules menu
+**Reference for ship characters**
 
-`/ship actions` - Lists the stations and the name of the actions that can be performed at that station.
+`/ship list` - List ship rules lookup sub-commands.
 
-`/ship minor actions` - The minor actions the PC can perform.
+`/ship overview` - Get an overview of what ship actions belongs to which deparment.
 
-`/ship [action or minor action or station]` - Details of a ship action by name. See `/ship actions` or `/ship minor actions` for possible actions.
+`/ship actions-page-1 [action]` - Get description of an action (page 1).
 
-`/ship attack properties` - Attack properties of a ship attack.
+`/ship actions-page-2 [action]` - Get description of an action (page 2).
+
+`/ship actions-page-3 [action]` - Get description of an action (page 3).
+
+`/ship minor-actions [action]` - The minor actions the PC can perform.
+
+`/ship attack-properties [property]` - Attack properties of a ship attack.
 
 **Momemtum and Threat Pools**
 
-`/m or /t global` - A prompt will be presented to the user to add or subtract the momentum or threat to the global pool.
+`/m or /t menu [global or here]` - A prompt will be presented to the user to add or subtract the momentum or threat from or to the pool.
 
-`/m or /t here` - A prompt will be presented to the user to add or subtract the momentum or threat to the current channel's pool.
+`/m or /t set [global or here] [amount]` - Directly set the amount to the momemtum or threat pool.
 
 **Traits**
 
@@ -89,7 +95,7 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 `/trait del [container] [trait]` - Delete a trait within a container.
 
-`/trait del [container]` - Delete a container. TODO: Delete container by container name
+`/trait del [container]` - Delete a container.
 
 
 # Developer Setup

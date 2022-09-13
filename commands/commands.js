@@ -20,6 +20,13 @@
  */
 
 const { SlashCommandBuilder } = require('@discordjs/builders')
+const pcActions = require('../data/pc-actions.json')
+const pcMinorActions = require('../data/pc-minor-actions.json')
+const pcAttackProperties = require('../data/pc-attack-properties.json')
+const shipOverview = require('../data/ship-actions-overview.json')
+const shipActions = require('../data/ship-actions.json')
+const shipMinorActions = require('../data/ship-minor-actions.json')
+const shipAttackProperties = require('../data/ship-attack-properties.json')
 const commands = []
 const isStaFeature = process.env.feature_sta
 const is2d20Feature = process.env.feature_2d20
@@ -116,13 +123,39 @@ commands.push(new SlashCommandBuilder()
     .setDescription('Manage momentum.')
     .addSubcommand(subcommand =>
         subcommand
-        .setName('global')
-        .setDescription('Manage global momentum pool.')
+        .setName('menu')
+        .setDescription('Bring up a menu to incrementally set the value of the momentum pool.')
+        .addStringOption(option =>
+            option
+            .setName('location')    
+            .setDescription('Manage the global or current channel\'s momentum pool.')
+            .setRequired(true)
+            .addChoices(
+                { name: 'global', value: 'global' },
+                { name: 'here', value: 'here' }
+            )
+        )
     )
     .addSubcommand(subcommand =>
         subcommand
-        .setName('here')
-        .setDescription('Manage momentum pool for this channel only.')
+        .setName('set')
+        .setDescription('Directly set the value of the momentum pool.')
+        .addStringOption(option =>
+            option
+            .setName('location')    
+            .setDescription('Manage the global or current channel\'s momentum pool.')
+            .setRequired(true)
+            .addChoices(
+                { name: 'global', value: 'global' },
+                { name: 'here', value: 'here' }
+            )
+        )
+        .addIntegerOption(option =>
+            option
+            .setName('amount')    
+            .setDescription('The pool\s new amount.')
+            .setRequired(true)
+        )
     )
     .toJSON()
 )
@@ -132,13 +165,39 @@ commands.push(new SlashCommandBuilder()
     .setDescription('Manage threat.')
     .addSubcommand(subcommand =>
         subcommand
-        .setName('global')
-        .setDescription('Manage global threat pool.')
+        .setName('menu')
+        .setDescription('Bring up a menu to incrementally set the value of the threat pool.')
+        .addStringOption(option =>
+            option
+            .setName('location')    
+            .setDescription('Manage the global or current channel\'s threat pool.')
+            .setRequired(true)
+            .addChoices(
+                { name: 'global', value: 'global' },
+                { name: 'here', value: 'here' }
+            )
+        )
     )
     .addSubcommand(subcommand =>
         subcommand
-        .setName('here')
-        .setDescription('Manage threat pool for this channel only.')
+        .setName('set')
+        .setDescription('Directly set the value of the threat pool.')
+        .addStringOption(option =>
+            option
+            .setName('location')    
+            .setDescription('Manage the global or current channel\'s threat pool.')
+            .setRequired(true)
+            .addChoices(
+                { name: 'global', value: 'global' },
+                { name: 'here', value: 'here' }
+            )
+        )
+        .addIntegerOption(option =>
+            option
+            .setName('amount')    
+            .setDescription('The pool\s new amount.')
+            .setRequired(true)
+        )
     )
     .toJSON()
 )
@@ -187,7 +246,6 @@ commands.push(new SlashCommandBuilder()
         .addStringOption(option =>
             option.setName('trait')
                 .setDescription('The trait to modify.')
-                .setRequired(true)
         )
     )
     .toJSON()
@@ -195,9 +253,193 @@ commands.push(new SlashCommandBuilder()
 
 // STA specific features
 if (isStaFeature) {
+    const pcActionsOptions = []
+    for (let action of Object.keys(pcActions)) {
+        pcActionsOptions.push({
+            name: action,
+            value: action
+        })
+    }
+
+    const pcMinorActionsOptions = []
+    for (let action of Object.keys(pcMinorActions)) {
+        pcMinorActionsOptions.push({
+            name: action,
+            value: action
+        })
+    }
+
+    const pcAttackProps = []
+    for (let action of Object.keys(pcAttackProperties)) {
+        pcAttackProps.push({
+            name: action,
+            value: action
+        })
+    }
     commands.push(new SlashCommandBuilder()
-        .setName('rules')
-        .setDescription('Bring up a rules lookup menu.')
+        .setName('pc')
+        .setDescription('Rules lookup for the pc.')
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('list')
+            .setDescription('List PC rules lookup sub-commands.')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('actions')
+            .setDescription('Get description of an action.')
+            .addStringOption(option =>
+                option.setName('action')
+                    .setDescription('The pc action.')
+                    .setRequired(true)
+                    .addChoices(...pcActionsOptions)
+            )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('minor-actions')
+            .setDescription('Get description of a minor action.')
+            .addStringOption(option =>
+                option.setName('action')
+                    .setDescription('The pc minor action.')
+                    .setRequired(true)
+                    .addChoices(...pcMinorActionsOptions)
+            )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('attack-properties')
+            .setDescription('Get description of a pc attack property.')
+            .addStringOption(option =>
+                option.setName('property')
+                    .setDescription('The pc attack property.')
+                    .setRequired(true)
+                    .addChoices(...pcAttackProps)
+            )
+        )
+        .toJSON()
+    )
+    
+    const shipActionsChoices1 = []
+    const shipActionsChoices2 = []
+    const shipActionsChoices3 = []
+    for (let action of Object.keys(shipActions).splice(0, 12)) {
+        shipActionsChoices1.push({
+            name: action,
+            value: action
+        })
+    }
+
+    for (let action of Object.keys(shipActions).splice(12, 25)) {
+        shipActionsChoices2.push({
+            name: action,
+            value: action
+        })
+    }
+
+    for (let action of Object.keys(shipActions).splice(25, 35)) {
+        shipActionsChoices3.push({
+            name: action,
+            value: action
+        })
+    }
+
+    const shipMinorActionsChoices = []
+    for (let action of Object.keys(shipMinorActions)) {
+        shipMinorActionsChoices.push({
+            name: action,
+            value: action
+        })
+    }
+
+    const shipAttackProps = []
+    for (let action of Object.keys(shipAttackProperties)) {
+        shipAttackProps.push({
+            name: action,
+            value: action
+        })
+    }
+
+    commands.push(new SlashCommandBuilder()
+        .setName('ship')
+        .setDescription('Rules lookup for the ship.')
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('list')
+            .setDescription('List ship rules lookup sub-commands.')
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('actions-page-1')
+            .setDescription('Get description of an action (page 1).')
+            .addStringOption(option =>
+                option.setName('action')
+                    .setDescription('The ship action.')
+                    .setRequired(true)
+                    .addChoices(...shipActionsChoices1)
+            )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('actions-page-2')
+            .setDescription('Get description of an action (page 2).')
+            .addStringOption(option =>
+                option.setName('action')
+                    .setDescription('The ship action.')
+                    .setRequired(true)
+                    .addChoices(...shipActionsChoices2)
+            )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('actions-page-3')
+            .setDescription('Get description of an action (page 3).')
+            .addStringOption(option =>
+                option.setName('action')
+                    .setDescription('The ship action.')
+                    .setRequired(true)
+                    .addChoices(...shipActionsChoices3)
+            )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('minor-actions')
+            .setDescription('Get description of a minor action.')
+            .addStringOption(option =>
+                option.setName('action')
+                    .setDescription('The ship minor action.')
+                    .setRequired(true)
+                    .addChoices(...shipMinorActionsChoices)
+            )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('attack-properties')
+            .setDescription('Get description of a ship attack property.')
+            .addStringOption(option =>
+                option.setName('property')
+                    .setDescription('The attack property.')
+                    .setRequired(true)
+                    .addChoices(...shipAttackProps)
+            )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('overview')
+            .setDescription('Get an overview of what ship actions belongs to which deparment.')
+        )
+        .toJSON()
+    )
+
+    commands.push(new SlashCommandBuilder()
+        .setName('momentum')
+        .setDescription('Display the momentum spends table.')
+        .toJSON()
+    )
+
+    commands.push(new SlashCommandBuilder()
+        .setName('determination')
+        .setDescription('Display the determination spends table.')
         .toJSON()
     )
 

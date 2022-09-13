@@ -32,6 +32,7 @@ const commands = require('./commands/commands');
 const diceRollInteraction = require('./interactions/dice-roll')
 const traitInteraction = require('./interactions/trait')
 const poolInteraction = require('./interactions/pool')
+const rulesInteraction = require('./interactions/rules')
 const about = require('./data/about.json')[0]
 const help = require('./data/help.json')
 const express = require('express')
@@ -112,7 +113,7 @@ bot.on('interactionCreate', async interaction => {
         content: addMeMsg
       });
     } else if (commandName === 'help') {
-      await interaction.reply({ content: help.help })
+      await interaction.reply({ content: help.help1 })
       await interaction.followUp({ content: help.help2 })
     } else if (commandName === 'game') {
       const subCmd = options.getSubcommand()
@@ -146,11 +147,41 @@ bot.on('interactionCreate', async interaction => {
         embeds: [utils.generateSupportCharacter()]
       });
     } else if (commandName === 'm' || commandName === 't') {
-      const subCmd = options.getSubcommand()
-      await poolInteraction.buildPrompt(interaction, commandName, subCmd)
+      await poolInteraction.buildPrompt(interaction, commandName)
     } else if (commandName === 'trait') {
       const subCmd = options.getSubcommand()
       await traitInteraction.buildPrompt(interaction, subCmd)
+    } else if (commandName === 'pc') {
+      const subCmd = options.getSubcommand()
+      if (subCmd === 'list') {
+        await rulesInteraction.handlePcList(interaction)
+      } else if (subCmd === 'actions') {
+        await rulesInteraction.handlePcAction(interaction)
+      } else if (subCmd === 'minor-actions') {
+        await rulesInteraction.handlePcMinorAction(interaction)
+      } else if (subCmd === 'attack-properties') {
+        await rulesInteraction.handlePcAttackProperty(interaction)
+      }
+    } else if (commandName === 'ship') {
+      const subCmd = options.getSubcommand()
+      if (subCmd === 'list') {
+        await rulesInteraction.handleShipList(interaction)
+      } else if ([
+        'actions-page-1',
+        'actions-page-2',
+        'actions-page-3'].includes(subCmd)) {
+        await rulesInteraction.handleShipAction(interaction)
+      } else if (subCmd === 'minor-actions') {
+        await rulesInteraction.handleShipMinorAction(interaction)
+      } else if (subCmd === 'attack-properties') {
+        await rulesInteraction.handleShipAttackProperty(interaction)
+      } else if (subCmd === 'overview') {
+        await rulesInteraction.handleShipOverview(interaction)
+      }
+    } else if (commandName === 'momentum') {
+      await rulesInteraction.handleMomentum(interaction)
+    } else if (commandName === 'determination') {
+      await rulesInteraction.handleDetermination(interaction)
     }
   } catch (error) {
     await interaction.reply({

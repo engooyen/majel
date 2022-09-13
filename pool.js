@@ -208,7 +208,7 @@ module.exports = {
       guildData[channelId] = {
         momentum: 0,
         threat: 0,
-        name: msg.channel.name,
+        name: channel.name,
       }
     }
 

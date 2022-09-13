@@ -21,7 +21,6 @@
 
 const Discord = require('discord.js')
 const pool = require('../pool')
-const { LastMessage } = require('../last-message')
 
 const poolFunctions = {
     m: pool.adjustMomentum,
@@ -29,9 +28,11 @@ const poolFunctions = {
 }
 
 module.exports = {
-    async buildPrompt(interaction, cmd, subCmd) {
-        const guild = interaction.guild
-        const channel = interaction.channel
+    async buildPrompt(interaction, cmd, loc) {
+        const { options, guild, channel } = interaction
+        const subCmd = options?.getSubcommand()
+        const location = options?.getString('location') || loc
+        const amount = options?.getInteger('amount')
         const action = cmd
         // const lastMsg = new LastMessage(guild, channel, action)
 
@@ -41,7 +42,7 @@ module.exports = {
                     .setCustomId(JSON.stringify({
                         action,
                         context: {
-                            channel: subCmd === 'here' ? channel.name : 'global',
+                            channel: location === 'here' ? channel.name : 'global',
                             op: 'add',
                             value: 1
                         }
@@ -52,7 +53,7 @@ module.exports = {
                     .setCustomId(JSON.stringify({
                         action,
                         context: {
-                            channel: subCmd === 'here' ? channel.name : 'global',
+                            channel: location === 'here' ? channel.name : 'global',
                             op: 'sub',
                             value: 1
                         }
@@ -62,8 +63,14 @@ module.exports = {
             )
 
         // await lastMsg.delete(interaction)
+        let embed
 
-        const embed = await poolFunctions[cmd](guild, channel, 'add', 0, subCmd === 'here')
+        if (subCmd === 'set') {
+            embed = await poolFunctions[cmd](guild, channel, 'set', amount, location === 'here')
+        } else {
+            embed = await poolFunctions[cmd](guild, channel, 'add', 0, location === 'here')
+        }
+        
         await interaction.reply({
             embeds: [embed],
             components: [row]

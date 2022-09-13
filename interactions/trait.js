@@ -24,10 +24,10 @@ const traits = require('../trait');
 
 module.exports = {
     async buildPrompt(interaction, subCmd) {
-        const guild = interaction.guild;
-        const container = interaction.options?.getString('container')
-        const trait = interaction.options?.getString('trait')
-        const value = interaction.options?.getString('value')
+        const { guild, options } = interaction
+        const container = options?.getString('container')
+        const trait = options?.getString('trait')
+        const value = options?.getString('value')
         await interaction.deferReply()
         const embed = await traits.doTrait(guild.id, subCmd, container, trait, value);
         await interaction.editReply({
