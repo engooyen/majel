@@ -42,8 +42,7 @@ const clientId = process.env.client_id
 
 // help content
 let addMeMsg =
-  `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&permissions=51200&scope=bot`
-//https://discordapp.com/api/oauth2/authorize?client_id=734409451162959962&permissions=51200&scope=bot
+  `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&permissions=137439266816&scope=bot`
 //Configure logger settings
 const logger = winston.createLogger({
   level: 'debug',
