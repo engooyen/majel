@@ -18,17 +18,8 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-const d6Result = [
-  '<:d6_1:1019054097657241650> ',
-  '<:d6_2:1019054098382856304> ',
-  '<:d6_0:1019054096658989076> ',
-  '<:d6_0:1019054096658989076> ',
-  '<:d6_fx:1019054099817308202> ',
-  '<:d6_fx:1019054099817308202> '
-]
 
 module.exports = {
-  d6Result,
   globalComplication: 20,
 
   /**
@@ -37,7 +28,7 @@ module.exports = {
    * @param numDice The number of dice.
    * @returns Formatted result as a string/
    */
-  rollD6(numDice) {
+  rollD6(numDice, game) {
     let rawResult = ''
     let rawResultValues = ''
     let numericResult = 0
@@ -55,7 +46,9 @@ module.exports = {
         ++fxResult
       }
 
-      rawResult += d6Result[roll - 1]
+      const d6Emojis = game.images['d6-emojis']
+
+      rawResult += d6Emojis[roll - 1]
       if (rawResultValues) {
         rawResultValues += ', '
       }

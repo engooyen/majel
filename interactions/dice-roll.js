@@ -62,6 +62,8 @@ module.exports = {
     const crit = interaction.options.getInteger('crit') || 1
     const comp = interaction.options.getInteger('comp') || 20
     const dice = interaction.options.getInteger('dice') || 2
+    const gameConfig = new GameConfig(interaction.guild)
+    const game = await gameConfig.getGame()
 
     if (is2d20Feature && !game) {
       const warning = new MessageEmbed()
@@ -74,10 +76,8 @@ module.exports = {
 
       return
     }
-
-    const gameConfig = new GameConfig(interaction.guild)
-    const game = await gameConfig.getGame()
-    const result = builders.rollD20(dice, [target, crit, comp, difficulty], interaction, await gameConfig.getGame())
+    
+    const result = builders.rollD20(dice, [target, crit, comp, difficulty], interaction, game)
     await interaction.reply({
       embeds: [result],
     })
@@ -111,6 +111,8 @@ module.exports = {
         comp = parseInt(params[4]) || 20
       }
 
+      const gameConfig = new GameConfig(interaction.guild)
+      const game = await gameConfig.getGame()
       if (is2d20Feature && !game) {
         const warning = new MessageEmbed()
           .setTitle('Game not set!')
@@ -123,9 +125,7 @@ module.exports = {
         return
       }
 
-      const gameConfig = new GameConfig(interaction.guild)
-      const game = await gameConfig.getGame()
-      const result = builders.rollD20(dice, [target, crit, comp, difficulty], interaction, await gameConfig.getGame())
+      const result = builders.rollD20(dice, [target, crit, comp, difficulty], interaction, game)
       await interaction.reply({
         embeds: [result],
       })

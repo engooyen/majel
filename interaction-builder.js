@@ -34,7 +34,7 @@ const is2d20Feature = process.env.feature_2d20
 
 module.exports = {
   rollD6(numDice, msg, game) {
-    const { rawResult, numericResult, fxResult, rawResultValues } = dice.rollD6(numDice)
+    const { rawResult, numericResult, fxResult, rawResultValues } = dice.rollD6(numDice, game)
     if (is2d20Feature && !game) {
       return new MessageEmbed()
       .setTitle('Game not set!')

@@ -30,7 +30,7 @@ const shipAttackProperties = require('../data/ship-attack-properties.json')
 const commands = []
 const isStaFeature = process.env.feature_sta
 const is2d20Feature = process.env.feature_2d20
-
+//https://discordapp.com/api/oauth2/authorize?client_id=838230765195755541&permissions=137439266816&scope=bot
 commands.push(new SlashCommandBuilder()
     .setName('about')
     .setDescription('Information on development and source code.')
