@@ -119,6 +119,19 @@ commands.push(new SlashCommandBuilder()
 )
 
 commands.push(new SlashCommandBuilder()
+    .setName('r')
+    .setDescription('Replicating the old !Xd20 command behavior.')
+    .addStringOption(option =>
+        option
+        .setName('params')    
+        .setDescription('The parameters are entered in this order: [target] [dice] [difficulty] [crit] [comp].')
+        .setRequired(true)
+    )
+    .toJSON()
+)
+
+
+commands.push(new SlashCommandBuilder()
     .setName('m')
     .setDescription('Manage momentum.')
     .addSubcommand(subcommand =>

@@ -121,6 +121,8 @@ bot.on('interactionCreate', async interaction => {
       await diceRollInteraction.handleD6Roll(interaction)
     } else if (commandName === 'd20') {
       await diceRollInteraction.handleD20Roll(interaction)
+    } else if (commandName === 'r') {
+      await diceRollInteraction.handleD20RollRaw(interaction)
     } else if (commandName === 'about') {
       await interaction.reply({
         content: about

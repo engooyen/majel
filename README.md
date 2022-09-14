@@ -33,7 +33,9 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 ![d6 Rolls](https://i.imgur.com/9DrLkjB.png "d6 Rolls")
 
-`/d20` [target: required] [difficulty: default 0, optional] [crit range: default 1, optional] [complication range: default 20, optional] [dice: default 2, optional] - Perform d20 roll(s) with the target range to meet.
+`/d20 [target: required] [difficulty: default 0, optional] [crit range: default 1, optional] [complication range: default 20, optional] [dice: default 2, optional]` - Perform d20 roll(s) with the target range to meet.
+
+`/r [params]` - Replicating the old !Xd20 command behavior. 'params' is a text field where the roll parameters are entered with a space between each value. The parameters are entered in this order: [target] [dice] [difficulty] [crit] [comp]. [target] is the only required parameter. [dice, 2] [difficulty, 0] [crit, 1] [comp, 20] are optional, but have default values. 
 
 ![d20 Rolls](https://i.imgur.com/8xcZ9F7.png "d20 Rolls")
 

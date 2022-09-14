@@ -62,20 +62,6 @@ module.exports = {
     const crit = interaction.options.getInteger('crit') || 1
     const comp = interaction.options.getInteger('comp') || 20
     const dice = interaction.options.getInteger('dice') || 2
-    const options = []
-    for (let i = 0; i < 5; ++i) {
-      const dieValue = i + 1;
-      options.push({
-        label: `${dieValue} dice`,
-        description: `Roll ${dieValue} dice`,
-        value: JSON.stringify({
-          dice: dieValue,
-          target: target,
-          comp,
-          crit
-        })
-      })
-    }
 
     if (is2d20Feature && !game) {
       const warning = new MessageEmbed()
@@ -89,50 +75,65 @@ module.exports = {
       return
     }
 
-    // const row = new Discord.MessageActionRow()
-    //   .addComponents(
-    //     new Discord.MessageSelectMenu()
-    //       .setCustomId(JSON.stringify({
-    //         action: 'd20'
-    //       }))
-    //       .setPlaceholder('Pick number of d20s to roll')
-    //       .addOptions(options)
-    //   )
-
     const gameConfig = new GameConfig(interaction.guild)
     const game = await gameConfig.getGame()
-    // const embed = new Discord.MessageEmbed()
-    //   .setTitle('Roll d20')
-    //   .setDescription('Difficulty is the number of dice to roll. Add more or less if momentum and threats are used.')
-    //   .setThumbnail(game.images.d20)
-    //   .addFields(
-    //     {
-    //       name: "Target Roll",
-    //       value: (target).toString(),
-    //       inline: true,
-    //     },
-    //     {
-    //       name: "Critical",
-    //       value: crit.toString(),
-    //       inline: true,
-    //     },
-    //     {
-    //       name: "Complication",
-    //       value: comp.toString(),
-    //       inline: true,
-    //     },
-    //     {
-    //       name: "Difficulty",
-    //       value: difficulty.toString(),
-    //       inline: true,
-    //     }
-    //   )
-
     const result = builders.rollD20(dice, [target, crit, comp, difficulty], interaction, await gameConfig.getGame())
     await interaction.reply({
       embeds: [result],
-      // components: [row]
     })
+  },
+  async handleD20RollRaw(interaction) {
+    try {
+      const params = interaction.options.getString('params').split(' ')
+      let dice = 2
+      let target = 10
+      let difficulty = 0
+      let crit = 1
+      let comp = 20
+
+      if (params.length > 0) {
+        target = parseInt(params[0])
+      }
+
+      if (params.length > 1) {
+        dice = parseInt(params[1]) || 2
+      }
+
+      if (params.length > 2) {
+        difficulty = parseInt(params[2]) || 0
+      }
+
+      if (params.length > 3) {
+        crit = parseInt(params[3]) || 1
+      }
+
+      if (params.length > 4) {
+        comp = parseInt(params[4]) || 20
+      }
+
+      if (is2d20Feature && !game) {
+        const warning = new MessageEmbed()
+          .setTitle('Game not set!')
+          .setDescription('/game set [game] to set game and /game list to show supported games.')
+
+        await interaction.reply({
+          embeds: [warning]
+        })
+
+        return
+      }
+
+      const gameConfig = new GameConfig(interaction.guild)
+      const game = await gameConfig.getGame()
+      const result = builders.rollD20(dice, [target, crit, comp, difficulty], interaction, await gameConfig.getGame())
+      await interaction.reply({
+        embeds: [result],
+      })
+    } catch (error) {
+      await interaction.reply({
+        content: error.toString()
+      })
+    }
   },
   async handled20Response(interaction) {
     const gameConfig = new GameConfig(interaction.guild)

@@ -43,7 +43,7 @@ module.exports = {
 
     return new MessageEmbed()
       .setTitle(msg.user.username)
-      .setDescription('D6 Roll Result\n<:d6_0:1019054096658989076> = 0\n<:d6_1:1019054097657241650> = 1\n<:d6_2:1019054098382856304> = 2\n<:d6_fx:1019054099817308202> = 1, plus Effect')
+      .setDescription('D6 Roll Result')
       .setThumbnail(game.images.d6)
       .addFields(
         {
