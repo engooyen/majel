@@ -13,7 +13,11 @@
                 "<:d6_fx:1019054099817308202> "
               ]
         },
-        "dice": {}
+        "dice": {},
+        "pool": {
+            "player": "Momentrum",
+            "gm": "Threat"
+        }
     },
     "fa": {
         "display": "Fallout",
@@ -55,6 +59,10 @@
                     "Right Leg"
                 ]
             }
+        },
+        "pool": {
+            "player": "Player AP",
+            "gm": "Overseer AP"
         }
     }
 }

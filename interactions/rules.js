@@ -83,6 +83,21 @@ module.exports = {
         })
     },
 
+    async handlePcAttackProperty(interaction) {
+        const prop = interaction.options.getString('property')
+        const embed = new Discord.MessageEmbed()
+            .setTitle('PC Attack Property')
+            .addFields(
+                {
+                    name: prop,
+                    value: pcAttackProperties[prop],
+                }
+            )
+        await interaction.reply({
+            embeds: [embed]
+        })
+    },
+
     async handleShipOverview(interaction) {
         const departments = Object.keys(shipOverview)
         const fields = []

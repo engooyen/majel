@@ -21,6 +21,7 @@
 
 const Discord = require('discord.js')
 const pool = require('../pool')
+const { GameConfig } = require('../game-config')
 
 const poolFunctions = {
     m: pool.adjustMomentum,
@@ -28,12 +29,15 @@ const poolFunctions = {
 }
 
 module.exports = {
-    async buildPrompt(interaction, cmd, loc) {
+    async buildPrompt(interaction, cmd, loc, op) {
         const { options, guild, channel } = interaction
-        const subCmd = options?.getSubcommand()
+        const subCmd = options?.getSubcommand() || op
         const location = options?.getString('location') || loc
         const amount = options?.getInteger('amount')
-        const action = cmd
+        const pool = options?.getString('pool')
+        const action = cmd === 'p'
+            ? pool === 'player' ? 'm' : 't' 
+            : cmd
         // const lastMsg = new LastMessage(guild, channel, action)
 
         let row = new Discord.MessageActionRow()
@@ -63,15 +67,16 @@ module.exports = {
             )
 
         // await lastMsg.delete(interaction)
+        const gameConfig = new GameConfig(interaction.guild)
         let embed
-
+        await interaction.deferReply()
         if (subCmd === 'set') {
-            embed = await poolFunctions[cmd](guild, channel, 'set', amount, location === 'here')
+            embed = await poolFunctions[action](guild, channel, 'set', amount, location === 'here', await gameConfig.getGame())
         } else {
-            embed = await poolFunctions[cmd](guild, channel, 'add', 0, location === 'here')
+            embed = await poolFunctions[action](guild, channel, 'add', 0, location === 'here', await gameConfig.getGame())
         }
         
-        await interaction.reply({
+        await interaction.editReply({
             embeds: [embed],
             components: [row]
         })
@@ -85,7 +90,8 @@ module.exports = {
         const amount = payload.context.value
         const isChannelPool = payload.context.channel !== 'global'
 
-        await poolFunctions[cmd](interaction.guild, interaction.channel, op, amount, isChannelPool)
-        await this.buildPrompt(interaction, cmd, isChannelPool ? 'here' : 'global')
+        const gameConfig = new GameConfig(interaction.guild)
+        await poolFunctions[cmd](interaction.guild, interaction.channel, op, amount, isChannelPool, await gameConfig.getGame())
+        await this.buildPrompt(interaction, cmd, isChannelPool ? 'here' : 'global', op)
     }
 }

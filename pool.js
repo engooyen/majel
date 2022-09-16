@@ -115,7 +115,7 @@ module.exports = {
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
   },
-  async adjustMomentum(guild, channel, op, amount, isChannelPool) {
+  async adjustMomentum(guild, channel, op, amount, isChannelPool, gameConfig) {
     const guildId = guild.id
     const channelId = channel.id
 
@@ -175,7 +175,7 @@ module.exports = {
       .setColor(3447003)
       .setFields([
         {
-          name: (pool === 'global' ? "Global" : `#${channel.name}`) + ' Momentum',
+          name: (pool === 'global' ? "Global " : `#${channel.name} `) + gameConfig.pool.player,
           value
         }
       ])
@@ -184,7 +184,7 @@ module.exports = {
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
   },
-  async adjustThreat(guild, channel, op, amount, isChannelPool) {
+  async adjustThreat(guild, channel, op, amount, isChannelPool, gameConfig) {
     const guildId = guild.id
     const channelId = channel.id
 
@@ -244,7 +244,7 @@ module.exports = {
       .setColor(15158332)
       .setFields([
         {
-          name: (pool === 'global' ? "Global" : `#${channel.name}`) + ' Threat',
+          name: (pool === 'global' ? "Global " : `#${channel.name} `) + gameConfig.pool.gm,
           value
         }
       ])

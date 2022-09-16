@@ -123,94 +123,9 @@ commands.push(new SlashCommandBuilder()
     .setDescription('Replicating the old !Xd20 command behavior.')
     .addStringOption(option =>
         option
-        .setName('params')    
-        .setDescription('The parameters are entered in this order: [target] [dice] [difficulty] [crit] [comp].')
-        .setRequired(true)
-    )
-    .toJSON()
-)
-
-
-commands.push(new SlashCommandBuilder()
-    .setName('m')
-    .setDescription('Manage momentum.')
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('menu')
-        .setDescription('Bring up a menu to incrementally set the value of the momentum pool.')
-        .addStringOption(option =>
-            option
-            .setName('location')    
-            .setDescription('Manage the global or current channel\'s momentum pool.')
+            .setName('params')
+            .setDescription('The parameters are entered in this order: [target] [dice] [difficulty] [crit] [comp].')
             .setRequired(true)
-            .addChoices(
-                { name: 'global', value: 'global' },
-                { name: 'here', value: 'here' }
-            )
-        )
-    )
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('set')
-        .setDescription('Directly set the value of the momentum pool.')
-        .addStringOption(option =>
-            option
-            .setName('location')    
-            .setDescription('Manage the global or current channel\'s momentum pool.')
-            .setRequired(true)
-            .addChoices(
-                { name: 'global', value: 'global' },
-                { name: 'here', value: 'here' }
-            )
-        )
-        .addIntegerOption(option =>
-            option
-            .setName('amount')    
-            .setDescription('The pool\s new amount.')
-            .setRequired(true)
-        )
-    )
-    .toJSON()
-)
-
-commands.push(new SlashCommandBuilder()
-    .setName('t')
-    .setDescription('Manage threat.')
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('menu')
-        .setDescription('Bring up a menu to incrementally set the value of the threat pool.')
-        .addStringOption(option =>
-            option
-            .setName('location')    
-            .setDescription('Manage the global or current channel\'s threat pool.')
-            .setRequired(true)
-            .addChoices(
-                { name: 'global', value: 'global' },
-                { name: 'here', value: 'here' }
-            )
-        )
-    )
-    .addSubcommand(subcommand =>
-        subcommand
-        .setName('set')
-        .setDescription('Directly set the value of the threat pool.')
-        .addStringOption(option =>
-            option
-            .setName('location')    
-            .setDescription('Manage the global or current channel\'s threat pool.')
-            .setRequired(true)
-            .addChoices(
-                { name: 'global', value: 'global' },
-                { name: 'here', value: 'here' }
-            )
-        )
-        .addIntegerOption(option =>
-            option
-            .setName('amount')    
-            .setDescription('The pool\s new amount.')
-            .setRequired(true)
-        )
     )
     .toJSON()
 )
@@ -220,52 +135,136 @@ commands.push(new SlashCommandBuilder()
     .setDescription('Manage traits.')
     .addSubcommand(subcommand =>
         subcommand
-        .setName('get')
-        .setDescription('Get containers and their traits or list traits for a specific container.')
-        .addStringOption(option =>
-            option.setName('container')
-                .setDescription('List all traits for this container.')
-        )
+            .setName('get')
+            .setDescription('Get containers and their traits or list traits for a specific container.')
+            .addStringOption(option =>
+                option.setName('container')
+                    .setDescription('List all traits for this container.')
+            )
     )
     .addSubcommand(subcommand =>
         subcommand
-        .setName('set')
-        .setDescription('Set a value to a trait within a container.')
-        .addStringOption(option =>
-            option.setName('container')
-                .setDescription('The container to modify.')
-                .setRequired(true)
-        )
-        .addStringOption(option =>
-            option.setName('trait')
-                .setDescription('The trait to modify.')
-                .setRequired(true)
-        )
-        .addStringOption(option =>
-            option.setName('value')
-                .setDescription('The value of the trait to set.')
-                .setRequired(true)
-        )
+            .setName('set')
+            .setDescription('Set a value to a trait within a container.')
+            .addStringOption(option =>
+                option.setName('container')
+                    .setDescription('The container to modify.')
+                    .setRequired(true)
+            )
+            .addStringOption(option =>
+                option.setName('trait')
+                    .setDescription('The trait to modify.')
+                    .setRequired(true)
+            )
+            .addStringOption(option =>
+                option.setName('value')
+                    .setDescription('The value of the trait to set.')
+                    .setRequired(true)
+            )
     )
     .addSubcommand(subcommand =>
         subcommand
-        .setName('del')
-        .setDescription('Delete a trait from a container.')
-        .addStringOption(option =>
-            option.setName('container')
-                .setDescription('The container to modify.')
-                .setRequired(true)
-        )
-        .addStringOption(option =>
-            option.setName('trait')
-                .setDescription('The trait to modify.')
-        )
+            .setName('del')
+            .setDescription('Delete a trait from a container.')
+            .addStringOption(option =>
+                option.setName('container')
+                    .setDescription('The container to modify.')
+                    .setRequired(true)
+            )
+            .addStringOption(option =>
+                option.setName('trait')
+                    .setDescription('The trait to modify.')
+            )
     )
     .toJSON()
 )
 
 // STA specific features
 if (isStaFeature) {
+    commands.push(new SlashCommandBuilder()
+        .setName('m')
+        .setDescription('Manage momentum.')
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('menu')
+                .setDescription('Bring up a menu to incrementally set the value of the momentum pool.')
+                .addStringOption(option =>
+                    option
+                        .setName('location')
+                        .setDescription('Manage the global or current channel\'s momentum pool.')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'global', value: 'global' },
+                            { name: 'here', value: 'here' }
+                        )
+                )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('set')
+                .setDescription('Directly set the value of the momentum pool.')
+                .addStringOption(option =>
+                    option
+                        .setName('location')
+                        .setDescription('Manage the global or current channel\'s momentum pool.')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'global', value: 'global' },
+                            { name: 'here', value: 'here' }
+                        )
+                )
+                .addIntegerOption(option =>
+                    option
+                        .setName('amount')
+                        .setDescription('The pool\s new amount.')
+                        .setRequired(true)
+                )
+        )
+        .toJSON()
+    )
+
+    commands.push(new SlashCommandBuilder()
+        .setName('t')
+        .setDescription('Manage threat.')
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('menu')
+                .setDescription('Bring up a menu to incrementally set the value of the threat pool.')
+                .addStringOption(option =>
+                    option
+                        .setName('location')
+                        .setDescription('Manage the global or current channel\'s threat pool.')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'global', value: 'global' },
+                            { name: 'here', value: 'here' }
+                        )
+                )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('set')
+                .setDescription('Directly set the value of the threat pool.')
+                .addStringOption(option =>
+                    option
+                        .setName('location')
+                        .setDescription('Manage the global or current channel\'s threat pool.')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'global', value: 'global' },
+                            { name: 'here', value: 'here' }
+                        )
+                )
+                .addIntegerOption(option =>
+                    option
+                        .setName('amount')
+                        .setDescription('The pool\s new amount.')
+                        .setRequired(true)
+                )
+        )
+        .toJSON()
+    )
+
     const pcActionsOptions = []
     for (let action of Object.keys(pcActions)) {
         pcActionsOptions.push({
@@ -294,45 +293,45 @@ if (isStaFeature) {
         .setDescription('Rules lookup for the pc.')
         .addSubcommand(subcommand =>
             subcommand
-            .setName('list')
-            .setDescription('List PC rules lookup sub-commands.')
+                .setName('list')
+                .setDescription('List PC rules lookup sub-commands.')
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('actions')
-            .setDescription('Get description of an action.')
-            .addStringOption(option =>
-                option.setName('action')
-                    .setDescription('The pc action.')
-                    .setRequired(true)
-                    .addChoices(...pcActionsOptions)
-            )
+                .setName('actions')
+                .setDescription('Get description of an action.')
+                .addStringOption(option =>
+                    option.setName('action')
+                        .setDescription('The pc action.')
+                        .setRequired(true)
+                        .addChoices(...pcActionsOptions)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('minor-actions')
-            .setDescription('Get description of a minor action.')
-            .addStringOption(option =>
-                option.setName('action')
-                    .setDescription('The pc minor action.')
-                    .setRequired(true)
-                    .addChoices(...pcMinorActionsOptions)
-            )
+                .setName('minor-actions')
+                .setDescription('Get description of a minor action.')
+                .addStringOption(option =>
+                    option.setName('action')
+                        .setDescription('The pc minor action.')
+                        .setRequired(true)
+                        .addChoices(...pcMinorActionsOptions)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('attack-properties')
-            .setDescription('Get description of a pc attack property.')
-            .addStringOption(option =>
-                option.setName('property')
-                    .setDescription('The pc attack property.')
-                    .setRequired(true)
-                    .addChoices(...pcAttackProps)
-            )
+                .setName('attack-properties')
+                .setDescription('Get description of a pc attack property.')
+                .addStringOption(option =>
+                    option.setName('property')
+                        .setDescription('The pc attack property.')
+                        .setRequired(true)
+                        .addChoices(...pcAttackProps)
+                )
         )
         .toJSON()
     )
-    
+
     const shipActionsChoices1 = []
     const shipActionsChoices2 = []
     const shipActionsChoices3 = []
@@ -378,68 +377,68 @@ if (isStaFeature) {
         .setDescription('Rules lookup for the ship.')
         .addSubcommand(subcommand =>
             subcommand
-            .setName('list')
-            .setDescription('List ship rules lookup sub-commands.')
+                .setName('list')
+                .setDescription('List ship rules lookup sub-commands.')
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('actions-page-1')
-            .setDescription('Get description of an action (page 1).')
-            .addStringOption(option =>
-                option.setName('action')
-                    .setDescription('The ship action.')
-                    .setRequired(true)
-                    .addChoices(...shipActionsChoices1)
-            )
+                .setName('actions-page-1')
+                .setDescription('Get description of an action (page 1).')
+                .addStringOption(option =>
+                    option.setName('action')
+                        .setDescription('The ship action.')
+                        .setRequired(true)
+                        .addChoices(...shipActionsChoices1)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('actions-page-2')
-            .setDescription('Get description of an action (page 2).')
-            .addStringOption(option =>
-                option.setName('action')
-                    .setDescription('The ship action.')
-                    .setRequired(true)
-                    .addChoices(...shipActionsChoices2)
-            )
+                .setName('actions-page-2')
+                .setDescription('Get description of an action (page 2).')
+                .addStringOption(option =>
+                    option.setName('action')
+                        .setDescription('The ship action.')
+                        .setRequired(true)
+                        .addChoices(...shipActionsChoices2)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('actions-page-3')
-            .setDescription('Get description of an action (page 3).')
-            .addStringOption(option =>
-                option.setName('action')
-                    .setDescription('The ship action.')
-                    .setRequired(true)
-                    .addChoices(...shipActionsChoices3)
-            )
+                .setName('actions-page-3')
+                .setDescription('Get description of an action (page 3).')
+                .addStringOption(option =>
+                    option.setName('action')
+                        .setDescription('The ship action.')
+                        .setRequired(true)
+                        .addChoices(...shipActionsChoices3)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('minor-actions')
-            .setDescription('Get description of a minor action.')
-            .addStringOption(option =>
-                option.setName('action')
-                    .setDescription('The ship minor action.')
-                    .setRequired(true)
-                    .addChoices(...shipMinorActionsChoices)
-            )
+                .setName('minor-actions')
+                .setDescription('Get description of a minor action.')
+                .addStringOption(option =>
+                    option.setName('action')
+                        .setDescription('The ship minor action.')
+                        .setRequired(true)
+                        .addChoices(...shipMinorActionsChoices)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('attack-properties')
-            .setDescription('Get description of a ship attack property.')
-            .addStringOption(option =>
-                option.setName('property')
-                    .setDescription('The attack property.')
-                    .setRequired(true)
-                    .addChoices(...shipAttackProps)
-            )
+                .setName('attack-properties')
+                .setDescription('Get description of a ship attack property.')
+                .addStringOption(option =>
+                    option.setName('property')
+                        .setDescription('The attack property.')
+                        .setRequired(true)
+                        .addChoices(...shipAttackProps)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('overview')
-            .setDescription('Get an overview of what ship actions belongs to which deparment.')
+                .setName('overview')
+                .setDescription('Get an overview of what ship actions belongs to which deparment.')
         )
         .toJSON()
     )
@@ -483,37 +482,99 @@ if (isStaFeature) {
 
 if (is2d20Feature) {
     commands.push(new SlashCommandBuilder()
+        .setName('p')
+        .setDescription('Manage player or GM pools.')
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('menu')
+                .setDescription('Bring up a menu to incrementally set the value of the momentum pool.')
+                .addStringOption(option =>
+                    option
+                        .setName('pool')
+                        .setDescription('Select the players\' or GM\'s pool')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'player', value: 'player' },
+                            { name: 'gm', value: 'gm' }
+                        )
+                )
+                .addStringOption(option =>
+                    option
+                        .setName('location')
+                        .setDescription('Manage the global or current channel\'s pool.')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'global', value: 'global' },
+                            { name: 'here', value: 'here' }
+                        )
+                )
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('set')
+                .setDescription('Directly set the value of the pool pool.')
+                .addStringOption(option =>
+                    option
+                        .setName('pool')
+                        .setDescription('Select the players\' or GM\'s pool')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'player', value: 'player' },
+                            { name: 'gm', value: 'gm' }
+                        )
+                )
+                .addStringOption(option =>
+                    option
+                        .setName('location')
+                        .setDescription('Manage the global or current channel\'s pool.')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'global', value: 'global' },
+                            { name: 'here', value: 'here' }
+                        )
+                )
+                .addIntegerOption(option =>
+                    option
+                        .setName('amount')
+                        .setDescription('The pool\s new amount.')
+                        .setRequired(true)
+                )
+        )
+        .toJSON()
+    )
+
+    commands.push(new SlashCommandBuilder()
         .setName('game')
         .setDescription('Set the support game to enable dice rolls specific to that game.')
         .addSubcommand(subcommand =>
             subcommand
-            .setName('list')
-            .setDescription('List the supported games.')
+                .setName('list')
+                .setDescription('List the supported games.')
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('help')
-            .setDescription('Get help for a specific game. Game must be set first! Use /game set [game]')
+                .setName('help')
+                .setDescription('Get help for a specific game. Game must be set first! Use /game set [game]')
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('set')
-            .setDescription('Set the supported game.')
-            .addStringOption(option =>
-                option.setName('game')
-                    .setDescription('The game code. /game list to see the game codes.')
-                    .setRequired(true)
-            )
+                .setName('set')
+                .setDescription('Set the supported game.')
+                .addStringOption(option =>
+                    option.setName('game')
+                        .setDescription('The game code. /game list to see the game codes.')
+                        .setRequired(true)
+                )
         )
         .addSubcommand(subcommand =>
             subcommand
-            .setName('custom')
-            .setDescription('The custom dice command enabled for this game.')
-            .addStringOption(option =>
-                option.setName('cmd')
-                    .setDescription('The custom game dice command to run. /game help to see the custom dice commands.')
-                    .setRequired(true)
-            )
+                .setName('custom')
+                .setDescription('The custom dice command enabled for this game.')
+                .addStringOption(option =>
+                    option.setName('cmd')
+                        .setDescription('The custom game dice command to run. /game help to see the custom dice commands.')
+                        .setRequired(true)
+                )
         )
         .toJSON()
     )
