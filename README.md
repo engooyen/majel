@@ -162,7 +162,7 @@ This should give a permissions mask of 51200, which will be part of the generate
 nodemon .
 ```
 
-(If you have a non-global installation of `nodemon`, the command to start `nodemon` may look differently. Refer to the `nodemon` installation instructions above.)
+(If you have a non-global installation of `nodemon`, the command to start `nodemon` may look differently. Refer to the `nodemon`  installation instructions above.)
 
 Your terminal should look something like this:
 ```

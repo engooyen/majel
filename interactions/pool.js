@@ -29,7 +29,7 @@ const poolFunctions = {
 }
 
 module.exports = {
-    async buildPrompt(interaction, cmd, loc, op) {
+    async buildPrompt(interaction, cmd, loc, op, gameConfig) {
         const { options, guild, channel } = interaction
         const subCmd = options?.getSubcommand() || op
         const location = options?.getString('location') || loc
@@ -67,7 +67,9 @@ module.exports = {
             )
 
         // await lastMsg.delete(interaction)
-        const gameConfig = new GameConfig(interaction.guild)
+        if (!gameConfig) {
+            gameConfig = new GameConfig(interaction.guild)
+        }
         let embed
         await interaction.deferReply()
         if (subCmd === 'set') {
@@ -92,6 +94,6 @@ module.exports = {
 
         const gameConfig = new GameConfig(interaction.guild)
         await poolFunctions[cmd](interaction.guild, interaction.channel, op, amount, isChannelPool, await gameConfig.getGame())
-        await this.buildPrompt(interaction, cmd, isChannelPool ? 'here' : 'global', op)
+        await this.buildPrompt(interaction, cmd, isChannelPool ? 'here' : 'global', op, gameConfig)
     }
 }

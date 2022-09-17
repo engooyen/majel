@@ -19,7 +19,7 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require('discord.js')
+const { MessageEmbed } = require('discord.js');
 const builders = require('../interaction-builder')
 const { GameConfig } = require('../game-config')
 const is2d20Feature = process.env.feature_2d20

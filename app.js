@@ -44,6 +44,7 @@ const clientId = process.env.client_id
 let addMeMsg =
   `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&permissions=137439266816&scope=bot`
 //Configure logger settings
+
 const logger = winston.createLogger({
   level: 'debug',
   format: winston.format.json(),
@@ -57,25 +58,22 @@ const logger = winston.createLogger({
 const bot = new Discord.Client({
   intents: [
     Discord.Intents.FLAGS.GUILDS,
-    Discord.Intents.FLAGS.GUILD_MESSAGES
+    Discord.Intents.FLAGS.GUILD_MESSAGES,
+    Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS
   ]
 })
 
 bot.login(process.env.token)
 const rest = new REST({ version: '9' }).setToken(process.env.token);
-
-const registerCmds = async (botId, guildId) => {
+const registerCmds = async (botId, guild) => {
   try {
-    console.log('Started refreshing application (/) commands.');
-
     await rest.put(
-      Routes.applicationGuildCommands(botId, guildId),
+      Routes.applicationGuildCommands(botId, guild.id),
       { body: commands },
     )
 
-    console.log('Successfully reloaded application (/) commands.')
   } catch (error) {
-    console.error(error)
+    // console.error(guild.name)
   }
 }
 
@@ -84,9 +82,11 @@ bot.on('ready', (evt) => {
   logger.info('Logged in as: ')
   logger.info(bot.user.username + ' - (' + bot.user.id + ')')
   logger.info(evt.guilds.cache)
-  bot.guilds.cache.forEach(guild => {
-    registerCmds(bot.user.id, guild.id)
+  console.log('Started refreshing application (/) commands.');
+  bot.guilds.cache.forEach(async (guild) => {
+    await registerCmds(bot.user.id, guild)
   })
+  console.log('Successfully reloaded application (/) commands.')
 })
 
 bot.on("guildCreate", guild => {
