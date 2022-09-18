@@ -147,7 +147,7 @@ bot.on('interactionCreate', async interaction => {
       await interaction.reply({
         embeds: [utils.generateSupportCharacter()]
       });
-    } else if (['m', 't', 'p']) {
+    } else if (['m', 't', 'p'].includes(commandName)) {
       await poolInteraction.buildPrompt(interaction, commandName)
     } else if (commandName === 'trait') {
       const subCmd = options.getSubcommand()
