@@ -49,7 +49,7 @@ redis.getGuildData = async (guildId) => {
     guildData = JSON.parse(guildData)
   }
 
-  console.warn("get redis", guildId, guildData)
+  // console.warn("get redis", guildId, guildData)
   if (!guildData) {
     guildData = {}
   }

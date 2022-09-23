@@ -82,11 +82,11 @@ bot.on('ready', (evt) => {
   logger.info('Logged in as: ')
   logger.info(bot.user.username + ' - (' + bot.user.id + ')')
   logger.info(evt.guilds.cache)
-  console.log('Started refreshing application (/) commands.');
+  // console.log('Started refreshing application (/) commands.');
   bot.guilds.cache.forEach(async (guild) => {
     await registerCmds(bot.user.id, guild)
   })
-  console.log('Successfully reloaded application (/) commands.')
+  // console.log('Successfully reloaded application (/) commands.')
 })
 
 bot.on("guildCreate", guild => {

@@ -50,7 +50,7 @@ module.exports = {
     if (a.length > 0) {
       return a[Math.floor(Math.random() * a.length)]
     } else {
-      console.error("Tried picking a random element from empty array")
+      // console.error("Tried picking a random element from empty array")
       return null
     }
   },
@@ -151,7 +151,7 @@ module.exports = {
     let talent = this.randomElement(race.Talents)
 
     if (race.Source === undefined) {
-      console.warn("Source book for " + race.Name + " is undefined")
+      // console.warn("Source book for " + race.Name + " is undefined")
     }
 
     return {
@@ -282,6 +282,6 @@ module.exports = {
         return
       }
     }
-    console.warn("player-sheets channel not found on this server!")
+    // console.warn("player-sheets channel not found on this server!")
   }
 }

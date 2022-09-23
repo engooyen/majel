@@ -27,18 +27,18 @@ module.exports = {
     const guildId = msg.guild.id.toString()
     const channelId = msg.channel.id.toString()
     const isAdmin = msg.member.hasPermission("ADMINISTRATOR")
-    console.warn(msg.author.username)
-    console.warn("guild id", guildId)
-    console.warn("channel id", channelId)
+    // console.warn(msg.author.username)
+    // console.warn("guild id", guildId)
+    // console.warn("channel id", channelId)
 
     let guildData = await redis.get(guildId)
     if (guildData) {
       guildData = JSON.parse(guildData)
     }
 
-    console.warn("get redis", guildId, guildData)
+    // console.warn("get redis", guildId, guildData)
     if (!guildData || !guildData.global) {
-      console.warn("fixing guildData")
+      // console.warn("fixing guildData")
       guildData = {
         global: {
           momentum: 0,
@@ -62,7 +62,7 @@ module.exports = {
     let reset = false
     let thisChannelOnly = false
     const options = option.split(" ")
-    console.warn("option", options)
+    // console.warn("option", options)
     if (options.length > 1) {
       reset = options[0].toLowerCase() === "reset"
       thisChannelOnly = options[1].toLowerCase() === "here"
@@ -74,7 +74,7 @@ module.exports = {
 
     if (reset) {
       for (let currentId in guildData) {
-        console.warn("currentId", currentId)
+        // console.warn("currentId", currentId)
         if (!thisChannelOnly && currentId === "global") {
           guildData.global.momentum = 0
           guildData.global.threat = 0
@@ -85,13 +85,13 @@ module.exports = {
           continue
         }
 
-        console.warn("deleting", currentId)
+        // console.warn("deleting", currentId)
         delete guildData[currentId]
       }
     }
 
     for (let currentId in guildData) {
-      console.warn("currentId", currentId)
+      // console.warn("currentId", currentId)
       if (currentId === "global") {
         continue
       }
@@ -101,7 +101,7 @@ module.exports = {
       }
 
       const channel = guildData[currentId]
-      console.warn("channel", channel)
+      // console.warn("channel", channel)
       if (channel) {
         embed.fields.push({
           name: `#${channel.name}`,
@@ -111,7 +111,7 @@ module.exports = {
     }
 
 
-    console.warn("set redis", guildData)
+    // console.warn("set redis", guildData)
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
   },
@@ -124,9 +124,9 @@ module.exports = {
       guildData = JSON.parse(guildData)
     }
 
-    console.warn("get redis", guildId, guildData)
+    // console.warn("get redis", guildId, guildData)
     if (!guildData || !guildData.global) {
-      console.warn("fixing guildData")
+      // console.warn("fixing guildData")
       guildData = {
         global: {
           momentum: 0,
@@ -180,7 +180,7 @@ module.exports = {
         }
       ])
 
-    console.warn("redis set", guildId, guildData)
+    // console.warn("redis set", guildId, guildData)
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
   },
@@ -193,9 +193,9 @@ module.exports = {
       guildData = JSON.parse(guildData)
     }
 
-    console.warn("get redis", guildId, guildData)
+    // console.warn("get redis", guildId, guildData)
     if (!guildData || !guildData.global) {
-      console.warn("fixing guildData")
+      // console.warn("fixing guildData")
       guildData = {
         global: {
           momentum: 0,

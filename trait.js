@@ -61,7 +61,7 @@ module.exports = {
             guildData = JSON.parse(guildData)
         }
 
-        console.warn("get redis", guildId, guildData)
+        // console.warn("get redis", guildId, guildData)
         if (!guildData) {
             guildData = {}
         }
@@ -108,7 +108,7 @@ module.exports = {
             }
         } else {
             const containers = Object.keys(guildData.traits);
-            console.warn(containers)
+            // console.warn(containers)
             if (containers.length === 0) {
                 embed.addField("No traits Found", "Use /trait set [container name] [trait name] [trait value] to set a trait.")
             } else {
@@ -120,7 +120,7 @@ module.exports = {
             }
         }
 
-        console.warn("Guild data:", guildData)
+        // console.warn("Guild data:", guildData)
 
         await redis.set(guildId, JSON.stringify(guildData))
         return embed
