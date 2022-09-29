@@ -77,21 +77,30 @@ const registerCmds = async (botId, guild) => {
   }
 }
 
-bot.on('ready', (evt) => {
+const refreshCmdForAllServers = async () => {
+  bot.guilds.cache.forEach(async guild => {
+    await registerCmds(bot.user.id, guild)
+  })
+}
+
+bot.on('ready', async (evt) => {
   logger.info('Connected')
   logger.info('Logged in as: ')
   logger.info(bot.user.username + ' - (' + bot.user.id + ')')
-  logger.info(evt.guilds.cache)
   // console.log('Started refreshing application (/) commands.');
-  bot.guilds.cache.forEach(async (guild) => {
-    await registerCmds(bot.user.id, guild)
-  })
+  await refreshCmdForAllServers()
   // console.log('Successfully reloaded application (/) commands.')
 })
 
-bot.on("guildCreate", guild => {
-  registerCmds(bot.user.id, guild.id)
+bot.on("guildCreate", async guild => {
+  console.warn('guildCreate', guild)
+  await registerCmds(bot.user.id, guild)
 })
+
+bot.on("channelUpdate", async (oldChannel, newChannel) => {
+  console.warn('channelUpdate', newChannel.guild)
+  await registerCmds(bot.user.id, newChannel.guild)
+});
 
 bot.on('interactionCreate', async interaction => {
   try {
@@ -192,13 +201,23 @@ bot.on('interactionCreate', async interaction => {
 })
 
 bot.on('unhandledRejection', error => {
-  console.error('Unhandled promise rejection:', error);
-});
+  logger.error('Unhandled promise rejection:', error);
+})
+
+bot.on('messageCreate', async msg => {
+  if (msg.guildId === process.env.dev_guild_id) {
+    if (msg.author.id === process.env.dev_author_id) {
+      if (msg.content.includes('refresh')) {
+        await refreshCmdForAllServers()
+      }
+    }
+  }
+})
 
 app.get('/', (req, res) => {
   res.send(`${process.env.bot_name} is up and running. Testing.`)
 })
 
 app.listen(port, () => {
-  console.log(`${process.env.bot_name} listening on port ${port}`)
+  logger.info(`${process.env.bot_name} listening on port ${port}`)
 })
