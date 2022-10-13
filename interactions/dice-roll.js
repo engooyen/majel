@@ -50,9 +50,8 @@ module.exports = {
   async handleD6Roll(interaction) {
     const gameConfig = new GameConfig(interaction.guild)
     const numDice = interaction.options.getInteger('x')
-    await interaction.deferReply()
     const result = builders.rollD6(numDice, interaction, await gameConfig.getGame())
-    await interaction.editReply({
+    await interaction.reply({
       embeds: [result]
     });
   },

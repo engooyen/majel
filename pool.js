@@ -156,6 +156,10 @@ module.exports = {
       guildData[pool].momentum = amount
     }
 
+    if (guildData[pool].momentum < 0) {
+      guildData[pool].momentum = 0
+    }
+
     if (guildData.global.momentum > 6) {
       guildData.global.momentum = 6
     }
@@ -227,6 +231,10 @@ module.exports = {
       guildData[pool].threat -= amount
     } else if (op === "set") {
       guildData[pool].threat = amount
+    }
+
+    if (guildData[pool].threat < 0) {
+      guildData[pool].threat = 0;
     }
 
     if (guildData.global.threat < 0 || guildData.global.threat === null) {
