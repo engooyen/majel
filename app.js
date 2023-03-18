@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2022 John H. Nguyen
+ * Copyright 2019-2023 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
@@ -21,203 +21,163 @@
 
 require('dotenv').config()
 process.setMaxListeners(0)
-const Discord = require('discord.js')
-const { REST } = require('@discordjs/rest')
-const { Routes } = require('discord-api-types/v9')
+const fs = require('node:fs');
+const path = require('node:path');
+const { Client, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
 const winston = require('winston')
-const utils = require('./utils')
-const babble = require('./babble')
-const builders = require('./interaction-builder')
-const commands = require('./commands/commands');
-const diceRollInteraction = require('./interactions/dice-roll')
-const traitInteraction = require('./interactions/trait')
-const poolInteraction = require('./interactions/pool')
-const rulesInteraction = require('./interactions/rules')
-const about = require('./data/about.json')[0]
-const help = require('./data/help.json')
 const express = require('express')
 const app = express()
 const port = process.env.port
 const clientId = process.env.client_id
 
-// help content
-let addMeMsg =
-  `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&permissions=137439266816&scope=bot`
-//Configure logger settings
+global.resolveModule = (filePath) => {
+    const modulePath = path.resolve(__dirname, filePath);
+    return require(modulePath);
+}
 
 const logger = winston.createLogger({
-  level: 'debug',
-  format: winston.format.json(),
-  defaultMeta: {
-    service: 'user-service',
-  },
-  transports: [new winston.transports.Console()],
+    level: 'debug',
+    format: winston.format.json(),
+    defaultMeta: {
+        service: 'user-service',
+    },
+    transports: [new winston.transports.Console()],
 })
 
 // Initialize Discord Bot
-const bot = new Discord.Client({
-  intents: [
-    Discord.Intents.FLAGS.GUILDS,
-    Discord.Intents.FLAGS.GUILD_MESSAGES,
-    Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS
-  ]
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildEmojisAndStickers,
+        GatewayIntentBits.MessageContent,
+    ]
 })
 
-bot.login(process.env.token)
-const rest = new REST({ version: '9' }).setToken(process.env.token);
-const registerCmds = async (botId, guild) => {
-  try {
-    await rest.put(
-      Routes.applicationGuildCommands(botId, guild.id),
-      { body: commands },
-    )
+client.login(process.env.token)
+client.commands = new Collection()
 
-  } catch (error) {
-    // console.error(guild.name)
-  }
+const rest = new REST({ version: '10' }).setToken(process.env.token);
+
+const getCommands = (cmdPath) => {
+    const commandsPath = path.join(__dirname, cmdPath);
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+    const commands = [];
+    for (const file of commandFiles) {
+        const filePath = path.join(commandsPath, file);
+        const command = require(filePath);
+        commands.push(command.data.toJSON());
+
+        if ('data' in command && 'execute' in command) {
+            client.commands.set(command.data.name, command);
+        } else {
+            console.log(`[WARNING] The command at ${filePath} is missing a required 'data' or 'execute' property.`);
+        }
+    }
+
+    return commands;
+};
+
+const registerCmds = async (guildId) => {
+    try {
+        const commands = getCommands('commands')
+        const isStaFeature = process.env.feature_sta
+        const is2d20Feature = process.env.feature_2d20
+
+        if (isStaFeature) {
+            commands.push(...getCommands('commands/sta'))
+        }
+
+        if (is2d20Feature) {
+            commands.push(...getCommands('commands/2d20'))
+        }
+
+        console.log(`Started refreshing ${commands.length} application (/) commands.`);
+
+        // The put method is used to fully refresh all commands in the guild with the current set
+        const data = await rest.put(
+            Routes.applicationGuildCommands(clientId, guildId), { body: commands },
+        );
+
+        // clear any global comands.
+        await rest.put(
+            Routes.applicationCommands(clientId), { body: [] },
+        );
+
+        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 const refreshCmdForAllServers = async () => {
-  bot.guilds.cache.forEach(async guild => {
-    await registerCmds(bot.user.id, guild)
-  })
+    client.guilds.cache.forEach(async guild => {
+        await registerCmds(guild.id)
+    })
 }
 
-bot.on('ready', async (evt) => {
-  logger.info('Connected')
-  logger.info('Logged in as: ')
-  logger.info(bot.user.username + ' - (' + bot.user.id + ')')
-  // console.log('Started refreshing application (/) commands.');
-  await refreshCmdForAllServers()
-  // console.log('Successfully reloaded application (/) commands.')
+client.on(Events.ClientReady, async (evt) => {
+    logger.info('Connected')
+    logger.info('Logged in as: ')
+    logger.info(client.user.username + ' - (' + client.user.id + ')')
+    await refreshCmdForAllServers()
 })
 
-bot.on("guildCreate", async guild => {
-  console.warn('guildCreate', guild)
-  await registerCmds(bot.user.id, guild)
+client.on(Events.ChannelUpdate, async (evt) => {
+    await refreshCmdForAllServers()
 })
 
-bot.on("channelUpdate", async (oldChannel, newChannel) => {
-  console.warn('channelUpdate', newChannel.guild)
-  await registerCmds(bot.user.id, newChannel.guild)
-});
+client.on(Events.GuildCreate, async (evt) => {
+    await refreshCmdForAllServers()
+})
 
-bot.on('interactionCreate', async interaction => {
-  try {
-    if (!interaction.isCommand()) {
-      const payload = JSON.parse(interaction.customId)
-      if (payload.action === 'd20') {
-        await diceRollInteraction.handled20Response(interaction)
-      } else if (payload.action === 'm' || payload.action === 't') {
-        await poolInteraction.handleResponse(interaction);
-      }
-
-      return
+client.on(Events.InteractionCreate, async interaction => {
+    let command = interaction.client.commands.get(interaction.commandName);
+    if (!interaction.isChatInputCommand()) {
+        try {
+            const payload = JSON.parse(interaction.customId)
+            command = interaction.client.commands.get(payload.action);
+        } catch (e) {
+            console.error(e)
+        }
     }
 
-    const { commandName, member, options } = interaction;
-    if (commandName === 'addme') {
-      await interaction.reply({
-        content: addMeMsg
-      });
-    } else if (commandName === 'help') {
-      await interaction.reply({ content: help.help1 })
-      await interaction.followUp({ content: help.help2 })
-    } else if (commandName === 'game') {
-      const subCmd = options.getSubcommand()
-      await diceRollInteraction.handleGame(interaction, subCmd)
-    } else if (commandName === 'd6') {
-      await diceRollInteraction.handleD6Roll(interaction)
-    } else if (commandName === 'd20') {
-      await diceRollInteraction.handleD20Roll(interaction)
-    } else if (commandName === 'r') {
-      await diceRollInteraction.handleD20RollRaw(interaction)
-    } else if (commandName === 'about') {
-      await interaction.reply({
-        content: about
-      });
-    } else if (commandName === 'babble') {
-      await interaction.reply({
-        content: `<@${member.user.id}> Technobabble generated. Check your DM.`
-      });
-
-      member.user.send(babble.generateTechnobabble());
-    } else if (commandName === 'medbabble') {
-      await interaction.reply({
-        content: `<@${member.user.id}> Technobabble generated. Check your DM.`
-      });
-
-      member.user.send(babble.generateMedbabble());
-    } else if (commandName === 'alien') {
-      await interaction.reply({
-        embeds: [builders.generateAlien()]
-      });
-    } else if (commandName === 'support') {
-      await interaction.reply({
-        embeds: [utils.generateSupportCharacter()]
-      });
-    } else if (['m', 't', 'p'].includes(commandName)) {
-      await poolInteraction.buildPrompt(interaction, commandName)
-    } else if (commandName === 'trait') {
-      const subCmd = options.getSubcommand()
-      await traitInteraction.buildPrompt(interaction, subCmd)
-    } else if (commandName === 'pc') {
-      const subCmd = options.getSubcommand()
-      if (subCmd === 'list') {
-        await rulesInteraction.handlePcList(interaction)
-      } else if (subCmd === 'actions') {
-        await rulesInteraction.handlePcAction(interaction)
-      } else if (subCmd === 'minor-actions') {
-        await rulesInteraction.handlePcMinorAction(interaction)
-      } else if (subCmd === 'attack-properties') {
-        await rulesInteraction.handlePcAttackProperty(interaction)
-      }
-    } else if (commandName === 'ship') {
-      const subCmd = options.getSubcommand()
-      if (subCmd === 'list') {
-        await rulesInteraction.handleShipList(interaction)
-      } else if ([
-        'actions-page-1',
-        'actions-page-2',
-        'actions-page-3'].includes(subCmd)) {
-        await rulesInteraction.handleShipAction(interaction)
-      } else if (subCmd === 'minor-actions') {
-        await rulesInteraction.handleShipMinorAction(interaction)
-      } else if (subCmd === 'attack-properties') {
-        await rulesInteraction.handleShipAttackProperty(interaction)
-      } else if (subCmd === 'overview') {
-        await rulesInteraction.handleShipOverview(interaction)
-      }
-    } else if (commandName === 'momentum') {
-      await rulesInteraction.handleMomentum(interaction)
-    } else if (commandName === 'determination') {
-      await rulesInteraction.handleDetermination(interaction)
+    if (!command) {
+        console.error(`No command matching ${interaction.commandName} was found.`);
+        return;
     }
-  } catch (error) {
-    await interaction.reply({
-      content: error.toString()
-    })
-  }
+
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        if (interaction.replied || interaction.deferred) {
+            await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+        } else {
+            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+        }
+    }
 })
 
-bot.on('unhandledRejection', error => {
-  logger.error('Unhandled promise rejection:', error);
+client.on('unhandledRejection', error => {
+    logger.error('Unhandled promise rejection:', error);
 })
 
-bot.on('messageCreate', async msg => {
-  if (msg.guildId === process.env.dev_guild_id) {
-    if (msg.author.id === process.env.dev_author_id) {
-      if (msg.content.includes('refresh')) {
-        await refreshCmdForAllServers()
-      }
+client.on('messageCreate', async msg => {
+    if (msg.guildId === process.env.dev_guild_id) {
+        if (msg.author.id === process.env.dev_author_id) {
+            if (msg.content.includes('refresh')) {
+                await refreshCmdForAllServers()
+            }
+        }
     }
-  }
 })
 
 app.get('/', (req, res) => {
-  res.send(`${process.env.bot_name} is up and running. Testing.`)
+    res.send(`${process.env.bot_name} is up and running. Testing.`)
 })
 
 app.listen(port, () => {
-  logger.info(`${process.env.bot_name} listening on port ${port}`)
+    logger.info(`${process.env.bot_name} listening on port ${port}`)
 })

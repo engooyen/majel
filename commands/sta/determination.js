@@ -19,19 +19,14 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require('discord.js')
-const traits = resolveModule('api/trait');
+const { SlashCommandBuilder } = require('discord.js');
+const rulesInteraction = resolveModule('interactions/rules');
 
 module.exports = {
-    async buildPrompt(interaction, subCmd) {
-        const { guild, options } = interaction
-        const container = options?.getString('container')
-        const trait = options?.getString('trait')
-        const value = options?.getString('value')
-        await interaction.deferReply()
-        const embed = await traits.doTrait(guild.id, subCmd, container, trait, value);
-        await interaction.editReply({
-            embeds: [embed]
-        })
-    }
-}
+    data: new SlashCommandBuilder()
+        .setName('determination')
+        .setDescription('Display the determination spends table.'),
+    async execute(interaction) {
+        await rulesInteraction.handleDetermination(interaction);
+    },
+};

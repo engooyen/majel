@@ -19,19 +19,20 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require('discord.js')
-const traits = resolveModule('api/trait');
+const { SlashCommandBuilder } = require('discord.js');
+const diceRollInteraction = resolveModule('interactions/dice-roll');
 
 module.exports = {
-    async buildPrompt(interaction, subCmd) {
-        const { guild, options } = interaction
-        const container = options?.getString('container')
-        const trait = options?.getString('trait')
-        const value = options?.getString('value')
-        await interaction.deferReply()
-        const embed = await traits.doTrait(guild.id, subCmd, container, trait, value);
-        await interaction.editReply({
-            embeds: [embed]
-        })
-    }
-}
+    data: new SlashCommandBuilder()
+        .setName('r')
+        .setDescription('Replicating the old !Xd20 command behavior.')
+        .addStringOption(option =>
+            option
+                .setName('params')
+                .setDescription('The parameters are entered in this order: [target] [dice] [difficulty] [crit] [comp].')
+                .setRequired(true)
+        ),
+    async execute(interaction) {
+        await diceRollInteraction.handleD20RollRaw(interaction)
+    },
+};

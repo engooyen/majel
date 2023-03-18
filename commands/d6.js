@@ -19,19 +19,25 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require('discord.js')
-const traits = resolveModule('api/trait');
+const { SlashCommandBuilder } = require('discord.js');
+const { rollD6 } = resolveModule('api/interaction-builder')
+const { GameConfig } = resolveModule('api/game-config')
 
 module.exports = {
-    async buildPrompt(interaction, subCmd) {
-        const { guild, options } = interaction
-        const container = options?.getString('container')
-        const trait = options?.getString('trait')
-        const value = options?.getString('value')
-        await interaction.deferReply()
-        const embed = await traits.doTrait(guild.id, subCmd, container, trait, value);
-        await interaction.editReply({
-            embeds: [embed]
-        })
-    }
-}
+    data: new SlashCommandBuilder()
+        .setName('d6')
+        .setDescription('Roll x challenge dice.')
+        .addIntegerOption(option =>
+            option.setName('x')
+                .setDescription('The number of dice to roll.')
+                .setRequired(true)
+        ),
+    async execute(interaction) {
+        const gameConfig = new GameConfig(interaction.guild)
+        const numDice = interaction.options.getInteger('x')
+        const result = rollD6(numDice, interaction, await gameConfig.getGame())
+        await interaction.reply({
+            embeds: [result]
+        });
+    },
+};

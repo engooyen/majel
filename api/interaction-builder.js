@@ -1,7 +1,7 @@
 /**
- * Copyright 2019-2022 John H. Nguyen
+ * Copyright 2019-2023 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
+ * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
  * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
@@ -10,7 +10,7 @@
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -19,29 +19,29 @@
  * IN THE SOFTWARE.
  */
 
-const { MessageEmbed } = require('discord.js');
-const alienGenerator = require('./alien-generator')
-const dice = require('./dice')
-const pcActions = require('./data/pc-actions.json')
-const pcMinorActions = require('./data/pc-minor-actions.json')
-const pcAttackProperties = require('./data/pc-attack-properties.json')
-const shipActions = require('./data/ship-actions.json')
-const shipMinorActions = require('./data/ship-minor-actions.json')
-const shipAttackProperties = require('./data/ship-attack-properties.json')
-const determination = require('./data/determination.json')
-const momentum = require('./data/momentum.json')
+const { EmbedBuilder } = require('discord.js');
+const alienGenerator = require('./sta/alien-generator')
+const dice = resolveModule('api/dice')
+const pcActions = resolveModule('data/pc-actions.json')
+const pcMinorActions = resolveModule('data/pc-minor-actions.json')
+const pcAttackProperties = resolveModule('data/pc-attack-properties.json')
+const shipActions = resolveModule('data/ship-actions.json')
+const shipMinorActions = resolveModule('data/ship-minor-actions.json')
+const shipAttackProperties = resolveModule('data/ship-attack-properties.json')
+const determination = resolveModule('data/determination.json')
+const momentum = resolveModule('data/momentum.json')
 const is2d20Feature = process.env.feature_2d20
 
 module.exports = {
   rollD6(numDice, msg, game) {
     const { rawResult, numericResult, fxResult, rawResultValues } = dice.rollD6(numDice, game)
     if (is2d20Feature && !game) {
-      return new MessageEmbed()
+      return new EmbedBuilder()
       .setTitle('Game not set!')
       .setDescription('/game set [game] to set game and /game list to show supported games.')
     }
 
-    return new MessageEmbed()
+    return new EmbedBuilder()
       .setTitle(msg.user.username)
       .setDescription('D6 Roll Result')
       .setThumbnail(game.images.d6)
@@ -73,18 +73,19 @@ module.exports = {
       critRange,
       compRange,
       rawResult,
+      renderedResult,
       success,
       complication,
       difficulty
-    } = dice.rollD20(numDice, args)
+    } = dice.rollD20(numDice, args, game)
 
     if (is2d20Feature && !game) {
-      return new MessageEmbed()
+      return new EmbedBuilder()
       .setTitle('Game not set!')
       .setDescription('/game set [game] to set game and /game list to show supported games.')
     }
 
-    return new MessageEmbed()
+    return new EmbedBuilder()
       .setTitle(msg.user.username)
       .setDescription('D20 Roll Result')
       .setThumbnail(game.images.d20)
@@ -110,11 +111,6 @@ module.exports = {
           inline: true,
         },
         {
-          name: 'Raw Result',
-          value: rawResult,
-          inline: true,
-        },
-        {
           name: 'Success(es)',
           value: success.toString(),
           inline: true,
@@ -123,7 +119,15 @@ module.exports = {
           name: 'Complication(s)',
           value: complication.toString(),
           inline: true,
-        }
+        },
+        {
+          name: 'Result',
+          value: renderedResult,
+        },
+        {
+          name: 'Raw Result',
+          value: rawResult,
+        },
       )
   },
 
@@ -137,7 +141,7 @@ module.exports = {
       description = pcAttackProperties[action]
     }
 
-    return new MessageEmbed()
+    return new EmbedBuilder()
       .setTitle(action)
       .setDescription(description)
   },
@@ -152,7 +156,7 @@ module.exports = {
       description = shipActions[action]
     }
 
-    return new MessageEmbed()
+    return new EmbedBuilder()
       .setTitle(action)
       .setDescription(description)
   },
@@ -175,7 +179,7 @@ module.exports = {
       }
     }
 
-    return new MessageEmbed()
+    return new EmbedBuilder()
       .setTitle(`${topic.toUpperCase()} SPENDS`)
       .addFields(...fields)
   },
@@ -199,7 +203,7 @@ module.exports = {
       }
     }
 
-    return new MessageEmbed()
+    return new EmbedBuilder()
       .setTitle('GENERATED ALIEN')
       .addFields(...fields)
   },

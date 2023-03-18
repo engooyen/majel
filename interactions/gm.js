@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2022 John H. Nguyen
+ * Copyright 2019-2023 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
@@ -20,8 +20,8 @@
  */
 
 const Discord = require('discord.js')
-const { playerSheetGet } = require('../player-sheets')
-const builders = require('../interaction-builder')
+const { playerSheetGet } = resolveModule('player-sheets')
+const builders = resolveModule('api/interaction-builder')
 
 module.exports = {
     async buildPrompt(interaction) {
@@ -66,38 +66,38 @@ module.exports = {
                     .addOptions(options)
             )
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Roll d20')
             .setDescription('You have been chose to make this roll. Do not disappoint.')
             .setThumbnail('https://i.imgur.com/sBWwCxI.png')
             .addFields(
                 {
-                    name: "Target Roll",
+                    name: 'Target Roll',
                     value: (attributeValue + disciplineValue).toString(),
                     inline: true,
                 },
                 {
-                    name: "Critical",
+                    name: 'Critical',
                     value: crit.toString(),
                     inline: true,
                 },
                 {
-                    name: "Complication",
+                    name: 'Complication',
                     value: comp.toString(),
                     inline: true,
                 },
                 {
-                    name: "Attribute",
+                    name: 'Attribute',
                     value: attributeValue.toString(),
                     inline: true,
                 },
                 {
-                    name: "Discipline",
+                    name: 'Discipline',
                     value: disciplineValue.toString(),
                     inline: true,
                 },
                 {
-                    name: "Difficulty",
+                    name: 'Difficulty',
                     value: difficulty.toString(),
                     inline: true,
                 }

@@ -53,6 +53,8 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 `/alien` - Generate a random alien species.
 
+`/computer [prompt]` - Ask the computer anything.
+
 **Reference for player characters (PC)**
 
 `/pc list` - List pc rules lookup sub-commands.
@@ -85,7 +87,7 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 **Momemtum and Threat Pools**
 
-`/m or /t menu [global or here]` - A prompt will be presented to the user to add or subtract the momentum or threat from or to the pool.
+`/m or /t get [global or here]` - Get the current value of a specified pool's location.
 
 `/m or /t set [global or here] [amount]` - Directly set the amount to the momemtum or threat pool.
 

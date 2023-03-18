@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2022 John H. Nguyen
+ * Copyright 2019-2023 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
@@ -19,9 +19,9 @@
  * IN THE SOFTWARE.
  */
 
-const { MessageEmbed } = require('discord.js');
-const builders = require('../interaction-builder')
-const { GameConfig } = require('../game-config')
+const { EmbedBuilder } = require('discord.js');
+const builders = resolveModule('api/interaction-builder')
+const { GameConfig } = resolveModule('api/game-config')
 const is2d20Feature = process.env.feature_2d20
 
 module.exports = {
@@ -47,14 +47,6 @@ module.exports = {
       })
     }
   },
-  async handleD6Roll(interaction) {
-    const gameConfig = new GameConfig(interaction.guild)
-    const numDice = interaction.options.getInteger('x')
-    const result = builders.rollD6(numDice, interaction, await gameConfig.getGame())
-    await interaction.reply({
-      embeds: [result]
-    });
-  },
   async handleD20Roll(interaction) {
     const target = interaction.options.getInteger('target')
     const difficulty = interaction.options.getInteger('difficulty') || 0
@@ -65,7 +57,7 @@ module.exports = {
     const game = await gameConfig.getGame()
 
     if (is2d20Feature && !game) {
-      const warning = new MessageEmbed()
+      const warning = new EmbedBuilder()
         .setTitle('Game not set!')
         .setDescription('/game set [game] to set game and /game list to show supported games.')
 
@@ -113,7 +105,7 @@ module.exports = {
       const gameConfig = new GameConfig(interaction.guild)
       const game = await gameConfig.getGame()
       if (is2d20Feature && !game) {
-        const warning = new MessageEmbed()
+        const warning = new EmbedBuilder()
           .setTitle('Game not set!')
           .setDescription('/game set [game] to set game and /game list to show supported games.')
 

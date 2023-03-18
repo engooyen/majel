@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2022 John H. Nguyen
+ * Copyright 2019-2023 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
@@ -19,9 +19,9 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require('discord.js')
-const pool = require('../pool')
-const { GameConfig } = require('../game-config')
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const pool = resolveModule('api/pool')
+const { GameConfig } = resolveModule('api/game-config')
 
 const poolFunctions = {
     m: pool.adjustMomentum,
@@ -29,20 +29,29 @@ const poolFunctions = {
 }
 
 module.exports = {
-    async buildPrompt(interaction, cmd, loc, op, gameConfig) {
+    async buildPrompt(interaction, loc, op, gameConfig) {
+        let cmd = interaction.commandName
+        if (!interaction.isChatInputCommand()) {
+            try {
+                const payload = JSON.parse(interaction.customId)
+                cmd = interaction.client.commands.get(payload.action);
+            } catch (e) {
+                console.error(e)
+            }
+        }
         const { options, guild, channel } = interaction
         const subCmd = options?.getSubcommand() || op
         const location = options?.getString('location') || loc
         const amount = options?.getInteger('amount')
         const pool = options?.getString('pool')
         const action = cmd === 'p'
-            ? pool === 'player' ? 'm' : 't' 
+            ? pool === 'player' ? 'm' : 't'
             : cmd
         // const lastMsg = new LastMessage(guild, channel, action)
 
-        let row = new Discord.MessageActionRow()
+        let row = new ActionRowBuilder()
             .addComponents(
-                new Discord.MessageButton()
+                new ButtonBuilder()
                     .setCustomId(JSON.stringify({
                         action,
                         context: {
@@ -52,8 +61,8 @@ module.exports = {
                         }
                     }))
                     .setLabel('Add')
-                    .setStyle('PRIMARY'),
-                new Discord.MessageButton()
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
                     .setCustomId(JSON.stringify({
                         action,
                         context: {
@@ -63,7 +72,7 @@ module.exports = {
                         }
                     }))
                     .setLabel('Spend')
-                    .setStyle('PRIMARY')
+                    .setStyle(ButtonStyle.Primary)
             )
 
         // await lastMsg.delete(interaction)
@@ -77,10 +86,10 @@ module.exports = {
         } else {
             embed = await poolFunctions[action](guild, channel, 'add', 0, location === 'here', await gameConfig.getGame())
         }
-        
+
         await interaction.editReply({
             embeds: [embed],
-            components: [row]
+            // components: [row]
         })
 
         // await lastMsg.save(interaction)
@@ -94,6 +103,6 @@ module.exports = {
 
         const gameConfig = new GameConfig(interaction.guild)
         await poolFunctions[cmd](interaction.guild, interaction.channel, op, amount, isChannelPool, await gameConfig.getGame())
-        await this.buildPrompt(interaction, cmd, isChannelPool ? 'here' : 'global', op, gameConfig)
+        await this.buildPrompt(interaction, isChannelPool ? 'here' : 'global', op, gameConfig)
     }
 }

@@ -1,7 +1,7 @@
 /**
- * Copyright 2019-2022 John H. Nguyen
+ * Copyright 2019-2023 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
+ * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
  * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
@@ -10,7 +10,7 @@
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -19,26 +19,26 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require('discord.js')
-const { redis } = require("./redis")
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js')
+const { redis } = resolveModule('api/redis')
 
 module.exports = {
   async status(msg, option) {
     const guildId = msg.guild.id.toString()
     const channelId = msg.channel.id.toString()
-    const isAdmin = msg.member.hasPermission("ADMINISTRATOR")
+    const isAdmin = msg.member.hasPermission('ADMINISTRATOR')
     // console.warn(msg.author.username)
-    // console.warn("guild id", guildId)
-    // console.warn("channel id", channelId)
+    // console.warn('guild id', guildId)
+    // console.warn('channel id', channelId)
 
     let guildData = await redis.get(guildId)
     if (guildData) {
       guildData = JSON.parse(guildData)
     }
 
-    // console.warn("get redis", guildId, guildData)
+    // console.warn('get redis', guildId, guildData)
     if (!guildData || !guildData.global) {
-      // console.warn("fixing guildData")
+      // console.warn('fixing guildData')
       guildData = {
         global: {
           momentum: 0,
@@ -50,10 +50,10 @@ module.exports = {
     const global = guildData.global
     // making sure global is always first to be displayed
     const embed = {
-      title: "Momentum and Threat Pools",
+      title: 'Momentum and Threat Pools',
       fields: [
         {
-          name: "Global",
+          name: 'Global',
           value: `Momentum: ${global.momentum}. Threat: ${global.threat}`,
         },
       ],
@@ -61,21 +61,21 @@ module.exports = {
 
     let reset = false
     let thisChannelOnly = false
-    const options = option.split(" ")
-    // console.warn("option", options)
+    const options = option.split(' ')
+    // console.warn('option', options)
     if (options.length > 1) {
-      reset = options[0].toLowerCase() === "reset"
-      thisChannelOnly = options[1].toLowerCase() === "here"
+      reset = options[0].toLowerCase() === 'reset'
+      thisChannelOnly = options[1].toLowerCase() === 'here'
     } else if (options.length > 0) {
       const op = options[0].toLowerCase()
-      reset = op === "reset"
-      thisChannelOnly = op === "here"
+      reset = op === 'reset'
+      thisChannelOnly = op === 'here'
     }
 
     if (reset) {
       for (let currentId in guildData) {
-        // console.warn("currentId", currentId)
-        if (!thisChannelOnly && currentId === "global") {
+        // console.warn('currentId', currentId)
+        if (!thisChannelOnly && currentId === 'global') {
           guildData.global.momentum = 0
           guildData.global.threat = 0
           continue
@@ -85,14 +85,14 @@ module.exports = {
           continue
         }
 
-        // console.warn("deleting", currentId)
+        // console.warn('deleting', currentId)
         delete guildData[currentId]
       }
     }
 
     for (let currentId in guildData) {
-      // console.warn("currentId", currentId)
-      if (currentId === "global") {
+      // console.warn('currentId', currentId)
+      if (currentId === 'global') {
         continue
       }
 
@@ -101,9 +101,9 @@ module.exports = {
       }
 
       const channel = guildData[currentId]
-      // console.warn("channel", channel)
+      // console.warn('channel', channel)
       if (channel) {
-        embed.fields.push({
+        embed.addFields({
           name: `#${channel.name}`,
           value: `Momentum: ${channel.momentum}. Threat: ${channel.threat}`,
         })
@@ -111,7 +111,7 @@ module.exports = {
     }
 
 
-    // console.warn("set redis", guildData)
+    // console.warn('set redis', guildData)
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
   },
@@ -124,9 +124,9 @@ module.exports = {
       guildData = JSON.parse(guildData)
     }
 
-    // console.warn("get redis", guildId, guildData)
+    // console.warn('get redis', guildId, guildData)
     if (!guildData || !guildData.global) {
-      // console.warn("fixing guildData")
+      // console.warn('fixing guildData')
       guildData = {
         global: {
           momentum: 0,
@@ -143,16 +143,16 @@ module.exports = {
       }
     }
 
-    let pool = "global"
+    let pool = 'global'
     if (isChannelPool) {
       pool = channelId
     }
 
-    if (op === "add") {
+    if (op === 'add') {
       guildData[pool].momentum += amount
-    } else if (op === "sub") {
+    } else if (op === 'sub') {
       guildData[pool].momentum -= amount
-    } else if (op === "set") {
+    } else if (op === 'set') {
       guildData[pool].momentum = amount
     }
 
@@ -164,10 +164,6 @@ module.exports = {
       guildData.global.momentum = 6
     }
 
-    if (guildData.global.momentum < 0) {
-      guildData.global.momentum = 0
-    }
-
     let value = guildData.global.momentum || '0'
     if (pool !== 'global') {
       value = guildData[channelId].momentum || '0'
@@ -175,16 +171,16 @@ module.exports = {
 
     value = value.toString()
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor(3447003)
       .setFields([
         {
-          name: (pool === 'global' ? "Global " : `#${channel.name} `) + gameConfig.pool.player,
+          name: (pool === 'global' ? 'Global ' : `#${channel.name} `) + gameConfig.pool.player,
           value
         }
       ])
 
-    // console.warn("redis set", guildId, guildData)
+    // console.warn('redis set', guildId, guildData)
     await redis.set(guildId, JSON.stringify(guildData))
     return embed
   },
@@ -197,9 +193,9 @@ module.exports = {
       guildData = JSON.parse(guildData)
     }
 
-    // console.warn("get redis", guildId, guildData)
+    // console.warn('get redis', guildId, guildData)
     if (!guildData || !guildData.global) {
-      // console.warn("fixing guildData")
+      // console.warn('fixing guildData')
       guildData = {
         global: {
           momentum: 0,
@@ -216,7 +212,7 @@ module.exports = {
       }
     }
 
-    let pool = "global"
+    let pool = 'global'
     if (isChannelPool) {
       pool = channelId
     }
@@ -225,11 +221,11 @@ module.exports = {
       guildData[pool].threat = 0;
     }
 
-    if (op === "add") {
+    if (op === 'add') {
       guildData[pool].threat += amount
-    } else if (op === "sub") {
+    } else if (op === 'sub') {
       guildData[pool].threat -= amount
-    } else if (op === "set") {
+    } else if (op === 'set') {
       guildData[pool].threat = amount
     }
 
@@ -248,11 +244,11 @@ module.exports = {
 
     value = value.toString()
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor(15158332)
       .setFields([
         {
-          name: (pool === 'global' ? "Global " : `#${channel.name} `) + gameConfig.pool.gm,
+          name: (pool === 'global' ? 'Global ' : `#${channel.name} `) + gameConfig.pool.gm,
           value
         }
       ])

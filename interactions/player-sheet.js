@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2022 John H. Nguyen
+ * Copyright 2019-2023 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
@@ -21,7 +21,7 @@
 
 const Discord = require('discord.js')
 const axios = require('axios').default;
-const { playerSheetSet, playerSheetGet } = require('../player-sheets')
+const { playerSheetSet, playerSheetGet } = resolveModule('player-sheets')
 
 module.exports = {
     async handleSet(interaction) {
@@ -43,74 +43,74 @@ module.exports = {
         }
         const attributes = sheet.attributes
         const disciplines = sheet.disciplines
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Player Sheet')
             .addFields(
                 {
-                    name: "Attributes",
+                    name: 'Attributes',
                     value: 'Attributes',
                 },
                 {
-                    name: "Control",
+                    name: 'Control',
                     value: attributes.control.toString(),
                     inline: true,
                 },
                 {
-                    name: "Fitness",
+                    name: 'Fitness',
                     value: attributes.fitness.toString(),
                     inline: true,
                 },
                 {
-                    name: "Presence",
+                    name: 'Presence',
                     value: attributes.presence.toString(),
                     inline: true,
                 },
                 {
-                    name: "Daring",
+                    name: 'Daring',
                     value: attributes.daring.toString(),
                     inline: true,
                 },
                 {
-                    name: "Insight",
+                    name: 'Insight',
                     value: attributes.insight.toString(),
                     inline: true,
                 },
                 {
-                    name: "Reason",
+                    name: 'Reason',
                     value: attributes.reason.toString(),
                     inline: true,
                 },
                 {
-                    name: "Disciplines",
+                    name: 'Disciplines',
                     value: 'Disciplines',
                 },
                 {
-                    name: "Command",
+                    name: 'Command',
                     value: disciplines.command.toString(),
                     inline: true,
                 },
                 {
-                    name: "Security",
+                    name: 'Security',
                     value: disciplines.security.toString(),
                     inline: true,
                 },
                 {
-                    name: "Science",
+                    name: 'Science',
                     value: disciplines.science.toString(),
                     inline: true,
                 },
                 {
-                    name: "Conn",
+                    name: 'Conn',
                     value: disciplines.conn.toString(),
                     inline: true,
                 },
                 {
-                    name: "Engineering",
+                    name: 'Engineering',
                     value: disciplines.engineering.toString(),
                     inline: true,
                 },
                 {
-                    name: "Medicine",
+                    name: 'Medicine',
                     value: disciplines.medicine.toString(),
                     inline: true,
                 }

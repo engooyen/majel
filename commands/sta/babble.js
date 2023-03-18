@@ -19,19 +19,19 @@
  * IN THE SOFTWARE.
  */
 
-const Discord = require('discord.js')
-const traits = resolveModule('api/trait');
+const { SlashCommandBuilder } = require('discord.js');
+const babble = resolveModule('api/sta/babble');
 
 module.exports = {
-    async buildPrompt(interaction, subCmd) {
-        const { guild, options } = interaction
-        const container = options?.getString('container')
-        const trait = options?.getString('trait')
-        const value = options?.getString('value')
-        await interaction.deferReply()
-        const embed = await traits.doTrait(guild.id, subCmd, container, trait, value);
-        await interaction.editReply({
-            embeds: [embed]
-        })
-    }
-}
+    data: new SlashCommandBuilder()
+        .setName('babble')
+        .setDescription('Generate a random techno babble phrase and DMs the user.'),
+    async execute(interaction) {
+        const { member } = interaction;
+        await interaction.reply({
+            content: `<@${member.user.id}> Techno babble generated. Check your DM.`
+        });
+
+        member.user.send(babble.generateTechnobabble());
+    },
+};

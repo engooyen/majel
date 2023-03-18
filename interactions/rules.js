@@ -1,7 +1,7 @@
 /**
- * Copyright 2019-2022 John H. Nguyen
+ * Copyright 2019-2023 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
+ * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
  * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
@@ -10,7 +10,7 @@
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -20,15 +20,15 @@
  */
 
 const Discord = require('discord.js')
-const pcActions = require('../data/pc-actions.json')
-const pcMinorActions = require('../data/pc-minor-actions.json')
-const pcAttackProperties = require('../data/pc-attack-properties.json')
-const shipOverview = require('../data/ship-actions-overview.json')
-const shipActions = require('../data/ship-actions.json')
-const shipMinorActions = require('../data/ship-minor-actions.json')
-const shipAttackProperties = require('../data/ship-attack-properties.json')
-const momentum = require('../data/momentum.json')
-const determination = require('../data/determination.json')
+const pcActions = resolveModule('data/pc-actions.json')
+const pcMinorActions = resolveModule('data/pc-minor-actions.json')
+const pcAttackProperties = resolveModule('data/pc-attack-properties.json')
+const shipOverview = resolveModule('data/ship-actions-overview.json')
+const shipActions = resolveModule('data/ship-actions.json')
+const shipMinorActions = resolveModule('data/ship-minor-actions.json')
+const shipAttackProperties = resolveModule('data/ship-attack-properties.json')
+const momentum = resolveModule('data/momentum.json')
+const determination = resolveModule('data/determination.json')
 
 module.exports = {
     async handlePcList(interaction) {
@@ -45,7 +45,7 @@ module.exports = {
             name: '/pc attack-properties [prop]',
             value: Object.keys(pcAttackProperties).join(', ')
         })
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('PC Rules Lookup Sub-commands')
             .addFields(...fields)
         await interaction.reply({
@@ -55,7 +55,7 @@ module.exports = {
 
     async handlePcAction(interaction) {
         const action = interaction.options.getString('action')
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('PC Action')
             .addFields(
                 {
@@ -70,7 +70,7 @@ module.exports = {
 
     async handlePcMinorAction(interaction) {
         const action = interaction.options.getString('action')
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('PC Minor Action')
             .addFields(
                 {
@@ -85,7 +85,7 @@ module.exports = {
 
     async handlePcAttackProperty(interaction) {
         const prop = interaction.options.getString('property')
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('PC Attack Property')
             .addFields(
                 {
@@ -108,7 +108,7 @@ module.exports = {
             })
         }
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Ship Deparments Action Overview')
             .setDescription('/ship action [action] - To look up the rule for that action.')
             .addFields(...fields)
@@ -131,7 +131,7 @@ module.exports = {
             name: '/ship attack-properties [prop]',
             value: Object.keys(shipAttackProperties).join(', ')
         })
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Ship Rules Lookup Sub-commands')
             .addFields(...fields)
         await interaction.reply({
@@ -141,7 +141,7 @@ module.exports = {
 
     async handleShipAction(interaction) {
         const action = interaction.options.getString('action')
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Ship Action')
             .addFields(
                 {
@@ -156,7 +156,7 @@ module.exports = {
 
     async handleShipMinorAction(interaction) {
         const action = interaction.options.getString('action')
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Ship Minor Action')
             .addFields(
                 {
@@ -172,7 +172,7 @@ module.exports = {
 
     async handleShipAttackProperty(interaction) {
         const prop = interaction.options.getString('property')
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Ship Attack Property')
             .addFields(
                 {
@@ -195,7 +195,7 @@ module.exports = {
             })
         }
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Momentum Spends')
             .addFields(...fields)
         await interaction.reply({
@@ -213,7 +213,7 @@ module.exports = {
             })
         }
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle('Determination Spends')
             .addFields(...fields)
         await interaction.reply({

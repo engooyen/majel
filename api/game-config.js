@@ -1,7 +1,7 @@
-const Discord = require('discord.js')
-const { redis } = require('./redis')
-const config = require('./config')
-const utils = require('./utils')
+const { EmbedBuilder } = require('discord.js')
+const { redis } = resolveModule('api/redis')
+const config = resolveModule('config')
+const utils = resolveModule('api/utils')
 const isStaFeature = process.env.feature_sta
 
 class GameConfig {
@@ -18,16 +18,16 @@ class GameConfig {
     }
 
     async setGame(game) {
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(`Setting Game to ${game}`)
         const guildData = await redis.getGuildData(this.guildId)
         if (!config[game]) {
-            embed.addField('Error', `'${game}' not supported!`)
+            embed.addFields({ name: 'Error', value: `'${game}' not supported!` })
             embed.addFields(...this.supportedGames().fields)
         } else {
             guildData.game = game;
             await redis.setGuildData(this.guildId, guildData)
-            embed.addField('Success', `Game is now set to ${config[game].display}`)
+            embed.addFields({ name: 'Success', value: `Game is now set to ${config[game].display}` })
         }
 
         return embed
@@ -44,19 +44,19 @@ class GameConfig {
     }
 
     supportedGames() {
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Supported Games')
             .setDescription('Supported game listed by their code and full name.')
         const keys = Object.keys(config)
         for (let key of keys) {
-            embed.addField(key, config[key].display)
+            embed.addFields({ name: key, value: config[key].display })
         }
 
         return embed
     }
 
     async supportedCustomCmds() {
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle('Supported Commands')
 
         const guildData = await redis.getGuildData(this.guildId)
@@ -66,14 +66,14 @@ class GameConfig {
             const diceCmds = config[game].dice;
             const keys = Object.keys(diceCmds)
             for (let key of keys) {
-                embed.addField(key, diceCmds[key].display)
+                embed.addFields({ name: key, value: diceCmds[key].display })
             }
 
             if (keys.length === 0) {
-                embed.addField('Error', `No custom commands avaialble for ${config[game].display}`)
+                embed.addFields({ name: 'Error', value: `No custom commands avaialble for ${config[game].display}` })
             }
         } else {
-            embed.addField('Error', `Game has not been set. Use /game set [game] to set. /game list to see the list of supported games.`)
+            embed.addFields({ name: 'Error', value: `Game has not been set. Use /game set [game] to set. /game list to see the list of supported games.` })
         }
 
         return embed
@@ -83,21 +83,30 @@ class GameConfig {
         const guildData = await redis.getGuildData(this.guildId)
         const game = guildData?.game
         const gameConfig = config[game]
-        const embed = new Discord.MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle(this.player)
 
         if (game) {
             const cmd = gameConfig.dice[customCmd]
             if (!cmd) {
-                embed.addField(`${customCmd} is not a game specific command`, `Valid commands:`)
+                embed.addFields({
+                    name: `${customCmd} is not a game specific command`,
+                    value: `Valid commands:`
+                })
                 const cmds = await this.supportedCustomCmds()
                 embed.addFields(...cmds.fields)
             } else {
                 embed.setThumbnail(gameConfig.images.d20)
-                embed.addField(cmd.display, utils.randomElement(cmd.values))
+                embed.addFields({
+                    name: cmd.display,
+                    value: utils.randomElement(cmd.values)
+                })
             }
         } else {
-            embed.addField('Error', `Game has not been set. Use /game set [game] to set. /game list to see the list of supported games.`)
+            embed.addFields({
+                name: 'Error',
+                value: `Game has not been set. Use /game set [game] to set. /game list to see the list of supported games.`
+            })
         }
 
         return embed
