@@ -50,7 +50,6 @@ const client = new Client({
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildEmojisAndStickers,
-        GatewayIntentBits.MessageContent,
     ]
 })
 
@@ -100,9 +99,9 @@ const registerCmds = async (guildId) => {
         );
 
         // clear any global comands.
-        await rest.put(
-            Routes.applicationCommands(clientId), { body: [] },
-        );
+        // await rest.put(
+        //     Routes.applicationCommands(clientId), { body: [] },
+        // );
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
 
