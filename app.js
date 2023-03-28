@@ -98,7 +98,7 @@ const registerCmds = async (guildId) => {
             Routes.applicationGuildCommands(clientId, guildId), { body: commands },
         );
     } catch (error) {
-        console.error(error)
+        // console.error(error)
     }
 }
 
@@ -112,7 +112,9 @@ client.on(Events.ClientReady, async () => {
     logger.info('Connected')
     logger.info('Logged in as: ')
     logger.info(client.user.username + ' - (' + client.user.id + ')')
+    logger.info('Starting command registration')
     await refreshCmdForAllServers()
+    logger.info('Command registration completed')
 })
 
 client.on(Events.ChannelUpdate, async () => {
