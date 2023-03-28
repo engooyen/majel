@@ -44,6 +44,8 @@ const logger = winston.createLogger({
     transports: [new winston.transports.Console()],
 })
 
+global.logger = logger
+
 // Initialize Discord Bot
 const client = new Client({
     intents: [
@@ -98,11 +100,6 @@ const registerCmds = async (guildId) => {
             Routes.applicationGuildCommands(clientId, guildId), { body: commands },
         );
 
-        // clear any global comands.
-        // await rest.put(
-        //     Routes.applicationCommands(clientId), { body: [] },
-        // );
-
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
 
     } catch (error) {
@@ -116,18 +113,18 @@ const refreshCmdForAllServers = async () => {
     })
 }
 
-client.on(Events.ClientReady, async (evt) => {
+client.on(Events.ClientReady, async () => {
     logger.info('Connected')
     logger.info('Logged in as: ')
     logger.info(client.user.username + ' - (' + client.user.id + ')')
     await refreshCmdForAllServers()
 })
 
-client.on(Events.ChannelUpdate, async (evt) => {
+client.on(Events.ChannelUpdate, async () => {
     await refreshCmdForAllServers()
 })
 
-client.on(Events.GuildCreate, async (evt) => {
+client.on(Events.GuildCreate, async () => {
     await refreshCmdForAllServers()
 })
 

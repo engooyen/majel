@@ -11,6 +11,7 @@
 
 	},
     "globals": {
-        "resolveModule":"readonly"
+        "resolveModule":"readonly",
+        "logger":"readonly"
     }
 }

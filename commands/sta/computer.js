@@ -21,7 +21,7 @@
 
 const { SlashCommandBuilder } = require('discord.js');
 const { Configuration, OpenAIApi } = require('openai');
-const trainingData = resolveModule('data/training-data.json');
+const systemPrompts = resolveModule('data/system-prompts.json');
 const configuration = new Configuration({
     organization: process.env.ORGANIZATION,
     apiKey: process.env.OPENAI_API_KEY,
@@ -48,13 +48,22 @@ module.exports = {
     async execute(interaction) {
         const prompt = interaction.options.getString('prompt')
         const guildId = interaction.guildId
-        await interaction.deferReply();
         let response
+
+        if (prompt.length > 2000) {
+            await interaction.reply({
+                content: `You've exceeded the 2000 character limit. Please try a shorter prompt.`
+            });
+
+            return
+        }
+
+        await interaction.deferReply();
         try {
 
             let context = contexts[guildId]
             if (!context) {
-                context = trainingData
+                context = []
                 contexts[guildId] = context
             }
 
@@ -62,21 +71,63 @@ module.exports = {
                 role: 'user',
                 content: prompt
             });
+            let newContext = [...systemPrompts]
+            newContext.push(...context)
             console.log('[query]', prompt)
 
-            request.messages = context
+            request.messages = newContext
+            let tokens = 0
+            for (let message of newContext) {
+                tokens += message.content.split(' ').length
+            }
+
+            const maxTokens = request.max_tokens / 2
+            let rebuildContext = tokens > maxTokens
+            while (tokens > maxTokens) {
+                tokens -= context[0].content.split(' ').length
+                context.shift()
+            }
+
+            if (rebuildContext) {
+                newContext = [...systemPrompts]
+                newContext.push(...context)
+            }
 
             response = await openai.createCompletion(request);
-            const message = response.data.choices[0].message
-            const content = message.content.split('\n\n').join('\n')
-            context.push(message)
-            
             await interaction.editReply({
-                content: `\n[You]: ${prompt}\n\n[Computer]: ${content}`
+                content: `[You]: ${prompt}`
             });
+
+            const data = response.data
+            const message = data.choices[0].message
+            context.push(message)
+            const content = message.content.split('\n\n')
+            let reply = ''
+            for (let i = 0; i < content.length; ++i) {
+                const potentialReply = reply + content[i]
+                if (potentialReply.length > 1950) {
+                    await interaction.followUp({
+                        content: `[Computer]: ${reply}`
+                    });
+
+                    reply = content[i]
+                } else {
+                    if (reply.length > 0) {
+                        reply += '\n'
+                    }
+                    reply += content[i]
+                }
+            }
+
+            if (reply) {
+                await interaction.followUp({
+                    content: `[Computer]: ${reply}`
+                });
+            }
+            
         } catch (error) {
             await interaction.editReply({
-                content: error
+                content: error.toString()
             });
         }
     },
