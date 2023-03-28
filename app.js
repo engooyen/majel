@@ -93,15 +93,10 @@ const registerCmds = async (guildId) => {
             commands.push(...getCommands('commands/2d20'))
         }
 
-        console.log(`Started refreshing ${commands.length} application (/) commands.`);
-
         // The put method is used to fully refresh all commands in the guild with the current set
-        const data = await rest.put(
+        await rest.put(
             Routes.applicationGuildCommands(clientId, guildId), { body: commands },
         );
-
-        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-
     } catch (error) {
         console.error(error)
     }
