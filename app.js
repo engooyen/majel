@@ -44,133 +44,133 @@ const logger = winston.createLogger({
     transports: [new winston.transports.Console()],
 })
 
-global.logger = logger
-
-// Initialize Discord Bot
-const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildEmojisAndStickers,
-    ]
-})
-
-client.login(process.env.token)
-client.commands = new Collection()
-
-const rest = new REST({ version: '10' }).setToken(process.env.token);
-
-const getCommands = (cmdPath) => {
-    const commandsPath = path.join(__dirname, cmdPath);
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-    const commands = [];
-    for (const file of commandFiles) {
-        const filePath = path.join(commandsPath, file);
-        const command = require(filePath);
-        commands.push(command.data.toJSON());
-
-        if ('data' in command && 'execute' in command) {
-            client.commands.set(command.data.name, command);
-        } else {
-            console.log(`[WARNING] The command at ${filePath} is missing a required 'data' or 'execute' property.`);
-        }
-    }
-
-    return commands;
-};
-
-const registerCmds = async (guildId) => {
-    try {
-        const commands = getCommands('commands')
-        const isStaFeature = process.env.feature_sta
-        const is2d20Feature = process.env.feature_2d20
-
-        if (isStaFeature) {
-            commands.push(...getCommands('commands/sta'))
-        }
-
-        if (is2d20Feature) {
-            commands.push(...getCommands('commands/2d20'))
-        }
-
-        // The put method is used to fully refresh all commands in the guild with the current set
-        await rest.put(
-            Routes.applicationGuildCommands(clientId, guildId), { body: commands },
-        );
-    } catch (error) {
-        // console.error(error)
-    }
-}
-
-const refreshCmdForAllServers = async () => {
-    client.guilds.cache.forEach(async guild => {
-        await registerCmds(guild.id)
-    })
-}
-
-client.on(Events.ClientReady, async () => {
-    logger.info('Connected')
-    logger.info('Logged in as: ')
-    logger.info(client.user.username + ' - (' + client.user.id + ')')
-    logger.info('Starting command registration')
-    await refreshCmdForAllServers()
-    logger.info('Command registration completed')
-})
-
-client.on(Events.ChannelUpdate, async () => {
-    await refreshCmdForAllServers()
-})
-
-client.on(Events.GuildCreate, async () => {
-    await refreshCmdForAllServers()
-})
-
-client.on(Events.InteractionCreate, async interaction => {
-    let command = interaction.client.commands.get(interaction.commandName);
-    if (!interaction.isChatInputCommand()) {
-        try {
-            const payload = JSON.parse(interaction.customId)
-            command = interaction.client.commands.get(payload.action);
-        } catch (e) {
-            console.error(e)
-        }
-    }
-
-    if (!command) {
-        console.error(`No command matching ${interaction.commandName} was found.`);
-        return;
-    }
-
-    try {
-        await command.execute(interaction);
-    } catch (error) {
-        console.error(error);
-        if (interaction.replied || interaction.deferred) {
-            await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
-        } else {
-            await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-        }
-    }
-})
-
-client.on('unhandledRejection', error => {
+process.on('unhandledRejection', error => {
     logger.error('Unhandled promise rejection:', error);
 })
 
-client.on('messageCreate', async msg => {
-    if (msg.guildId === process.env.dev_guild_id) {
-        if (msg.author.id === process.env.dev_author_id) {
-            if (msg.content.includes('refresh')) {
-                await refreshCmdForAllServers()
+global.logger = logger
+try {
+    // Initialize Discord Bot
+    const client = new Client({
+        intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.GuildEmojisAndStickers,
+        ]
+    })
+
+    client.login(process.env.token)
+    client.commands = new Collection()
+
+    const rest = new REST({ version: '10' }).setToken(process.env.token);
+
+    const getCommands = (cmdPath) => {
+        const commandsPath = path.join(__dirname, cmdPath);
+        const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+        const commands = [];
+        for (const file of commandFiles) {
+            const filePath = path.join(commandsPath, file);
+            const command = require(filePath);
+            commands.push(command.data.toJSON());
+
+            if ('data' in command && 'execute' in command) {
+                client.commands.set(command.data.name, command);
+            } else {
+                console.log(`[WARNING] The command at ${filePath} is missing a required 'data' or 'execute' property.`);
             }
         }
+
+        return commands;
+    };
+
+    const registerCmds = async (guildId) => {
+        try {
+            const commands = getCommands('commands')
+            const isStaFeature = process.env.feature_sta
+            const is2d20Feature = process.env.feature_2d20
+
+            if (isStaFeature) {
+                commands.push(...getCommands('commands/sta'))
+            }
+
+            if (is2d20Feature) {
+                commands.push(...getCommands('commands/2d20'))
+            }
+
+            // The put method is used to fully refresh all commands in the guild with the current set
+            await rest.put(
+                Routes.applicationGuildCommands(clientId, guildId), { body: commands },
+            );
+        } catch (error) {
+            // console.error(error)
+        }
     }
-})
 
-app.get('/', (req, res) => {
-    res.send(`${process.env.bot_name} is up and running. Testing.`)
-})
+    const refreshCmdForAllServers = async () => {
+        client.guilds.cache.forEach(async guild => {
+            await registerCmds(guild.id)
+        })
+    }
 
-app.listen(port, () => {
-    logger.info(`${process.env.bot_name} listening on port ${port}`)
-})
+    client.on(Events.ClientReady, async () => {
+        logger.info('Connected')
+        logger.info('Logged in as: ')
+        logger.info(client.user.username + ' - (' + client.user.id + ')')
+        logger.info('Starting command registration')
+        await refreshCmdForAllServers()
+        logger.info('Command registration completed')
+    })
+
+    client.on(Events.ChannelUpdate, async () => {
+        await refreshCmdForAllServers()
+    })
+
+    client.on(Events.GuildCreate, async () => {
+        await refreshCmdForAllServers()
+    })
+
+    client.on(Events.InteractionCreate, async interaction => {
+        let command = interaction.client.commands.get(interaction.commandName);
+        if (!interaction.isChatInputCommand()) {
+            try {
+                await interaction.reply({
+                    content: `This interaction is no longer supported.`
+                });
+            } catch (e) {
+                console.error(e)
+            }
+        }
+
+        if (!command) {
+            console.error(`No command matching ${interaction.commandName} was found.`);
+            return;
+        }
+
+        try {
+            await command.execute(interaction);
+        } catch (error) {
+            console.error(error);
+        }
+    })
+
+    client.on(Events.MessageCreate, async msg => {
+        if (msg.guildId === process.env.dev_guild_id) {
+            if (msg.author.id === process.env.dev_author_id) {
+                if (msg.content.includes('refresh')) {
+                    await refreshCmdForAllServers()
+                }
+            }
+        }
+    })
+
+    app.get('/', (req, res) => {
+        res.send(`${process.env.bot_name} is up and running. Testing.`)
+    })
+
+    app.listen(port, () => {
+        logger.info(`${process.env.bot_name} listening on port ${port}`)
+    })
+
+} catch (error) {
+    console.error(error)
+}

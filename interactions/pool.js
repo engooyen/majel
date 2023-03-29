@@ -19,7 +19,6 @@
  * IN THE SOFTWARE.
  */
 
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const pool = resolveModule('api/pool')
 const { GameConfig } = resolveModule('api/game-config')
 
@@ -47,35 +46,7 @@ module.exports = {
         const action = cmd === 'p'
             ? pool === 'player' ? 'm' : 't'
             : cmd
-        // const lastMsg = new LastMessage(guild, channel, action)
 
-        let row = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId(JSON.stringify({
-                        action,
-                        context: {
-                            channel: location === 'here' ? channel.name : 'global',
-                            op: 'add',
-                            value: 1
-                        }
-                    }))
-                    .setLabel('Add')
-                    .setStyle(ButtonStyle.Primary),
-                new ButtonBuilder()
-                    .setCustomId(JSON.stringify({
-                        action,
-                        context: {
-                            channel: location === 'here' ? channel.name : 'global',
-                            op: 'sub',
-                            value: 1
-                        }
-                    }))
-                    .setLabel('Spend')
-                    .setStyle(ButtonStyle.Primary)
-            )
-
-        // await lastMsg.delete(interaction)
         if (!gameConfig) {
             gameConfig = new GameConfig(interaction.guild)
         }
@@ -89,10 +60,7 @@ module.exports = {
 
         await interaction.editReply({
             embeds: [embed],
-            // components: [row]
         })
-
-        // await lastMsg.save(interaction)
     },
     async handleResponse(interaction) {
         const payload = JSON.parse(interaction.customId)

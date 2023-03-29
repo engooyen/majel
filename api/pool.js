@@ -19,19 +19,15 @@
  * IN THE SOFTWARE.
  */
 
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const { redis } = resolveModule('api/redis')
 
 module.exports = {
   async status(msg, option) {
     const guildId = msg.guild.id.toString()
     const channelId = msg.channel.id.toString()
-    const isAdmin = msg.member.hasPermission('ADMINISTRATOR')
-    // console.warn(msg.author.username)
-    // console.warn('guild id', guildId)
-    // console.warn('channel id', channelId)
-
     let guildData = await redis.get(guildId)
+
     if (guildData) {
       guildData = JSON.parse(guildData)
     }

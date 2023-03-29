@@ -19,7 +19,7 @@
  * IN THE SOFTWARE.
  */
 
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { rollD20 } = resolveModule('api/interaction-builder')
 const { GameConfig } = resolveModule('api/game-config')
 const is2d20Feature = process.env.feature_2d20
