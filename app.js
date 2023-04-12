@@ -101,6 +101,12 @@ try {
             await rest.put(
                 Routes.applicationGuildCommands(clientId, guildId), { body: commands },
             );
+
+            // const command = commands.find(cmd => cmd.name === 'computer')
+
+            // await rest.put(
+            //     Routes.applicationGuildCommands(clientId, guildId), { body: [] },
+            // );
         } catch (error) {
             // console.error(error)
         }

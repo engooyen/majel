@@ -121,13 +121,15 @@ module.exports = {
     }
 
     // console.warn('get redis', guildId, guildData)
-    if (!guildData || !guildData.global) {
+    if (!guildData) {
+      guildData = {}
+    }
+
+    if (!guildData.global) {
       // console.warn('fixing guildData')
-      guildData = {
-        global: {
-          momentum: 0,
-          threat: 0,
-        },
+      guildData.global = {
+        momentum: 0,
+        threat: 0,
       }
     }
 
@@ -190,13 +192,14 @@ module.exports = {
     }
 
     // console.warn('get redis', guildId, guildData)
-    if (!guildData || !guildData.global) {
-      // console.warn('fixing guildData')
-      guildData = {
-        global: {
-          momentum: 0,
-          threat: 0,
-        },
+    if (!guildData) {
+      guildData = {}
+    }
+
+    if (!guildData.global) {
+      guildData.global = {
+        momentum: 0,
+        threat: 0,
       }
     }
 
