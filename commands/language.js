@@ -19,50 +19,25 @@
  * IN THE SOFTWARE.
  */
 
- 
-const { createClient } = require('redis')
-const { redis_host, redis_port, redis_password } = process.env
-const redis = createClient({
-  url: `rediss://${redis_host}:${redis_port}`,
-  password: redis_password
-})
-
-redis.on('error', (error) => {
-  logger.error('Redis error:', error)
-})
-
-redis.on('ready', () => {
-  logger.log('Redis client ready.')
-})
-
-redis.setJson = async (key, jsonData) => {
-  await redis.set(key, JSON.stringify(jsonData))
-}
-
-redis.getJson = async (key) => {
-  return JSON.parse(await redis.get(key) || '{}')
-}
-
-redis.getGuildData = async (guildId) => {
-  let guildData = await redis.get(guildId)
-  if (guildData) {
-    guildData = JSON.parse(guildData)
-  }
-
-  // console.warn('get redis', guildId, guildData)
-  if (!guildData) {
-    guildData = {}
-  }
-
-  return guildData
-}
-
-redis.setGuildData = async (guildId, guildData) => {
-  await redis.set(guildId, JSON.stringify(guildData))
-}
-
-redis.connect()
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
-    redis
-}
+    data: new SlashCommandBuilder()
+        .setName('language')
+        .setDescription('Set the language for the commands and content.')
+        .addStringOption(option =>
+            option
+                .setName('language')
+                .setDescription('The language to set.')
+                .setRequired(true)
+                .addChoices(
+                    { name: 'English', value: 'eng' },
+                    { name: 'Deutsch', value: 'deu' },
+                )
+        ),
+    async execute(interaction) {
+        const message = `Set current language to ${interaction.options.getString('language')}. PLACEHOLDER.`;
+        interaction.reply(message);
+        logger.log(message);
+    },
+};

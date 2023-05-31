@@ -97,16 +97,14 @@ try {
                 commands.push(...getCommands('commands/2d20'))
             }
 
-            // The put method is used to fully refresh all commands in the guild with the current set
-            await rest.put(
-                Routes.applicationGuildCommands(clientId, guildId), { body: commands },
-            );
-
-            // const command = commands.find(cmd => cmd.name === 'computer')
-
-            // await rest.put(
+            // rest.put(
             //     Routes.applicationGuildCommands(clientId, guildId), { body: [] },
             // );
+
+            // The put method is used to fully refresh all commands in the guild with the current set
+            rest.put(
+                Routes.applicationGuildCommands(clientId, guildId), { body: commands },
+            );
         } catch (error) {
             // console.error(error)
         }
@@ -144,11 +142,13 @@ try {
                 });
             } catch (e) {
                 console.error(e)
+                logger.error(e)
             }
         }
 
         if (!command) {
             console.error(`No command matching ${interaction.commandName} was found.`);
+            logger.error(`No command matching ${interaction.commandName} was found.`)
             return;
         }
 
@@ -156,6 +156,7 @@ try {
             await command.execute(interaction);
         } catch (error) {
             console.error(error);
+            logger.error(error)
         }
     })
 
@@ -179,4 +180,5 @@ try {
 
 } catch (error) {
     console.error(error)
+    logger.error(error)
 }

@@ -58,7 +58,7 @@ module.exports = {
                 .addIntegerOption(option =>
                     option
                         .setName('amount')
-                        .setDescription('The pool\s new amount.')
+                        .setDescription('The pool\'s new amount.')
                         .setRequired(true)
                 )
         ),
