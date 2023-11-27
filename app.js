@@ -44,15 +44,18 @@ const logger = winston.createLogger({
     transports: [new winston.transports.Console()],
 })
 
-process.on('unhandledRejection', error => {
+const processError = error => {
     const code = error?.code || 'no error code'
     const message = error?.message || 'no message found'
-    const rawError = error?.rawError || 'no rawError found'
-    const msg = `code: ${code}, message: ${message}, rawError: ${rawError}`
+    const stack = error?.stack || 'no stack found'
+    const url = error?.url || 'no url found'
+    const msg = `code: ${code}, message: ${message}, stack: ${stack} url: ${url}`
 
     console.error(msg)
     logger.error(msg)
-})
+}
+
+process.on('unhandledRejection', error => processError(error))
 
 global.logger = logger
 try {
@@ -147,13 +150,7 @@ try {
                     content: `This interaction is no longer supported.`
                 });
             } catch (error) {
-                const code = error?.code || 'no error code'
-                const message = error?.message || 'no message found'
-                const rawError = error?.rawError || 'no rawError found'
-                const msg = `code: ${code}, message: ${message}, rawError: ${rawError}`
-            
-                console.error(msg)
-                logger.error(msg)
+                processError(error)
             }
         }
 
@@ -166,13 +163,7 @@ try {
         try {
             await command.execute(interaction);
         } catch (error) {
-            const code = error?.code || 'no error code'
-            const message = error?.message || 'no message found'
-            const rawError = error?.rawError || 'no rawError found'
-            const msg = `code: ${code}, message: ${message}, rawError: ${rawError}`
-        
-            console.error(msg)
-            logger.error(msg)
+            processError(error)
         }
     })
 
@@ -195,11 +186,5 @@ try {
     })
 
 } catch (error) {
-    const code = error?.code || 'no error code'
-    const message = error?.message || 'no message found'
-    const rawError = error?.rawError || 'no rawError found'
-    const msg = `code: ${code}, message: ${message}, rawError: ${rawError}`
-
-    console.error(msg)
-    logger.error(msg)
+    processError(error)
 }
