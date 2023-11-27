@@ -179,6 +179,11 @@ try {
     })
 
 } catch (error) {
-    console.error(error)
-    logger.error(error)
+    const code = error?.code || 'no error code'
+    const message = error?.message || 'no message found'
+    const rawError = error?.rawError || 'no rawError found'
+    const msg = `code: ${code}, message: ${message}, rawError: ${rawError}`
+
+    console.error(msg)
+    logger.error(msg)
 }
