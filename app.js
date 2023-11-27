@@ -45,7 +45,13 @@ const logger = winston.createLogger({
 })
 
 process.on('unhandledRejection', error => {
-    logger.error('Unhandled promise rejection:', error);
+    const code = error?.code || 'no error code'
+    const message = error?.message || 'no message found'
+    const rawError = error?.rawError || 'no rawError found'
+    const msg = `code: ${code}, message: ${message}, rawError: ${rawError}`
+
+    console.error(msg)
+    logger.error(msg)
 })
 
 global.logger = logger
@@ -140,9 +146,14 @@ try {
                 await interaction.reply({
                     content: `This interaction is no longer supported.`
                 });
-            } catch (e) {
-                console.error(e)
-                logger.error(e)
+            } catch (error) {
+                const code = error?.code || 'no error code'
+                const message = error?.message || 'no message found'
+                const rawError = error?.rawError || 'no rawError found'
+                const msg = `code: ${code}, message: ${message}, rawError: ${rawError}`
+            
+                console.error(msg)
+                logger.error(msg)
             }
         }
 
@@ -155,8 +166,13 @@ try {
         try {
             await command.execute(interaction);
         } catch (error) {
-            console.error(error);
-            logger.error(error)
+            const code = error?.code || 'no error code'
+            const message = error?.message || 'no message found'
+            const rawError = error?.rawError || 'no rawError found'
+            const msg = `code: ${code}, message: ${message}, rawError: ${rawError}`
+        
+            console.error(msg)
+            logger.error(msg)
         }
     })
 
