@@ -20,14 +20,13 @@
  */
 
 const { SlashCommandBuilder } = require('discord.js');
-const { Configuration, OpenAIApi } = require('openai');
+const OpenAIApi = require('openai');
 const systemPrompts = resolveModule('data/system-prompts.json');
-const configuration = new Configuration({
+const openai = new OpenAIApi({
     organization: process.env.ORGANIZATION,
     apiKey: process.env.OPENAI_API_KEY,
     basePath: process.env.OPENAI_CHAT_BASE_PATH
 });
-const openai = new OpenAIApi(configuration);
 const contexts = {};
 const request = {
     model: process.env.OPENAI_MODEL,
@@ -93,12 +92,12 @@ module.exports = {
                 newContext.push(...context)
             }
 
-            response = await openai.createCompletion(request);
+            response = await openai.chat.completions.create(request);
             await interaction.editReply({
                 content: `[You]: ${prompt}`
             });
 
-            const data = response.data
+            const data = response
             const message = data.choices[0].message
             context.push(message)
             const content = message.content.split('\n\n')

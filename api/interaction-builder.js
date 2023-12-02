@@ -42,7 +42,7 @@ module.exports = {
     }
 
     return new EmbedBuilder()
-      .setTitle(msg.user.username)
+      .setTitle(msg.member.displayName)
       .setDescription('D6 Roll Result')
       .setThumbnail(game.images.d6)
       .addFields(
@@ -86,7 +86,7 @@ module.exports = {
     }
 
     return new EmbedBuilder()
-      .setTitle(msg.user.username)
+      .setTitle(msg.member.displayName)
       .setDescription('D20 Roll Result')
       .setThumbnail(game.images.d20)
       .addFields(

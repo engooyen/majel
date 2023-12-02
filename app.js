@@ -92,7 +92,7 @@ try {
         return commands;
     };
 
-    const registerCmds = async (guildId) => {
+    const registerCmds = async (guildId, reset) => {
         try {
             const commands = getCommands('commands')
             const isStaFeature = process.env.feature_sta
@@ -106,14 +106,16 @@ try {
                 commands.push(...getCommands('commands/2d20'))
             }
 
-            // rest.put(
-            //     Routes.applicationGuildCommands(clientId, guildId), { body: [] },
-            // );
-
-            // The put method is used to fully refresh all commands in the guild with the current set
-            rest.put(
-                Routes.applicationGuildCommands(clientId, guildId), { body: commands },
-            );
+            if (reset) {
+                rest.put(
+                    Routes.applicationGuildCommands(clientId, guildId), { body: [] },
+                );
+            } else {
+                // The put method is used to fully refresh all commands in the guild with the current set
+                rest.put(
+                    Routes.applicationGuildCommands(clientId, guildId), { body: commands },
+                );
+            }
         } catch (error) {
             // console.error(error)
         }
@@ -138,8 +140,8 @@ try {
         await refreshCmdForAllServers()
     })
 
-    client.on(Events.GuildCreate, async () => {
-        await refreshCmdForAllServers()
+    client.on(Events.GuildCreate, async (guild) => {
+        await registerCmds(guild.id)
     })
 
     client.on(Events.InteractionCreate, async interaction => {
@@ -176,6 +178,8 @@ try {
             }
         }
     })
+
+    client.on(Events.Error, (error) => processError(error))
 
     app.get('/', (req, res) => {
         res.send(`${process.env.bot_name} is up and running. Testing.`)
