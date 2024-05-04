@@ -22,7 +22,8 @@
         "pool": {
             "player": "Momentum",
             "gm": "Threat"
-        }
+        },
+        "isD6Supported": true
     },
     "fa": {
         "display": "Fallout",
@@ -73,6 +74,33 @@
         "pool": {
             "player": "Player AP",
             "gm": "Overseer AP"
-        }
+        },
+        "isD6Supported": true
+    },
+    "dm": {
+        "display": "Dreams and Machines",
+        "images": {
+            "d20": "https://i.imgur.com/dR1Xso7.png",
+            "d6": "https://i.imgur.com/gN5LDfH.png",
+            "d6-emojis": [
+                "<:d6_1:1019054097657241650> ",
+                "<:d6_2:1019054098382856304> ",
+                "<:d6_0:1019054096658989076> ",
+                "<:d6_0:1019054096658989076> ",
+                "<:d6_fx:1019054099817308202> ",
+                "<:d6_fx:1019054099817308202> "
+            ],
+            "d20-emojis": {
+                "success": "☝️",
+                "critical": "✌️",
+                "complication": "👎"
+            }
+        },
+        "dice": {},
+        "pool": {
+            "player": "Momentum",
+            "gm": "Threat"
+        },
+        "isD6Supported": false
     }
 }

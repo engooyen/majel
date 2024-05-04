@@ -37,8 +37,14 @@ module.exports = {
     const { rawResult, numericResult, fxResult, rawResultValues } = dice.rollD6(numDice, game)
     if (is2d20Feature && !game) {
       return new EmbedBuilder()
-      .setTitle('Game not set!')
-      .setDescription('/game set [game] to set game and /game list to show supported games.')
+        .setTitle('Game not set!')
+        .setDescription('/game set [game] to set game and /game list to show supported games.')
+    }
+
+    if (game && !game.isD6Supported) {
+      return new EmbedBuilder()
+        .setTitle('D6 not supported!')
+        .setDescription(`${game.display} doesn't support the D6 command.`)
     }
 
     return new EmbedBuilder()
