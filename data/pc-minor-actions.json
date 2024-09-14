@@ -3,5 +3,11 @@
     "DRAW ITEM": "PC may pick up an item within REACH, or draw a weapon/item on their person. If item does not require a TASK for use, PC may use it immediately upon drawing.",
     "DROP PRONE or STAND": "PC may not do both in the same turn.",
     "INTERACT or PREPARE": "PC interacts with an object in the environment or readies for a TASK. Complex interactions may require a TASK.",
-    "MOVEMENT": "PC moves up to Medium range. Cannot be combined with a TASK related movement action."
+    "MOVEMENT": "PC moves up to Medium range. Cannot be combined with a TASK related movement action.",
+    "AIM 2e": "When you make an Attack this turn, you may re-roll a single d20 on the task roll.",
+    "DRAW ITEM 2e": "You pick up an item within Reach or draw an item you are carrying. If using the item doesn’t require a task to use, you can use it immediately as part of this minor action.",
+    "INTERACT 2e": "You Interact with an object in the environment, such as opening a door by pressing the control panel or issuing a simple voice command to a computer. Complex interactions may require a major action and a task roll instead.",
+    "MOVEMENT 2e": "You move up to one zone, to any point within Medium range. You cannot take this minor action in the same turn as a Movement major action. If there are any enemies within Reach of you, you cannot perform this action.",
+    "PREPARE 2e": "You prepare for or set up a task. Some items require this minor action before they can be used, and some major actions require this minor action before they can be attempted. Sometimes items will grant special benefits if this action is used before performing a task.",
+    "STAND/DROP PRONE 2e": "You drop to the ground, making yourself a smaller target, or stand up from being prone. You cannot Stand and Drop Prone in the same turn."
 }

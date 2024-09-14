@@ -1,0 +1,6 @@
+{
+    "ASSIST 2e": "In addition to the standard Assist action, if you use the Assist action on your turn while in command, you may pick two characters to assist, rather than one.",
+    "CREATE TRAIT 2e": "In addition to the standard Create Trait action, note that while not unique to command, this action is useful for characters in command, and usually uses Control, Insight, or Reason + Command, to perform the task, normally representing battle plans, strategies, and similar.",
+    "DIRECT 2e": "Spend 1 Momentum and select one ally on the bridge who immediately attempts a single major action, and you assist them by rolling 1d20 with your Control + Command.",
+    "RALLY 2e": "You inspire and coordinate the crew, attempting a Presence + Command task with a Difficulty of 0; this task is specifically to generate Momentum, either to use immediately or to save for the group."
+}

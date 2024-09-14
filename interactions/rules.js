@@ -53,51 +53,6 @@ module.exports = {
         })
     },
 
-    async handlePcAction(interaction) {
-        const action = interaction.options.getString('action')
-        const embed = new Discord.EmbedBuilder()
-            .setTitle('PC Action')
-            .addFields(
-                {
-                    name: action,
-                    value: pcActions[action],
-                }
-            )
-        await interaction.reply({
-            embeds: [embed]
-        })
-    },
-
-    async handlePcMinorAction(interaction) {
-        const action = interaction.options.getString('action')
-        const embed = new Discord.EmbedBuilder()
-            .setTitle('PC Minor Action')
-            .addFields(
-                {
-                    name: action,
-                    value: pcMinorActions[action],
-                }
-            )
-        await interaction.reply({
-            embeds: [embed]
-        })
-    },
-
-    async handlePcAttackProperty(interaction) {
-        const prop = interaction.options.getString('property')
-        const embed = new Discord.EmbedBuilder()
-            .setTitle('PC Attack Property')
-            .addFields(
-                {
-                    name: prop,
-                    value: pcAttackProperties[prop],
-                }
-            )
-        await interaction.reply({
-            embeds: [embed]
-        })
-    },
-
     async handleShipOverview(interaction) {
         const departments = Object.keys(shipOverview)
         const fields = []
@@ -131,6 +86,14 @@ module.exports = {
             name: '/ship attack-properties [prop]',
             value: Object.keys(shipAttackProperties).join(', ')
         })
+        fields.push({
+            name: '/ship-major-action [station] (New in 2e)',
+            value: 'standard, command, communications, helm, navigator, ops, sensor, tactical'
+        })
+        fields.push({
+            name: '/ship-minor-action [station] (New in 2e)',
+            value: 'standard, helm, sensor, tactical'
+        })
         const embed = new Discord.EmbedBuilder()
             .setTitle('Ship Rules Lookup Sub-commands')
             .addFields(...fields)
@@ -139,45 +102,14 @@ module.exports = {
         })
     },
 
-    async handleShipAction(interaction) {
-        const action = interaction.options.getString('action')
+    async handleLookup(interaction, title, option, actions) {
+        const action = interaction.options.getString(option)
         const embed = new Discord.EmbedBuilder()
-            .setTitle('Ship Action')
+            .setTitle(title)
             .addFields(
                 {
                     name: action,
-                    value: shipActions[action],
-                }
-            )
-        await interaction.reply({
-            embeds: [embed]
-        })
-    },
-
-    async handleShipMinorAction(interaction) {
-        const action = interaction.options.getString('action')
-        const embed = new Discord.EmbedBuilder()
-            .setTitle('Ship Minor Action')
-            .addFields(
-                {
-                    name: action,
-                    value: shipMinorActions[action],
-                }
-            )
-        await interaction.reply({
-            embeds: [embed]
-        })
-    },
-
-
-    async handleShipAttackProperty(interaction) {
-        const prop = interaction.options.getString('property')
-        const embed = new Discord.EmbedBuilder()
-            .setTitle('Ship Attack Property')
-            .addFields(
-                {
-                    name: prop,
-                    value: shipAttackProperties[prop],
+                    value: actions[action],
                 }
             )
         await interaction.reply({

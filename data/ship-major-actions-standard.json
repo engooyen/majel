@@ -1,0 +1,8 @@
+{
+    "ASSIST 2e": "The character performs some activity that grants an ally an advantage. The character nominates a single ally they can communicate with and assists their next task (see Teamwork and Assistance). If a character attempts a task and you have not yet acted, you can give up your turn this round to assist them immediately.",
+    "CREATE TRAIT 2e": "Create or change a trait in the scene, or remove one that’s already present. This is a task with a Difficulty of 2, using an attribute + department and focus based on what you are doing. If successful, you create, change, or remove a trait.",
+    "OTHER TASKS 2e": "Perform a task at the discretion of the gamemaster. Circumstances or objectives may dictate a task, and particularly dangerous situations may require working to overcome an extended task or complete a challenge.",
+    "OVERRIDE 2e": "The character overrides the controls of another position. The character may attempt a major action from any other position other than commanding officer, but increasing the Difficulty by 1, due to the sub-optimal controls.",
+    "PASS 2e": "The character chooses not to attempt a task.",
+    "READY 2e": "You choose another major action to take as a reaction to something else. When the trigger event occurs, you temporarily interrupt the current character’s turn to resolve your readied major action, then play proceeds as normal. If the triggering event does not occur before your next turn, the action is lost. You can still perform minor actions during your turn."
+}

@@ -1,0 +1,5 @@
+{
+    "CALIBRATE WEAPONS 2e": "You fine-tune the frequency of energy weapons, and the yield of torpedoes to achieve a desired result. On your next attack with the ship’s weapons, increase the weapon’s damage by 1.",
+    "PREPARE 2e": "The character prepares for, or spends time setting up, a task. Some tasks require this minor action to be taken before the task can be attempted. At tactical, this action can be used to raise or lower the ship’s shields, or to arm or disarm the ship’s weapons. § Shields: When the shields are lowered, the ship’s maximum shields are 0. When raised, they are restored to their normal maximum, or to their previous total if the ship has taken any damage this scene. § Weapons: The ship may only make Weapons Attacks if the weapons are armed. However, enemy ships can detect whether your ship’s weapons are armed.",
+    "TARGETING SOLUTION 2e": "You lock targeting sensors onto an enemy vessel. Select a single enemy vessel within Long range. On the next attack against that vessel, either re-roll a d20 on the task, or choose which of the target’s systems are hit by the attack, rather than rolling."
+}
