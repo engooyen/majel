@@ -17,7 +17,7 @@
   "dependencies": {
     "axios": "^1.7.4",
     "discord-api-types": "^0.37.35",
-    "discord.js": "^14.7.1",
+    "discord.js": "^14.16.3",
     "dotenv": "^16.0.3",
     "express": "^4.21.0",
     "fs": "0.0.1-security",
