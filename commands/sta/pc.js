@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2023 John H. Nguyen
+ * Copyright 2019-2025 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
@@ -25,29 +25,18 @@ const pcActions = resolveModule('data/pc-actions.json')
 const pcMinorActions = resolveModule('data/pc-minor-actions.json')
 const pcAttackProperties = resolveModule('data/pc-attack-properties.json')
 
-const pcActionsOptions = []
-for (let action of Object.keys(pcActions)) {
-    pcActionsOptions.push({
-        name: action,
-        value: action
-    })
+function createChoices(actions) {
+    let choices = []
+    for (let action of Object.keys(actions)) {
+        choices.push({
+            name: action,
+            value: action
+        })
+    }
+
+    return choices
 }
 
-const pcMinorActionsOptions = []
-for (let action of Object.keys(pcMinorActions)) {
-    pcMinorActionsOptions.push({
-        name: action,
-        value: action
-    })
-}
-
-const pcAttackProps = []
-for (let action of Object.keys(pcAttackProperties)) {
-    pcAttackProps.push({
-        name: action,
-        value: action
-    })
-}
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('pc')
@@ -65,7 +54,7 @@ module.exports = {
                     option.setName('action')
                         .setDescription('The pc action.')
                         .setRequired(true)
-                        .addChoices(...pcActionsOptions)
+                        .addChoices(...createChoices(pcActions))
                 )
         )
         .addSubcommand(subcommand =>
@@ -76,7 +65,7 @@ module.exports = {
                     option.setName('action')
                         .setDescription('The pc minor action.')
                         .setRequired(true)
-                        .addChoices(...pcMinorActionsOptions)
+                        .addChoices(...createChoices(pcMinorActions))
                 )
         )
         .addSubcommand(subcommand =>
@@ -87,7 +76,7 @@ module.exports = {
                     option.setName('property')
                         .setDescription('The pc attack property.')
                         .setRequired(true)
-                        .addChoices(...pcAttackProps)
+                        .addChoices(...createChoices(pcAttackProperties))
                 )
         ),
     async execute(interaction) {
@@ -96,11 +85,11 @@ module.exports = {
         if (subCmd === 'list') {
           await rulesInteraction.handlePcList(interaction)
         } else if (subCmd === 'actions') {
-          await rulesInteraction.handlePcAction(interaction)
+          await rulesInteraction.handleLookup(interaction, 'PC Action', 'action', pcActions)
         } else if (subCmd === 'minor-actions') {
-          await rulesInteraction.handlePcMinorAction(interaction)
+          await rulesInteraction.handlePcMinorAction(interaction, 'PC Minor Action', 'action', pcMinorActions)
         } else if (subCmd === 'attack-properties') {
-          await rulesInteraction.handlePcAttackProperty(interaction)
+          await rulesInteraction.handlePcAttackProperty(interaction, 'PC Attack Property', 'property', pcAttackProperties)
         }
     },
 };

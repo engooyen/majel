@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2023 John H. Nguyen
+ * Copyright 2019-2025 John H. Nguyen
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the 'Software'), to
  * deal in the Software without restriction, including without limitation the
@@ -24,49 +24,29 @@ const rulesInteraction = resolveModule('interactions/rules')
 const shipActions = resolveModule('data/ship-actions.json')
 const shipMinorActions = resolveModule('data/ship-minor-actions.json')
 const shipAttackProperties = resolveModule('data/ship-attack-properties.json')
-const shipActionsChoices1 = []
-const shipActionsChoices2 = []
-const shipActionsChoices3 = []
-for (let action of Object.keys(shipActions).splice(0, 12)) {
-    shipActionsChoices1.push({
-        name: action,
-        value: action
-    })
+const shipMajorActionsStandard = resolveModule('data/ship-major-actions-standard.json')
+
+function createChoices(actions) {
+    let choices = []
+    for (let action of Object.keys(actions)) {
+        choices.push({
+            name: action,
+            value: action
+        })
+    }
+
+    return choices
 }
 
-for (let action of Object.keys(shipActions).splice(12, 25)) {
-    shipActionsChoices2.push({
-        name: action,
-        value: action
-    })
-}
+const allChoices = createChoices(shipActions)
+const shipActionsChoices1 = allChoices.splice(0, 12)
+const shipActionsChoices2 = allChoices.splice(12, 25)
+const shipActionsChoices3 = allChoices.splice(25, 35)
 
-for (let action of Object.keys(shipActions).splice(25, 35)) {
-    shipActionsChoices3.push({
-        name: action,
-        value: action
-    })
-}
-
-const shipMinorActionsChoices = []
-for (let action of Object.keys(shipMinorActions)) {
-    shipMinorActionsChoices.push({
-        name: action,
-        value: action
-    })
-}
-
-const shipAttackProps = []
-for (let action of Object.keys(shipAttackProperties)) {
-    shipAttackProps.push({
-        name: action,
-        value: action
-    })
-}
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ship')
-        .setDescription('Rules lookup for the ship.')
+        .setDescription('Rules lookup for the ship minor actions.')
         .addSubcommand(subcommand =>
             subcommand
                 .setName('list')
@@ -113,7 +93,7 @@ module.exports = {
                     option.setName('action')
                         .setDescription('The ship minor action.')
                         .setRequired(true)
-                        .addChoices(...shipMinorActionsChoices)
+                        .addChoices(...createChoices(shipMinorActions))
                 )
         )
         .addSubcommand(subcommand =>
@@ -124,30 +104,42 @@ module.exports = {
                     option.setName('property')
                         .setDescription('The attack property.')
                         .setRequired(true)
-                        .addChoices(...shipAttackProps)
+                        .addChoices(...createChoices(shipAttackProperties))
                 )
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('overview')
                 .setDescription('Get an overview of what ship actions belongs to which deparment.')
-        ),
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('major-actions-standard')
+                .setDescription('Get description of a standard major action.')
+                .addStringOption(option =>
+                    option.setName('action')
+                        .setDescription('The ship major action.')
+                        .setRequired(true)
+                        .addChoices(...createChoices(shipMajorActionsStandard))
+                )
+        )
+        ,
     async execute(interaction) {
         const { options } = interaction;
         const subCmd = options.getSubcommand()
         if (subCmd === 'list') {
             await rulesInteraction.handleShipList(interaction)
+        } else if (subCmd === 'overview') {
+            await rulesInteraction.handleShipOverview(interaction)
         } else if ([
             'actions-page-1',
             'actions-page-2',
             'actions-page-3'].includes(subCmd)) {
-            await rulesInteraction.handleShipAction(interaction)
+            await rulesInteraction.handleLookup(interaction, 'Ship Major Actions', 'action', shipActions)
         } else if (subCmd === 'minor-actions') {
-            await rulesInteraction.handleShipMinorAction(interaction)
+            await rulesInteraction.handleLookup(interaction, 'Ship Minor Actions', 'action', shipMinorActions)
         } else if (subCmd === 'attack-properties') {
-            await rulesInteraction.handleShipAttackProperty(interaction)
-        } else if (subCmd === 'overview') {
-            await rulesInteraction.handleShipOverview(interaction)
+            await rulesInteraction.handleLookup(interaction, 'Ship Attack Properties', 'property', shipAttackProperties)
         }
     },
 };

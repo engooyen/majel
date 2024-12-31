@@ -1,0 +1,8 @@
+{
+    "CREATE TRAIT 2e": "In addition to the standard Create Trait action, note that, from operations, this action is often useful for creating traits that reflect modifications to ship systems.",
+    "DAMAGE CONTROL 2e": "Choose a single breach and attempt a Presence + Engineering task, with a Difficulty of 2; increase this by 1 per additional degree of Potency. If successful, the breach is patched, and no longer imposes penalties or effects. The breach will require proper repairs outside of combat.",
+    "REGAIN POWER 2e": "You draw energy from another system to replenish the ship’s Reserve Power. Attempt a Control + Engineering task, with a Difficulty of 1. This may Succeed at Cost. On success, you restore the ship’s Reserve Power, allowing it to be used later during the scene. Complications should reflect subsystems shutdown to use their power. The Difficulty for this task increases by 1 each time it is attempted during a scene.",
+    "REGENERATE SHIELDS 2e": "Requires Reserve Power. You reroute Reserve Power to the shield emitters, attempting to restore their strength. This requires a Control + Engineering task with a Difficulty of 2, assisted by the ship’s Structure + Engineering; the Difficulty increases by 1 if the ship’s shields are at 0. If successful, the ship regains shields equal to your Engineering department, plus 2 more by spending 1 Momentum (Repeatable).",
+    "REROUTE POWER 2e": "Requires Reserve Power. You reroute Reserve Power to a specific system; the chosen system gains power which will apply to the next action using that system.",
+    "TRANSPORT 2e": "You remotely operate the ship’s transporters. This follows the rules for transporters, but operating them from the bridge increases the Difficulty by 1."
+}

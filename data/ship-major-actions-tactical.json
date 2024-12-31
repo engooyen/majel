@@ -1,0 +1,7 @@
+{
+    "CREATE TRAIT 2e": "In addition to the standard Create Trait action, note that, from tactical, this action is often useful for creating traits that reflect modifications to weapon systems, or useful targeting data.",
+    "DEFENSIVE FIRE 2e": "Choose a single energy weapon on your ship. Until your next turn, any enemy attack against your ship becomes an opposed task, opposed by your Daring + Security (and assisted by your ship’s Weapons + Security) at the same Difficulty. If you succeed, you may spend 2 Momentum to counterattack, inflicting your weapon’s damage against the attacker. You cannot take this action if the ship is currently benefitting from Evasive Action.",
+    "FIRE 2e": "You select a single energy weapon or a single torpedo weapon on the ship, choose a target for that weapon, and make an Attack. If you attempt a torpedo attack, add 1 Threat.",
+    "MODULATE SHIELDS 2e": "This cannot be attempted if the shields are at 0. You try to tune your shields to resist enemy attacks. If you take this action, then until your next turn, increase the Resistance of your ship by 2.",
+    "TRACTOR BEAM 2e": "The character engages a tractor beam at a nearby object or vessel. This requires a Control + Security task, assisted by the ship’s Structure + Security with a Difficulty of 2, and can only be directed at a target within Close range. If successful, the target vessel is immobilized and cannot move unless it can break free. This can be done in a number of ways, but the Difficulty is equal to the tractor beam strength of your vessel."
+}

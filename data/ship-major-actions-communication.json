@@ -1,0 +1,5 @@
+{
+    "CREATE TRAIT 2e": "In addition to the standard Create Trait action, this action is often useful for creating traits which represent efforts to boost or recalibrate communications to pierce interference, or methods used to encrypt or decrypt messages. It can also be used to create traits that represent coordinating personnel aboard the ship or coordinating with other ships.",
+    "DAMAGE CONTROL 2e": "You direct a damage control team to begin stabilizing and repairing damage. Choose a single breach, and attempt a Presence + Engineering task, with a Difficulty of 2; increase this by 1 per additional degree of potency. If successful, the chosen breach is patched, and no longer imposes any penalties or effects. The breach itself is not fully removed, which will require proper repairs outside of combat.",
+    "TRANSPORT 2e": "You send instructions to one of the ship’s transporter rooms to beam a group of people or objects, to or from the ship, or from one place to another. This follows the rules for transporters, but operating them from the bridge increases the Difficulty by 1."
+}

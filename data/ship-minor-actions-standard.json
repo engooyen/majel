@@ -1,0 +1,6 @@
+{
+    "CHANGE POSITION 2e": "The character moves to any other station on the bridge, or to any other location on the ship. If that bridge station is unmanned, the character can take control of that station immediately; otherwise, the character takes control whenever the officer already at that station departs. If the character is moving to somewhere else on the ship, they will arrive in that location at the start of their next turn.",
+    "INTERACT 2e": "The character interacts with an object in the environment. Particularly complex interactions may require a major action (and a task) instead. This covers basic and routine interactions with ship systems that aren’t otherwise covered here.",
+    "PREPARE 2e": "The character prepares for, or spends time setting up, a task. Some tasks require this minor action to be taken before the task can be attempted.",
+    "RESTORE 2e": "The character performs the minor repairs and adjustments needed to restore a system after disruption or minor damage. Certain circumstances call for the use of this minor action."
+}
