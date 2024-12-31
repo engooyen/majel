@@ -85,6 +85,12 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 
 `/ship attack-properties [property]` - Attack properties of a ship attack.
 
+**2e Commands**
+
+`/ship-major-action [station]` - 2e ship major actions.
+
+`/ship-minor-action [station]` - 2e ship minor actions.
+
 **Momemtum and Threat Pools**
 
 `/m or /t get [global or here]` - Get the current value of a specified pool's location.
