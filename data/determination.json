@@ -1,6 +1,9 @@
 {
     "PERFECT OPPORTUNITY": "Must be declared before a roll. A point of Determination may be spent to grant the character a single bonus d20. This bonus d20 differs from most in that it is considered to have already rolled a 1, and thus generates two successes automatically. The normal limit of additional d20s bought for a Task still applies.",
+    "PERFECT OPPORTUNITY 2e": "You may spend Determination on a task roll—before any dice are rolled, but after you’ve purchased any extra dice—to select a single d20 and set it so that it counts as having rolled a 1 (and thus scoring a Critical Success).",
     "MOMENT OF INSPIRATION": "A point of Determination may be spent to re-roll all the character’s dice in their dice pool.",
+    "MOMENT OF INSPIRATION 2e": "You may spend Determination on a task roll, after the dice have been rolled, to re-roll any number of d20s in your dice pool.",
     "SURGE OF ACTIVITY": "The character may immediately perform another Task as soon as this one has been resolved. This is most useful in combat or other situations where the character is under pressure and cannot normally attempt two consecutive Tasks.",
-    "MAKE IT SO": "The character immediately creates an Advantage that applies to the current scene."
+    "MAKE IT SO": "The character immediately creates an Advantage that applies to the current scene.",
+    "SPECIAL TECHNIQUE 2e": "Your character immediately gains the use of a single talent they do not possess. This talent remains for the rest of the current scene. You must meet the prerequisites for that talent, and the gamemaster may veto talents which make no sense for a character to suddenly obtain for a short while. This might represent some incidental knowledge or training the character possesses which isn’t normally relevant, or the benefits of a piece of equipment or other circumstantial factor."
 }
