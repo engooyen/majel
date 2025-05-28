@@ -140,10 +140,6 @@ try {
         await refreshCmdForAllServers()
     })
 
-    client.on(Events.GuildCreate, async (guild) => {
-        await registerCmds(guild.id)
-    })
-
     client.on(Events.InteractionCreate, async interaction => {
         let command = interaction.client.commands.get(interaction.commandName);
         if (!interaction.isChatInputCommand()) {
