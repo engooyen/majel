@@ -179,6 +179,17 @@ try {
         }
     })
 
+    client.on(Events.GuildCreate, async (guild) => {
+        try {
+            logger.info(`Joined new guild: ${guild.id} (${guild.name}) - registering commands...`);
+            await registerCmds(guild.id);
+            logger.info(`Commands registered for guild: ${guild.id}`);
+        } catch (error) {
+            logger.error(`Failed to register commands for guild: ${guild.id}`);
+            processError(error);
+        }
+    })
+
     client.on(Events.Error, (error) => processError(error))
 
     app.get('/', (req, res) => {
