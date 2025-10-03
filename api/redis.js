@@ -32,7 +32,7 @@ redis.on('error', (error) => {
 })
 
 redis.on('ready', () => {
-  logger.log('Redis client ready.')
+  logger.info("Redis client ready.");
 })
 
 redis.setJson = async (key, jsonData) => {

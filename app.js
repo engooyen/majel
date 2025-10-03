@@ -45,6 +45,11 @@ const logger = winston.createLogger({
 })
 
 const processError = error => {
+    // Suppress "Missing Access" errors
+    if (error.code === 50001 || error.message?.includes('Missing Access')) {
+        return;
+    }
+
     const code = error?.code || 'no error code'
     const message = error?.message || 'no message found'
     const stack = error?.stack || 'no stack found'
@@ -117,14 +122,16 @@ try {
                 );
             }
         } catch (error) {
-            console.error(error)
+            processError(error);
         }
     }
 
     const refreshCmdForAllServers = async () => {
-        client.guilds.cache.forEach(async guild => {
-            await registerCmds(guild.id)
-        })
+        const guilds = Array.from(client.guilds.cache.values());
+        const promises = guilds.map(async guild => {
+            await registerCmds(guild.id);
+        });
+        await Promise.all(promises);
     }
 
     client.on(Events.ClientReady, async () => {
