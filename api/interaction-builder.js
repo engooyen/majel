@@ -34,13 +34,13 @@ const is2d20Feature = process.env.feature_2d20
 
 module.exports = {
   rollD6(numDice, msg, game) {
-    const { rawResult, numericResult, fxResult, rawResultValues } = dice.rollD6(numDice, game)
     if (is2d20Feature && !game) {
       return new EmbedBuilder()
         .setTitle('Game not set!')
         .setDescription('/game set [game] to set game and /game list to show supported games.')
     }
 
+    const { rawResult, numericResult, fxResult, rawResultValues } = dice.rollD6(numDice, game)
     if (game && !game.isD6Supported) {
       return new EmbedBuilder()
         .setTitle('D6 not supported!')
@@ -74,6 +74,12 @@ module.exports = {
   },
 
   rollD20(numDice, args, msg, game) {
+    if (is2d20Feature && !game) {
+      return new EmbedBuilder()
+        .setTitle('Game not set!')
+        .setDescription('/game set [game] to set game and /game list to show supported games.')
+    }
+
     const {
       target,
       critRange,
@@ -84,12 +90,6 @@ module.exports = {
       complication,
       difficulty
     } = dice.rollD20(numDice, args, game)
-
-    if (is2d20Feature && !game) {
-      return new EmbedBuilder()
-      .setTitle('Game not set!')
-      .setDescription('/game set [game] to set game and /game list to show supported games.')
-    }
 
     return new EmbedBuilder()
       .setTitle(msg.member.displayName)
