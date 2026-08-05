@@ -111,7 +111,7 @@ Majel Beta and Support Server: https://discord.gg/VbWfJ3M5T5
 # Developer Setup
 
 ## NPM
-This section assumes that you're familiar with javascript and node.js. Ensure you have npm installed on your workstation by following the steps outlined here:
+This section assumes that you're familiar with javascript and node.js. This project requires **Node.js 24 LTS or newer**. Ensure you have npm installed on your workstation by following the steps outlined here:
 
 https://www.npmjs.com/get-npm
 
