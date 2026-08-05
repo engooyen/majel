@@ -9,6 +9,9 @@
     "type": "git",
     "url": "git://github.com/engooyen/majel.git"
   },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
